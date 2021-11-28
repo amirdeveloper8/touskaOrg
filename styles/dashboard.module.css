@@ -1,0 +1,28 @@
+.addnewpage {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pageDetails {
+  background-color: rgb(82, 150, 138);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+.pageDetails h2,
+.pageDetails p {
+  text-align: center;
+}
+.pageDetails button {
+  width: 48%;
+}
+
+.buttonPages {
+  display: flex;
+  justify-content: space-between;
+}

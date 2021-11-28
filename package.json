@@ -8,9 +8,22 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@react-icons/all-files": "^4.1.0",
+    "axios": "^0.24.0",
+    "bootstrap": "^5.1.3",
+    "draft-js": "^0.11.7",
+    "draft-js-export-html": "^1.4.1",
+    "draft-js-import-html": "^1.4.1",
+    "interweave": "^12.9.0",
+    "js-cookie": "^3.0.1",
+    "lodash": "^4.17.21",
     "next": "12.0.4",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-alice-carousel": "^2.5.1",
+    "react-bootstrap": "^2.0.2",
+    "react-dom": "17.0.2",
+    "react-draft-wysiwyg": "^1.14.7",
+    "react-icons": "^4.3.1"
   },
   "devDependencies": {
     "eslint": "7.32.0",

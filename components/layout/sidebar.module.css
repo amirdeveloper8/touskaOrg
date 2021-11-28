@@ -1,0 +1,11 @@
+.sidebar {
+  position: fixed;
+  background-color: rgb(9, 56, 36);
+  height: 90vh;
+  width: 150px;
+  top: 100px;
+}
+
+.sidebar a {
+  color: white;
+}

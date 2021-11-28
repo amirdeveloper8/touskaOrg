@@ -1,0 +1,48 @@
+.boxes {
+  display: flex;
+  justify-content: space-evenly;
+  direction: rtl;
+}
+
+.box {
+  padding: 2%;
+  width: 46%;
+  max-width: 500px;
+  margin: 2%;
+  border: 10px solid #883676;
+  text-align: center;
+  height: 700px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: all 0.6s ease-in-out;
+}
+
+.box:hover {
+  transform: translateY(-20px);
+  background-color: rgb(100, 179, 172);
+}
+
+.box img {
+  max-width: 450px;
+}
+
+.planBtn {
+  background-color: #883676;
+  border-color: #883676;
+  margin-top: 1rem;
+  color: white;
+  width: 180px;
+}
+
+.planBtn:hover {
+  background-color: #0c9c59;
+  border-color: #0c9c59;
+  transition: all 0.3s ease-in-out;
+}
+
+.planBtn a {
+  color: white;
+  text-decoration: none;
+}

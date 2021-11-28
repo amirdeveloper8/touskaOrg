@@ -1,0 +1,183 @@
+.auth {
+  margin: auto;
+  width: 95%;
+  max-width: 25rem;
+  border-radius: 6px;
+  background-color: #304430;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.auth h1 {
+  text-align: center;
+  color: white;
+}
+
+.auth h2 {
+  text-align: center;
+  color: white;
+  background-color: transparent;
+}
+
+.control {
+  margin-bottom: 0.5rem;
+}
+
+.control label {
+  display: block;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.control input {
+  font: inherit;
+  background-color: #f1e1fc;
+  color: #022b1e;
+  border-radius: 4px;
+  border: 1px solid white;
+  width: 100%;
+  text-align: left;
+  padding: 0.25rem;
+}
+
+.actions {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.actions button {
+  cursor: pointer;
+  font: inherit;
+  color: white;
+  background-color: #507d2a;
+  border: 1px solid #507d2a;
+  border-radius: 4px;
+  padding: 0.5rem 2.5rem;
+}
+
+.actions button:hover {
+  background-color: #2a7a3b;
+  border: 1px solid #2a7a3b;
+}
+
+.actions button:disabled {
+  background-color: #9e97a3;
+  border-color: #9e97a3;
+  cursor: not-allowed;
+}
+
+.actions .toggle {
+  margin-top: 1rem;
+  background-color: transparent;
+  color: #9f5ccc;
+  border: none;
+  padding: 0.15rem 1.5rem;
+}
+
+.actions .toggle:hover {
+  background-color: transparent;
+  color: #ae82cc;
+}
+
+.actions a {
+  text-decoration: none;
+  color: white;
+}
+
+.actions a:hover {
+  text-decoration: none;
+  color: #1ba354;
+}
+
+.countForm {
+  width: 400px;
+  margin: auto;
+  margin-bottom: 1rem;
+}
+
+.slidesForm {
+  max-width: 900px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+  position: relative;
+  margin-top: 1rem;
+}
+
+.sliderForm {
+  position: relative;
+}
+
+.sliderFormSave {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.badgeSlider {
+  position: absolute;
+  bottom: 1rem;
+  right: 0;
+}
+
+.sliders {
+  position: relative;
+  padding-bottom: 100px;
+}
+
+.sliders .submitactions {
+  position: absolute;
+  bottom: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sliders .controlFirstForm {
+  max-width: 400px;
+  margin: auto;
+  background-color: rgb(10, 110, 105);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.plansIcons {
+  margin-top: 5px;
+  direction: rtl;
+  height: 2rem;
+  position: relative;
+  width: 100%;
+}
+
+.plansIcons svg {
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.addItemPlans {
+  color: #09a538;
+  position: absolute;
+  right: 5px;
+}
+
+.addItemPlans:hover {
+  color: #2bcf5d;
+}
+
+.removeItemPlans {
+  color: #c51f1f;
+  position: absolute;
+  left: 5px;
+}
+
+.removeItemPlans:hover {
+  color: #ff0000;
+  position: absolute;
+  left: 5px;
+}

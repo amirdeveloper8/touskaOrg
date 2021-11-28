@@ -1,0 +1,21 @@
+.simple {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  padding: 2rem;
+  direction: rtl;
+}
+
+.simple div {
+  width: 45%;
+}
+
+.image {
+  direction: ltr;
+}
+
+.image img {
+  width: 80%;
+  border: 10px solid #883676;
+  max-width: 450px;
+}

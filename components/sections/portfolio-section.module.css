@@ -1,0 +1,69 @@
+.portfolio {
+  width: 80%;
+  margin: auto;
+  padding: 2rem 0;
+}
+
+.portfolio h2 {
+  text-align: center;
+}
+
+.portfolioBoxes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.portfolioBox {
+  flex-basis: 30%;
+  border: 10px solid #883676;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  margin: 1rem;
+  background-color: #3a917673;
+  transition: 0.45s ease-in-out;
+}
+
+.portfolioBox:hover {
+  transform: scale(1.2);
+  background-color: #3a9175;
+  border-width: 5px;
+  transition: 0.45s ease-in-out;
+}
+
+.portfolioBox img {
+  width: 100%;
+  margin: 1rem;
+}
+
+.portfolioBox button {
+  width: 130px;
+  background-color: #883676;
+  transition: 0.3s ease-in-out;
+  border-color: #883676;
+  border-radius: 0;
+}
+
+.portfolioBox a {
+  text-decoration: none;
+  color: white;
+  transition: 0.3s ease-in-out;
+}
+
+.portfolioBox button:hover {
+  width: 130px;
+  background-color: #ffffff;
+  color: #883676;
+  border-color: white;
+  transition: 0.3s ease-in-out;
+}
+
+.portfolioBox button:hover a {
+  color: #883676;
+  font-weight: 700;
+  transition: 0.3s ease-in-out;
+}

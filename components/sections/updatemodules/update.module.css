@@ -1,0 +1,222 @@
+.auth {
+  margin: auto;
+  width: 95%;
+  max-width: 25rem;
+  border-radius: 6px;
+  background-color: #304430;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.auth h1 {
+  text-align: center;
+  color: white;
+}
+
+.auth h2 {
+  text-align: center;
+  color: white;
+}
+
+.control {
+  margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.edit {
+  position: absolute;
+  right: 1rem;
+  bottom: 6px;
+  cursor: pointer;
+}
+
+.control label {
+  display: block;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.control input {
+  font: inherit;
+  background-color: #f1e1fc;
+  color: #022b1e;
+  border-radius: 4px;
+  border: 1px solid white;
+  width: 100%;
+  text-align: left;
+  padding: 0.25rem;
+}
+
+.actions {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.actions button {
+  cursor: pointer;
+  font: inherit;
+  color: white;
+  background-color: #507d2a;
+  border: 1px solid #507d2a;
+  border-radius: 4px;
+  padding: 0.5rem 2.5rem;
+}
+
+.actions button:hover {
+  background-color: #2a7a3b;
+  border: 1px solid #2a7a3b;
+}
+
+.actions button:disabled {
+  background-color: #9e97a3;
+  border-color: #9e97a3;
+  cursor: not-allowed;
+}
+
+.actions .toggle {
+  margin-top: 1rem;
+  background-color: transparent;
+  color: #9f5ccc;
+  border: none;
+  padding: 0.15rem 1.5rem;
+}
+
+.actions .toggle:hover {
+  background-color: transparent;
+  color: #ae82cc;
+}
+
+.actions a {
+  text-decoration: none;
+  color: white;
+}
+
+.actions a:hover {
+  text-decoration: none;
+  color: #1ba354;
+}
+
+.countForm {
+  width: 400px;
+  margin: auto;
+  margin-bottom: 1rem;
+}
+
+.slidesForm {
+  max-width: 900px;
+  display: flex;
+  flex-wrap: wrap;
+  margin: auto;
+  position: relative;
+  margin-top: 1rem;
+}
+
+.sliderForm {
+  position: relative;
+}
+
+.sliderFormSave {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.badgeSlider {
+  position: absolute;
+  bottom: 1rem;
+  right: 0;
+}
+
+.sliders {
+  position: relative;
+  padding-bottom: 100px;
+}
+
+.sliders .submitactions {
+  position: absolute;
+  bottom: 50px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sliders .controlFirstForm {
+  max-width: 400px;
+  margin: auto;
+  background-color: rgb(10, 110, 105);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.updateImage img {
+  background-color: #fff;
+  height: auto;
+  max-width: 22rem;
+}
+
+.updateImage {
+  width: 100%;
+}
+
+.formGroup {
+  position: relative;
+}
+
+.editTxtRich h1,
+.editTxtRich h2,
+.editTxtRich h3,
+.editTxtRich h4,
+.editTxtRich h5,
+.editTxtRich h6,
+.editTxtRich p,
+.editTxtRich ul,
+.editTxtRich ol,
+.editTxtRich a {
+  background-color: white !important;
+  color: black !important;
+}
+
+.editTxtRich {
+  height: 300px;
+  overflow-y: scroll;
+  box-sizing: content-box;
+  background: white;
+}
+
+/* width */
+.editTxtRich::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+.editTxtRich::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+.editTxtRich::-webkit-scrollbar-thumb {
+  background: rgb(11, 107, 67);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+.editTxtRich::-webkit-scrollbar-thumb:hover {
+  background: #3d8371;
+}
+
+#openLinkInNewWindow span {
+  color: black !important;
+}
+
+.editRich {
+  position: absolute;
+  right: 1rem;
+  bottom: 5px;
+  cursor: pointer;
+}

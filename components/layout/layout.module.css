@@ -1,0 +1,19 @@
+.nav-item-list {
+  justify-content: flex-end;
+}
+
+.dashboard {
+  margin-left: 10vw;
+}
+
+.menu {
+  position: fixed !important;
+  top: 0;
+  width: 100%;
+  z-index: 999;
+  height: 100px;
+}
+
+.main {
+  margin-top: 100px;
+}
