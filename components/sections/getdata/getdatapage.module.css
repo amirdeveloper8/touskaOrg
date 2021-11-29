@@ -66,7 +66,7 @@
   background-color: white;
 }
 
-.content svg {
+.editBtn svg {
   font-size: 2rem;
   color: #d0f0c0;
   cursor: pointer;
@@ -138,4 +138,33 @@
   width: 80%;
   margin: auto;
   padding: 1rem;
+}
+
+.worksamples {
+  padding: 8px;
+  width: 80%;
+  margin: auto;
+  border: 2px solid #883676;
+  margin-bottom: 1rem;
+  position: relative;
+  padding-bottom: 30px;
+}
+
+.worksampleItems {
+  display: flex;
+  justify-content: space-between;
+}
+
+.worksampleItems div {
+  background-color: rgba(255, 255, 255, 0.39);
+  padding: 1rem;
+  margin: 0.5rem;
+}
+
+.boxWorksamples {
+  flex-basis: 35%;
+}
+
+.prjWorksamples {
+  flex-basis: 65%;
 }

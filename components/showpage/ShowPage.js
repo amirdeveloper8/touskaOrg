@@ -8,6 +8,7 @@ import TeamSection from "../sections/TeamSection";
 import AccordionSection from "../sections/AccordionSection";
 import TableSection from "../sections/TableSection";
 import PortfolioSection from "../sections/PortfolioSection";
+import WorkSamplesSection from "../sections/updatemodules/WorkSamplesSection";
 
 const ShowPage = (props) => {
   console.log(props.secData);
@@ -52,6 +53,9 @@ const ShowPage = (props) => {
             )}
             {sec.type_id === 9 && (
               <PortfolioSection key={sec.section_content.id} details={sec} />
+            )}
+            {sec.type_id === 10 && (
+              <WorkSamplesSection key={sec.section_content.id} details={sec} />
             )}
           </section>
         ))}

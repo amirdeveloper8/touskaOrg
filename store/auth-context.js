@@ -39,6 +39,9 @@ const AuthContext = React.createContext({
   portfolioSection: false,
   portfolioSectionTrigger: () => {},
   closePortfolioSection: () => {},
+  sampleWorksSection: false,
+  sampleWorksSectionTrigger: () => {},
+  closesampleWorksSection: () => {},
   openSectionModal: () => {},
   closeSectionModal: () => {},
 });
@@ -78,6 +81,7 @@ export const AuthContextProvider = (props) => {
   const [accordionSection, setAccordionSection] = useState(false);
   const [tableSection, setTableSection] = useState(false);
   const [portfolioSection, setPortfolioSection] = useState(false);
+  const [sampleWorksSection, setSampleWorksSection] = useState(false);
 
   const simpleSectionTrigger = () => {
     setSimpleSection(true);
@@ -89,6 +93,8 @@ export const AuthContextProvider = (props) => {
     setPlansSection(false);
     setTeamsSection(false);
     setTableSection(false);
+    setPortfolioSection(false);
+    setSampleWorksSection(false);
   };
 
   const closeSimpleSection = () => {
@@ -105,6 +111,8 @@ export const AuthContextProvider = (props) => {
     setPlansSection(false);
     setTeamsSection(false);
     setTableSection(false);
+    setPortfolioSection(false);
+    setSampleWorksSection(false);
   };
 
   const closeSliderSection = () => {
@@ -121,6 +129,8 @@ export const AuthContextProvider = (props) => {
     setPlansSection(false);
     setTeamsSection(false);
     setTableSection(false);
+    setPortfolioSection(false);
+    setSampleWorksSection(false);
   };
 
   const closeServiceBoxesSection = () => {
@@ -137,6 +147,8 @@ export const AuthContextProvider = (props) => {
     setPlansSection(false);
     setTeamsSection(false);
     setTableSection(false);
+    setPortfolioSection(false);
+    setSampleWorksSection(false);
   };
 
   const closeSlideDownSection = () => {
@@ -153,6 +165,8 @@ export const AuthContextProvider = (props) => {
     setServiceBoxesSection(false);
     setTeamsSection(false);
     setTableSection(false);
+    setPortfolioSection(false);
+    setSampleWorksSection(false);
   };
 
   const closePlansSection = () => {
@@ -169,6 +183,8 @@ export const AuthContextProvider = (props) => {
     setServiceBoxesSection(false);
     setPlansSection(false);
     setTableSection(false);
+    setPortfolioSection(false);
+    setSampleWorksSection(false);
   };
 
   const closeTeamsSection = () => {
@@ -186,6 +202,8 @@ export const AuthContextProvider = (props) => {
     setServiceBoxesSection(false);
     setPlansSection(false);
     setTableSection(false);
+    setPortfolioSection(false);
+    setSampleWorksSection(false);
   };
 
   const closeAccordionSection = () => {
@@ -203,6 +221,8 @@ export const AuthContextProvider = (props) => {
     setSliderSection(false);
     setServiceBoxesSection(false);
     setPlansSection(false);
+    setPortfolioSection(false);
+    setSampleWorksSection(false);
   };
 
   const closeTableSection = () => {
@@ -221,10 +241,30 @@ export const AuthContextProvider = (props) => {
     setSliderSection(false);
     setServiceBoxesSection(false);
     setPlansSection(false);
+    setSampleWorksSection(false);
   };
 
   const closePortfolioSection = () => {
     setPortfolioSection(false);
+  };
+
+  const sampleWorksSectionTrigger = () => {
+    setSampleWorksSection(true);
+    setPortfolioSection(false);
+    setTableSection(false);
+    setAccordionSection(false);
+    setTeamsSection(false);
+    setSimpleSection(false);
+    setSlideDownSection(false);
+    setSectionModal(false);
+    setShowPage(false);
+    setSliderSection(false);
+    setServiceBoxesSection(false);
+    setPlansSection(false);
+  };
+
+  const closesampleWorksSection = () => {
+    setSampleWorksSection(false);
   };
 
   const showPageHandler = () => {
@@ -278,6 +318,9 @@ export const AuthContextProvider = (props) => {
     portfolioSection,
     portfolioSectionTrigger,
     closePortfolioSection,
+    sampleWorksSection,
+    sampleWorksSectionTrigger,
+    closesampleWorksSection,
     openSectionModal,
     closeSectionModal,
   };

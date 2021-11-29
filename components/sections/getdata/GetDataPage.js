@@ -33,6 +33,8 @@ import UpdateTable from "./table/UpdateTable";
 import AddTable from "../addnew/table/AddTable";
 import UpdatePortfolio from "../updatemodules/UpdatePortfolio";
 import AddPortfolio from "../addnew/potfolio/AddAll";
+import UpdateWorkSamples from "../updatemodules/UpdateWorkSamples";
+import AddSampleWorks from "../addnew/sampleworks/addSampleWorks";
 
 const GetDataPage = (props) => {
   const [updateOne, setUpdateOne] = useState(false);
@@ -85,6 +87,7 @@ const GetDataPage = (props) => {
 
             {sec.type_id !== 6 &&
               sec.type_id !== 8 &&
+              sec.type_id !== 10 &&
               sec.section_content.map((item, index) => (
                 <div ref={closeBtnRef} key={index} className={classes.content}>
                   <div
@@ -172,6 +175,7 @@ const GetDataPage = (props) => {
                 </div>
               ))}
             {sec.type_id === 6 &&
+              sec.type_id !== 10 &&
               sec.section_content.map((item, index) => (
                 <div ref={closeBtnRef} key={index} className={classes.content}>
                   <div
@@ -271,6 +275,46 @@ const GetDataPage = (props) => {
                 </Tab.Container>
               </section>
             )}
+            {sec.type_id === 10 &&
+              sec.type_id !== 6 &&
+              sec.section_content.map((item, index) => (
+                <section key={index} className={classes.worksamples}>
+                  <div className={`details ${classes.worksampleItems}`}>
+                    <div className={classes.boxWorksamples}>
+                      <h3>Box Items:</h3>
+                      <h4>title : {item.title_box}</h4>
+                      <img src={item.image_box_url} />
+                    </div>
+                    <div className={classes.prjWorksamples}>
+                      <h3>Project Items:</h3>
+                      <h4>title: {item.title_project}</h4>
+                      <h5>name: {item.name_project}</h5>
+                      <p>
+                        url: <a href={item.url_project}>{item.url_project}</a>
+                      </p>
+                      <p>button name: {item.buttons.name}</p>
+                      <img src={item.image_project_url} />
+                    </div>
+                  </div>
+
+                  <div className="updateForm">
+                    {updateOne && (
+                      <UpdateWorkSamples updateData={item} sec={sec} />
+                    )}
+                    <CloseButton
+                      className={classes.closeBtn}
+                      onClick={noUpdateHandler}
+                    />
+                  </div>
+                  <div className={classes.editBtn}>
+                    <BiEdit />
+                  </div>
+                  <div
+                    className={classes.fakeBtn}
+                    onClick={updateSectionHandler}
+                  ></div>
+                </section>
+              ))}
             <div className="addnewcol">
               <div className="addForm">
                 {sec.type_id === 5 && addNew && (
@@ -284,6 +328,9 @@ const GetDataPage = (props) => {
                 )}
                 {sec.type_id === 9 && addNew && (
                   <AddPortfolio secId={sec.id} typeId={sec.type_id} />
+                )}
+                {sec.type_id === 10 && addNew && (
+                  <AddSampleWorks secId={sec.id} typeId={sec.type_id} />
                 )}
 
                 {(sec.type_id === 2 ||

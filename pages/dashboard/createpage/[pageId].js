@@ -18,6 +18,7 @@ import TablesForm from "../../../components/sections/create/table/TablesForm";
 import CreateTable from "../../../components/sections/create/table/CreateTable";
 import { Markup } from "interweave";
 import CreatePortfolio from "../../../components/sections/create/Portfolio/CreatePortfolio";
+import SampleWorks from "../../../components/sections/create/sample-works/SampleWorks";
 
 const CreatePage = (props) => {
   const authCtx = useContext(AuthContext);
@@ -30,6 +31,7 @@ const CreatePage = (props) => {
   const accordionSec = authCtx.accordionSection;
   const tableSec = authCtx.tableSection;
   const portfolioSec = authCtx.portfolioSection;
+  const sampleWorksSec = authCtx.sampleWorksSection;
   const modalSec = authCtx.sectionModal;
   const showPage = authCtx.showPage;
 
@@ -76,6 +78,7 @@ const CreatePage = (props) => {
       {accordionSec && <CreateAccordion pageId={pageId} />}
       {tableSec && <CreateTable pageId={pageId} />}
       {portfolioSec && <CreatePortfolio pageId={pageId} />}
+      {sampleWorksSec && <SampleWorks pageId={pageId} />}
     </section>
   );
 };

@@ -43,6 +43,10 @@ const SectionModule = () => {
     authCtx.portfolioSectionTrigger();
   };
 
+  const sampleWorksHandler = () => {
+    authCtx.sampleWorksSectionTrigger();
+  };
+
   const closeHandler = () => {
     authCtx.closeSectionModal();
   };
@@ -93,6 +97,23 @@ const SectionModule = () => {
           <Col className="p-1 text-center">
             <Button onClick={accordionHandler} className="px-2">
               Accordion
+            </Button>
+          </Col>
+          <Col className="p-1 text-center">
+            <Button onClick={tableHandler} className="px-2">
+              Table
+            </Button>
+          </Col>
+          <Col className="p-1 text-center">
+            <Button onClick={portfolioHandler} className="px-2">
+              Portfolio
+            </Button>
+          </Col>
+        </Row>
+        <Row className={classes.row}>
+          <Col className="p-1 text-center">
+            <Button onClick={sampleWorksHandler} className="px-2">
+              Sample Works
             </Button>
           </Col>
           <Col className="p-1 text-center">
