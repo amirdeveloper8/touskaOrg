@@ -2,6 +2,7 @@
   width: 80%;
   margin: auto;
   padding: 2rem 0;
+  position: relative;
 }
 
 .worksamples h1 {
@@ -30,7 +31,7 @@
 }
 
 .box h5 {
-  z-index: 9999;
+  z-index: 99;
   background-color: darkgreen;
   color: white;
   font-size: 16px;
@@ -59,4 +60,67 @@
   top: 0;
   height: 0;
   transition: 0.3s ease-in;
+}
+
+.projects {
+  display: flex;
+  justify-content: space-between;
+  direction: rtl;
+  width: 100%;
+}
+
+.projects .prjDetails {
+  width: 60%;
+}
+
+.prjDetails button {
+  background-color: #213d3a;
+  border-color: #213d3a;
+  min-width: 120px;
+  transition: 0.2s ease-in;
+}
+
+.prjDetails button:hover {
+  background-color: #609a96;
+  border-color: #609a96;
+}
+
+.prjDetails a {
+  color: #f2f2f2;
+  text-decoration: none;
+  transition: 0.2s ease-in;
+}
+
+.prjDetails button:hover a {
+  color: #213d3a;
+}
+
+.projects .prjImg {
+  width: 30%;
+  text-align: center;
+}
+
+.projects .prjImg img {
+  width: 100%;
+}
+
+.projects .divider {
+  background: rgb(33, 61, 58);
+  background: linear-gradient(
+    90deg,
+    rgba(33, 61, 58, 1) 0%,
+    rgba(101, 158, 153, 1) 58%,
+    rgba(242, 242, 242, 1) 100%
+  );
+  transform: scaleX(-1);
+
+  width: 80%;
+  height: 2px;
+  direction: ltr;
+}
+
+.close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
 }

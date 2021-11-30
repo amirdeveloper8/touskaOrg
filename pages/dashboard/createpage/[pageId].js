@@ -19,6 +19,7 @@ import CreateTable from "../../../components/sections/create/table/CreateTable";
 import { Markup } from "interweave";
 import CreatePortfolio from "../../../components/sections/create/Portfolio/CreatePortfolio";
 import SampleWorks from "../../../components/sections/create/sample-works/SampleWorks";
+import CreateContactForm from "../../../components/sections/create/contact-form/CreateContactForm";
 
 const CreatePage = (props) => {
   const authCtx = useContext(AuthContext);
@@ -79,6 +80,7 @@ const CreatePage = (props) => {
       {tableSec && <CreateTable pageId={pageId} />}
       {portfolioSec && <CreatePortfolio pageId={pageId} />}
       {sampleWorksSec && <SampleWorks pageId={pageId} />}
+      <CreateContactForm pageId={pageId} />
     </section>
   );
 };

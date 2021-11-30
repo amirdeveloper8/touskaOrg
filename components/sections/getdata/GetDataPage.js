@@ -88,6 +88,7 @@ const GetDataPage = (props) => {
             {sec.type_id !== 6 &&
               sec.type_id !== 8 &&
               sec.type_id !== 10 &&
+              sec.type_id !== 11 &&
               sec.section_content.map((item, index) => (
                 <div ref={closeBtnRef} key={index} className={classes.content}>
                   <div
@@ -315,6 +316,7 @@ const GetDataPage = (props) => {
                   ></div>
                 </section>
               ))}
+            {sec.type_id === 11 && <h3>create contact form</h3>}
             <div className="addnewcol">
               <div className="addForm">
                 {sec.type_id === 5 && addNew && (
