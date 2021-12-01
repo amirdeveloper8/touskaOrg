@@ -33,6 +33,7 @@ const CreatePage = (props) => {
   const tableSec = authCtx.tableSection;
   const portfolioSec = authCtx.portfolioSection;
   const sampleWorksSec = authCtx.sampleWorksSection;
+  const contactFormsSec = authCtx.contactFormsSection;
   const modalSec = authCtx.sectionModal;
   const showPage = authCtx.showPage;
 
@@ -80,7 +81,7 @@ const CreatePage = (props) => {
       {tableSec && <CreateTable pageId={pageId} />}
       {portfolioSec && <CreatePortfolio pageId={pageId} />}
       {sampleWorksSec && <SampleWorks pageId={pageId} />}
-      <CreateContactForm pageId={pageId} />
+      {contactFormsSec && <CreateContactForm pageId={pageId} />}
     </section>
   );
 };

@@ -42,6 +42,11 @@ const CreateContactForm = (props) => {
   const [slideCount, setSlideCount] = useState(0);
   const [titles, setTitles] = useState([]);
   const [ids, setIds] = useState([]);
+  const [gpNames, setGpNames] = useState([]);
+  const [labels, setLabels] = useState([]);
+  const [placeholders, setPlaceholders] = useState([]);
+  const [optionvals, setOptionvals] = useState([]);
+  const [valid, setValid] = useState([]);
 
   let sliders = [];
 
@@ -70,6 +75,26 @@ const CreateContactForm = (props) => {
     setIds([...ids, id]);
   };
 
+  const getGpNames = (gp) => {
+    setGpNames([...gpNames, gp]);
+  };
+
+  const getOptionvals = (opt) => {
+    setOptionvals([...optionvals, opt]);
+  };
+
+  const getValid = (val) => {
+    setValid([...valid, val]);
+  };
+
+  const getPlaceholders = (plc) => {
+    setPlaceholders([...placeholders, plc]);
+  };
+
+  const getLabels = (lbl) => {
+    setLabels([...labels, lbl]);
+  };
+
   const getInputsHandler = async () => {
     const dataInput = await getData("get/typeTable/contactForm");
     setInputs(dataInput.page);
@@ -93,6 +118,16 @@ const CreateContactForm = (props) => {
         slideNumber={i + 1}
         key={i}
         inputs={inputs}
+        getGpNames={getGpNames}
+        gpNames={gpNames}
+        getOptionvals={getOptionvals}
+        optionvals={optionvals}
+        getPlaceholders={getPlaceholders}
+        placeholders={placeholders}
+        getLabels={getLabels}
+        labels={labels}
+        getValid={getValid}
+        valid={valid}
       />
     );
   }
@@ -111,6 +146,10 @@ const CreateContactForm = (props) => {
     for (var i = 0; i < slideCount; i++) {
       console.log(`input_name_${i + 1}`, titles[i]);
       console.log(`input_type_id_${i + 1}`, ids[i]);
+      console.log(`input_placeholders_${i + 1}`, placeholders[i]);
+      console.log(`input_labels_${i + 1}`, labels[i]);
+      console.log(`input_potions_${i + 1}`, JSON.stringify(optionvals[i]));
+      console.log(`input_valid_${i + 1}`, valid[i]);
     }
 
     const fData = new FormData();
@@ -125,6 +164,10 @@ const CreateContactForm = (props) => {
     for (var i = 0; i < slideCount; i++) {
       fData.append(`input_name_${i + 1}`, titles[i]);
       fData.append(`input_type_id_${i + 1}`, ids[i]);
+      fData.append(`input_placeholder_${i + 1}`, placeholders[i]);
+      fData.append(`input_label_${i + 1}`, labels[i]);
+      fData.append(`input_options_${i + 1}`, JSON.stringify(optionvals[i]));
+      fData.append(`input_valid_${i + 1}`, valid[i]);
     }
 
     const connectDB = ConnectToDB("create/section/contactForm");
@@ -146,12 +189,12 @@ const CreateContactForm = (props) => {
           setNotification(res.data.status);
           setTimeout(() => {
             authCtx.showPageHandler();
-            authCtx.closeSliderSection();
+            authCtx.closeContactFormsSection();
           }, 3000);
         }
       })
       .catch((err) => {
-        console.log("Error", err);
+        console.log("Error", err.response.data);
       });
 
     console.log(fData);

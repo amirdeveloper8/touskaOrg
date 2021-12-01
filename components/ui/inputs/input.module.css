@@ -1,5 +1,5 @@
 .auth {
-  margin: 1rem auto;
+  margin: auto;
   width: 95%;
   max-width: 25rem;
   border-radius: 6px;
@@ -462,54 +462,4 @@
   text-align: left;
   color: white;
   text-shadow: 1px 1px 3px rgb(25, 44, 31);
-}
-
-.formGroup {
-  position: relative;
-}
-
-.closeGroup {
-  position: absolute;
-  right: 15px;
-  bottom: 5px;
-  background-color: red;
-}
-
-.optionInput {
-  background-color: rgba(255, 255, 255, 0.363);
-  padding: 1rem;
-  margin: 1rem auto;
-  width: 90%;
-}
-
-.optionInput svg {
-  margin: 0.3rem 0;
-  cursor: pointer;
-  font-size: 1.5rem;
-  z-index: 99;
-}
-
-.delOption {
-  float: left;
-  color: red;
-}
-.delOption:hover {
-  color: rgb(255, 16, 16);
-}
-.addOption {
-  float: right;
-  color: green;
-}
-.addOption:hover {
-  color: rgb(22, 151, 22);
-}
-
-.formCheck {
-  direction: rtl;
-}
-
-.formCheck input {
-  width: 15px !important;
-  height: 15px;
-  border-radius: 50px;
 }

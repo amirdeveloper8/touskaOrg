@@ -9,8 +9,8 @@ const PortfolioSection = (props) => {
     <section className={classes.portfolio}>
       <h2>{title}</h2>
       <div className={classes.portfolioBoxes}>
-        {data.map((item) => (
-          <div className={classes.portfolioBox}>
+        {data.map((item, index) => (
+          <div key={index} className={classes.portfolioBox}>
             <h3>{item.title.content}</h3>
             <img src={item.image} />
             <Button>

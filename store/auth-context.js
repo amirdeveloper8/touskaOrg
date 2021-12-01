@@ -42,6 +42,9 @@ const AuthContext = React.createContext({
   sampleWorksSection: false,
   sampleWorksSectionTrigger: () => {},
   closesampleWorksSection: () => {},
+  contactFormsSection: false,
+  contactFormsSectionTrigger: () => {},
+  closeContactFormsSection: () => {},
   openSectionModal: () => {},
   closeSectionModal: () => {},
 });
@@ -82,6 +85,7 @@ export const AuthContextProvider = (props) => {
   const [tableSection, setTableSection] = useState(false);
   const [portfolioSection, setPortfolioSection] = useState(false);
   const [sampleWorksSection, setSampleWorksSection] = useState(false);
+  const [contactFormsSection, setContactFormsSection] = useState(false);
 
   const simpleSectionTrigger = () => {
     setSimpleSection(true);
@@ -95,6 +99,7 @@ export const AuthContextProvider = (props) => {
     setTableSection(false);
     setPortfolioSection(false);
     setSampleWorksSection(false);
+    setContactFormsSection(false);
   };
 
   const closeSimpleSection = () => {
@@ -113,6 +118,7 @@ export const AuthContextProvider = (props) => {
     setTableSection(false);
     setPortfolioSection(false);
     setSampleWorksSection(false);
+    setContactFormsSection(false);
   };
 
   const closeSliderSection = () => {
@@ -131,6 +137,7 @@ export const AuthContextProvider = (props) => {
     setTableSection(false);
     setPortfolioSection(false);
     setSampleWorksSection(false);
+    setContactFormsSection(false);
   };
 
   const closeServiceBoxesSection = () => {
@@ -149,6 +156,7 @@ export const AuthContextProvider = (props) => {
     setTableSection(false);
     setPortfolioSection(false);
     setSampleWorksSection(false);
+    setContactFormsSection(false);
   };
 
   const closeSlideDownSection = () => {
@@ -167,6 +175,7 @@ export const AuthContextProvider = (props) => {
     setTableSection(false);
     setPortfolioSection(false);
     setSampleWorksSection(false);
+    setContactFormsSection(false);
   };
 
   const closePlansSection = () => {
@@ -185,6 +194,7 @@ export const AuthContextProvider = (props) => {
     setTableSection(false);
     setPortfolioSection(false);
     setSampleWorksSection(false);
+    setContactFormsSection(false);
   };
 
   const closeTeamsSection = () => {
@@ -204,6 +214,7 @@ export const AuthContextProvider = (props) => {
     setTableSection(false);
     setPortfolioSection(false);
     setSampleWorksSection(false);
+    setContactFormsSection(false);
   };
 
   const closeAccordionSection = () => {
@@ -223,6 +234,7 @@ export const AuthContextProvider = (props) => {
     setPlansSection(false);
     setPortfolioSection(false);
     setSampleWorksSection(false);
+    setContactFormsSection(false);
   };
 
   const closeTableSection = () => {
@@ -242,6 +254,7 @@ export const AuthContextProvider = (props) => {
     setServiceBoxesSection(false);
     setPlansSection(false);
     setSampleWorksSection(false);
+    setContactFormsSection(false);
   };
 
   const closePortfolioSection = () => {
@@ -261,10 +274,31 @@ export const AuthContextProvider = (props) => {
     setSliderSection(false);
     setServiceBoxesSection(false);
     setPlansSection(false);
+    setContactFormsSection(false);
   };
 
   const closesampleWorksSection = () => {
     setSampleWorksSection(false);
+  };
+
+  const contactFormsSectionTrigger = () => {
+    setContactFormsSection(true);
+    setSampleWorksSection(false);
+    setPortfolioSection(false);
+    setTableSection(false);
+    setAccordionSection(false);
+    setTeamsSection(false);
+    setSimpleSection(false);
+    setSlideDownSection(false);
+    setSectionModal(false);
+    setShowPage(false);
+    setSliderSection(false);
+    setServiceBoxesSection(false);
+    setPlansSection(false);
+  };
+
+  const closeContactFormsSection = () => {
+    setContactFormsSection(false);
   };
 
   const showPageHandler = () => {
@@ -321,6 +355,9 @@ export const AuthContextProvider = (props) => {
     sampleWorksSection,
     sampleWorksSectionTrigger,
     closesampleWorksSection,
+    contactFormsSection,
+    contactFormsSectionTrigger,
+    closeContactFormsSection,
     openSectionModal,
     closeSectionModal,
   };

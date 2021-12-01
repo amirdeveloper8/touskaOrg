@@ -47,6 +47,10 @@ const SectionModule = () => {
     authCtx.sampleWorksSectionTrigger();
   };
 
+  const contactFormsHandler = () => {
+    authCtx.contactFormsSectionTrigger();
+  };
+
   const closeHandler = () => {
     authCtx.closeSectionModal();
   };
@@ -117,8 +121,8 @@ const SectionModule = () => {
             </Button>
           </Col>
           <Col className="p-1 text-center">
-            <Button onClick={tableHandler} className="px-2">
-              Table
+            <Button onClick={contactFormsHandler} className="px-2">
+              Contact Form
             </Button>
           </Col>
           <Col className="p-1 text-center">
