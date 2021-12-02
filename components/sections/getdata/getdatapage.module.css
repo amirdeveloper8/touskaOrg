@@ -168,3 +168,18 @@
 .prjWorksamples {
   flex-basis: 65%;
 }
+
+.contactforms {
+  position: relative;
+  width: 80%;
+  margin: 1rem auto;
+  border: 2px solid #883676;
+  padding: 1rem;
+}
+
+.contactformItems h3 {
+  background-color: rgba(0, 100, 0, 0.425);
+  padding: 1rem;
+  width: 80%;
+  margin: 0 auto 1rem;
+}

@@ -35,6 +35,9 @@ import UpdatePortfolio from "../updatemodules/UpdatePortfolio";
 import AddPortfolio from "../addnew/potfolio/AddAll";
 import UpdateWorkSamples from "../updatemodules/UpdateWorkSamples";
 import AddSampleWorks from "../addnew/sampleworks/addSampleWorks";
+import UpdateContactForm from "../updatemodules/contact-form/UpdateContactForm";
+import AddInputForms from "../addnew/contact-form/AddInputForms";
+import UpdateHeadContactForm from "../updatemodules/contact-form/UpdateHeadContactForm";
 
 const GetDataPage = (props) => {
   const [updateOne, setUpdateOne] = useState(false);
@@ -83,7 +86,10 @@ const GetDataPage = (props) => {
         {sections.map((sec) => (
           <div key={sec.id} className={classes.section}>
             <h2>type:{sec.type.name}</h2>
-            <UpdateTable data={sec.title} tableId={sec.id} />
+            {sec.type_id !== 11 && (
+              <UpdateTable data={sec.title} tableId={sec.id} />
+            )}
+            {sec.type_id === 11 && <UpdateHeadContactForm data={sec} />}
 
             {sec.type_id !== 6 &&
               sec.type_id !== 8 &&
@@ -316,7 +322,44 @@ const GetDataPage = (props) => {
                   ></div>
                 </section>
               ))}
-            {sec.type_id === 11 && <h3>create contact form</h3>}
+            {sec.type_id === 11 &&
+              sec.section_content.map((item, index) => (
+                <section key={index} className={classes.contactforms}>
+                  <div className={`details ${classes.contactformItems}`}>
+                    <h3>type: {item.type_namee}</h3>
+                    <h5>Name: {item.name}</h5>
+                    <p>label: {item.label}</p>
+                    <p>placeholder: {item.placeholder}</p>
+                    {JSON.parse(item.options).length !== 0 && (
+                      <ul>
+                        options:
+                        {JSON.parse(item.options).map((option, index) => (
+                          <li key={index}>{option}</li>
+                        ))}
+                        {/* {item.options} */}
+                      </ul>
+                    )}
+                    <p>valid: {item.valid ? item.valid : "false"}</p>
+                  </div>
+
+                  <div className="updateForm">
+                    {updateOne && (
+                      <UpdateContactForm updateData={item} sec={sec} />
+                    )}
+                    <CloseButton
+                      className={classes.closeBtn}
+                      onClick={noUpdateHandler}
+                    />
+                  </div>
+                  <div className={classes.editBtn}>
+                    <BiEdit />
+                  </div>
+                  <div
+                    className={classes.fakeBtn}
+                    onClick={updateSectionHandler}
+                  ></div>
+                </section>
+              ))}
             <div className="addnewcol">
               <div className="addForm">
                 {sec.type_id === 5 && addNew && (
@@ -333,6 +376,9 @@ const GetDataPage = (props) => {
                 )}
                 {sec.type_id === 10 && addNew && (
                   <AddSampleWorks secId={sec.id} typeId={sec.type_id} />
+                )}
+                {sec.type_id === 11 && addNew && (
+                  <AddInputForms secId={sec.id} typeId={sec.type_id} />
                 )}
 
                 {(sec.type_id === 2 ||
