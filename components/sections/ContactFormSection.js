@@ -1,7 +1,9 @@
+import { useEffect, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import BaseInput from "../ui/inputs/BaseInput";
 import FileInput from "../ui/inputs/FileInput";
 import RadioInput from "../ui/inputs/RadioInput";
+import SelectInput from "../ui/inputs/SelectInput";
 import classes from "./contactform.module.css";
 
 const ContactFormSection = (props) => {
@@ -9,48 +11,74 @@ const ContactFormSection = (props) => {
   const imgSrc = props.details.photo_url;
   const title = props.details.title;
 
+  let value = [];
+
+  for (let i = 0; i < data.length; i++) {
+    value[i] = [data[i].name, ""];
+  }
+
+  const getValue = (number, name) => {
+    value[number] = [data[number].name, name];
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log(value);
+  };
+
   return (
     <section className={classes.contactForm}>
       <h2 className={classes.title}>{title}</h2>
       <div className={classes.details}>
-        <Form>
+        <Form onSubmit={submitHandler}>
           {data.map((item, index) => (
             <Row key={index}>
               {(item.type_namee === "text" ||
                 item.type_namee === "number" ||
                 item.type_namee === "email" ||
                 item.type_namee === "textarea" ||
+                item.type_namee === "colorpicker" ||
                 item.type_namee === "password") && (
                 <BaseInput
-                  type={item.type_namee}
-                  name={item.name}
+                  data={item}
                   id={`${props.details.id}_${index}`}
+                  number={index + 1}
+                  getValue={getValue}
+                  value={value}
                 />
               )}
               {item.type_namee === "file" && (
                 <FileInput
                   id={`${props.details.id}_${index}`}
                   name={item.name}
+                  getValue={getValue}
+                  number={index + 1}
                 />
+              )}
+              {(item.type_namee === "radioButton" ||
+                item.type_namee === "checkbox") && (
+                <RadioInput
+                  id={`${props.details.id}_${index}`}
+                  data={item}
+                  getValue={getValue}
+                  number={index + 1}
+                />
+              )}
+              {item.type_namee === "select" && (
+                <SelectInput
+                  id={`${props.details.id}_${index}`}
+                  data={item}
+                  getValue={getValue}
+                  number={index + 1}
+                />
+              )}
+              {item.type_namee === "submit" && (
+                <button type="submit" key={index}>
+                  {item.name}
+                </button>
               )}
             </Row>
           ))}
-          <fieldset>
-            <Form.Group as={Row} className="mb-3">
-              <Form.Label as="legend" column sm={12}>
-                Radios
-              </Form.Label>
-              {data
-                .filter((items) => items.groupname !== "0")
-                .map((item, index) => (
-                  <div>
-                    {item.groupname === item.groupname && (
-                      <RadioInput name={item.name} number={index + 1} />
-                    )}
-                  </div>
-                ))}
-            </Form.Group>
-          </fieldset>
         </Form>
         <div className={classes.imageC}>
           <img src={imgSrc} />

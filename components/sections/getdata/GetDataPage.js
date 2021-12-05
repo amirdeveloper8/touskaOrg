@@ -38,6 +38,7 @@ import AddSampleWorks from "../addnew/sampleworks/addSampleWorks";
 import UpdateContactForm from "../updatemodules/contact-form/UpdateContactForm";
 import AddInputForms from "../addnew/contact-form/AddInputForms";
 import UpdateHeadContactForm from "../updatemodules/contact-form/UpdateHeadContactForm";
+import UpdateBanner from "../updatemodules/UpdateBanner";
 
 const GetDataPage = (props) => {
   const [updateOne, setUpdateOne] = useState(false);
@@ -119,13 +120,18 @@ const GetDataPage = (props) => {
                       {/* <h4>{item.title.subtitle}</h4> */}
                       <p>
                         {sec.type_id !== 5 &&
+                          sec.type_id !== 1 &&
                           sec.type_id !== 7 &&
                           sec.type_id !== 9 &&
+                          sec.type_id !== 12 &&
                           item.texts.content}
                         {sec.type_id === 5 && item.title.subtitle}
                       </p>
-                      {sec.type_id === 7 && (
+                      {(sec.type_id === 7 || sec.type_id === 1) && (
                         <ListAccordion items={item.texts.content} />
+                      )}
+                      {sec.type_id === 12 && (
+                        <ListAccordion items={item.subtitle} />
                       )}
                       {sec.type_id === 5 && (
                         <ul>
@@ -150,7 +156,11 @@ const GetDataPage = (props) => {
                   </div>
                   <div className="updateForm">
                     {sec.type_id === 1 && updateOne && (
-                      <UpdateSimple updateData={item} sec={sec} />
+                      <UpdateSimple
+                        richTxt={item.texts.content}
+                        updateData={item}
+                        sec={sec}
+                      />
                     )}
                     {sec.type_id === 5 && updateOne && (
                       <UpdatePlans updateData={item} sec={sec} />
@@ -165,10 +175,18 @@ const GetDataPage = (props) => {
                     {sec.type_id === 9 && updateOne && (
                       <UpdatePortfolio updateData={item} sec={sec} />
                     )}
+                    {sec.type_id === 12 && updateOne && (
+                      <UpdateBanner
+                        richTxt={item.subtitle}
+                        updateData={item}
+                        sec={sec}
+                      />
+                    )}
                     {sec.type_id !== 1 &&
                       sec.type_id !== 5 &&
                       sec.type_id !== 7 &&
                       sec.type_id !== 9 &&
+                      sec.type_id !== 12 &&
                       updateOne && <UpdateAll updateData={item} sec={sec} />}
 
                     <CloseButton
@@ -182,7 +200,6 @@ const GetDataPage = (props) => {
                 </div>
               ))}
             {sec.type_id === 6 &&
-              sec.type_id !== 10 &&
               sec.section_content.map((item, index) => (
                 <div ref={closeBtnRef} key={index} className={classes.content}>
                   <div
@@ -283,7 +300,6 @@ const GetDataPage = (props) => {
               </section>
             )}
             {sec.type_id === 10 &&
-              sec.type_id !== 6 &&
               sec.section_content.map((item, index) => (
                 <section key={index} className={classes.worksamples}>
                   <div className={`details ${classes.worksampleItems}`}>

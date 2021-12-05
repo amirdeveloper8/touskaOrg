@@ -10,6 +10,8 @@ import TableSection from "../sections/TableSection";
 import PortfolioSection from "../sections/PortfolioSection";
 import WorkSamplesSection from "../sections/WorkSamplesSection";
 import ContactFormSection from "../sections/ContactFormSection";
+import MapSec from "../google-map/MapSec";
+import BannerSection from "../sections/BannerSection";
 
 const ShowPage = (props) => {
   console.log(props.secData);
@@ -29,7 +31,10 @@ const ShowPage = (props) => {
             className={index % 2 ? classes.whiteSec : classes.greenSec}
           >
             {sec.type_id === 1 && (
-              <SimpleSection details={sec.section_content} />
+              <SimpleSection
+                key={sec.section_content.id}
+                details={sec.section_content}
+              />
             )}
             {sec.type_id === 2 && (
               <SliderSection key={sec.section_content.id} details={sec} />
@@ -60,6 +65,12 @@ const ShowPage = (props) => {
             )}
             {sec.type_id === 11 && (
               <ContactFormSection key={sec.section_content.id} details={sec} />
+            )}
+            {sec.type_id === 12 && (
+              <BannerSection
+                key={sec.section_content.id}
+                details={sec.section_content}
+              />
             )}
           </section>
         ))}

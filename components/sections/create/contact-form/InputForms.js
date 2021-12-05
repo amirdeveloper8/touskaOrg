@@ -274,10 +274,11 @@ const InputForms = (props) => {
             controlId={`formBasicCheckbox${props.slideNumber}`}
           >
             <Form.Check
+              className={classes.checkContact}
               onChange={checkHandler}
               value={checkVal}
               type="checkbox"
-              label="Check me out"
+              label="Required ?"
             />
           </Form.Group>
           {checkVal && (

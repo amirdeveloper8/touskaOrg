@@ -1,0 +1,19 @@
+.banner {
+  position: relative;
+  direction: rtl;
+  width: 100%;
+}
+
+.banner img {
+  width: 100%;
+}
+
+.details {
+  position: absolute;
+  width: 100%;
+  bottom: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

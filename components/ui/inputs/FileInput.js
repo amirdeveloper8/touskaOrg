@@ -15,6 +15,7 @@ const FileInput = (props) => {
         id="image"
         type="file"
         onChange={(e) => handleChange(e.target.files)}
+        onBlur={() => props.getValue(+props.number - 1, selectedFile)}
         size="sm"
       />
     </Form.Group>

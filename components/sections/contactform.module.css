@@ -29,3 +29,9 @@
 .imageC img {
   width: 100%;
 }
+
+.details button {
+  margin: auto;
+  margin-top: 1rem;
+  max-width: 150px;
+}

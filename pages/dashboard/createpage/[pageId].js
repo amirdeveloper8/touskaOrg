@@ -20,6 +20,7 @@ import { Markup } from "interweave";
 import CreatePortfolio from "../../../components/sections/create/Portfolio/CreatePortfolio";
 import SampleWorks from "../../../components/sections/create/sample-works/SampleWorks";
 import CreateContactForm from "../../../components/sections/create/contact-form/CreateContactForm";
+import CreateBanner from "../../../components/sections/create/banner/CreateBanner";
 
 const CreatePage = (props) => {
   const authCtx = useContext(AuthContext);
@@ -34,6 +35,7 @@ const CreatePage = (props) => {
   const portfolioSec = authCtx.portfolioSection;
   const sampleWorksSec = authCtx.sampleWorksSection;
   const contactFormsSec = authCtx.contactFormsSection;
+  const bannerSec = authCtx.bannerSection;
   const modalSec = authCtx.sectionModal;
   const showPage = authCtx.showPage;
 
@@ -82,6 +84,7 @@ const CreatePage = (props) => {
       {portfolioSec && <CreatePortfolio pageId={pageId} />}
       {sampleWorksSec && <SampleWorks pageId={pageId} />}
       {contactFormsSec && <CreateContactForm pageId={pageId} />}
+      {bannerSec && <CreateBanner pageId={pageId} />}
     </section>
   );
 };

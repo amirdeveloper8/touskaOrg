@@ -12,7 +12,7 @@ import NewRich from "../../richtexteditor/NewRich";
 
 const isText = (value) => value.trim().length > 0;
 
-const UpdateSimple = (props) => {
+const UpdateBanner = (props) => {
   const [dataError, setdataError] = useState();
   const [notification, setNotification] = useState();
   const [selectedFile, setSelectedFile] = useState(null);
@@ -90,7 +90,7 @@ const UpdateSimple = (props) => {
     event.preventDefault();
     setNotification("pending");
 
-    const connectDB = ConnectToDB("create/section/simple");
+    const connectDB = ConnectToDB("update/section/banner");
 
     const headers = {
       Authorization: `Bearer ${login_token}`,
@@ -100,14 +100,12 @@ const UpdateSimple = (props) => {
 
     console.log(titleValue, textValue, selectedFile);
 
-    fData.append("page_id", pageId);
-    fData.append("type_id", 1);
     fData.append("section_id", sectionId);
     {
       titleValue && fData.append("title", titleValue);
     }
     {
-      textValue && fData.append("text", JSON.stringify(textValue));
+      textValue && fData.append("subtitle", JSON.stringify(textValue));
     }
     {
       selectedFile && fData.append("image", selectedFile);
@@ -273,4 +271,4 @@ const UpdateSimple = (props) => {
   );
 };
 
-export default UpdateSimple;
+export default UpdateBanner;

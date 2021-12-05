@@ -51,6 +51,10 @@ const SectionModule = () => {
     authCtx.contactFormsSectionTrigger();
   };
 
+  const bannerHandler = () => {
+    authCtx.bannerSectionTrigger();
+  };
+
   const closeHandler = () => {
     authCtx.closeSectionModal();
   };
@@ -126,8 +130,8 @@ const SectionModule = () => {
             </Button>
           </Col>
           <Col className="p-1 text-center">
-            <Button onClick={portfolioHandler} className="px-2">
-              Portfolio
+            <Button onClick={bannerHandler} className="px-2">
+              Banner
             </Button>
           </Col>
         </Row>

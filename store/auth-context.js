@@ -45,6 +45,9 @@ const AuthContext = React.createContext({
   contactFormsSection: false,
   contactFormsSectionTrigger: () => {},
   closeContactFormsSection: () => {},
+  bannerSection: false,
+  bannerSectionTrigger: () => {},
+  closeBannerSection: () => {},
   openSectionModal: () => {},
   closeSectionModal: () => {},
 });
@@ -86,6 +89,7 @@ export const AuthContextProvider = (props) => {
   const [portfolioSection, setPortfolioSection] = useState(false);
   const [sampleWorksSection, setSampleWorksSection] = useState(false);
   const [contactFormsSection, setContactFormsSection] = useState(false);
+  const [bannerSection, setBannerSection] = useState(false);
 
   const simpleSectionTrigger = () => {
     setSimpleSection(true);
@@ -100,6 +104,7 @@ export const AuthContextProvider = (props) => {
     setPortfolioSection(false);
     setSampleWorksSection(false);
     setContactFormsSection(false);
+    setBannerSection(false);
   };
 
   const closeSimpleSection = () => {
@@ -119,6 +124,7 @@ export const AuthContextProvider = (props) => {
     setPortfolioSection(false);
     setSampleWorksSection(false);
     setContactFormsSection(false);
+    setBannerSection(false);
   };
 
   const closeSliderSection = () => {
@@ -138,6 +144,7 @@ export const AuthContextProvider = (props) => {
     setPortfolioSection(false);
     setSampleWorksSection(false);
     setContactFormsSection(false);
+    setBannerSection(false);
   };
 
   const closeServiceBoxesSection = () => {
@@ -157,6 +164,7 @@ export const AuthContextProvider = (props) => {
     setPortfolioSection(false);
     setSampleWorksSection(false);
     setContactFormsSection(false);
+    setBannerSection(false);
   };
 
   const closeSlideDownSection = () => {
@@ -176,6 +184,7 @@ export const AuthContextProvider = (props) => {
     setPortfolioSection(false);
     setSampleWorksSection(false);
     setContactFormsSection(false);
+    setBannerSection(false);
   };
 
   const closePlansSection = () => {
@@ -195,6 +204,7 @@ export const AuthContextProvider = (props) => {
     setPortfolioSection(false);
     setSampleWorksSection(false);
     setContactFormsSection(false);
+    setBannerSection(false);
   };
 
   const closeTeamsSection = () => {
@@ -215,6 +225,7 @@ export const AuthContextProvider = (props) => {
     setPortfolioSection(false);
     setSampleWorksSection(false);
     setContactFormsSection(false);
+    setBannerSection(false);
   };
 
   const closeAccordionSection = () => {
@@ -235,6 +246,7 @@ export const AuthContextProvider = (props) => {
     setPortfolioSection(false);
     setSampleWorksSection(false);
     setContactFormsSection(false);
+    setBannerSection(false);
   };
 
   const closeTableSection = () => {
@@ -255,6 +267,7 @@ export const AuthContextProvider = (props) => {
     setPlansSection(false);
     setSampleWorksSection(false);
     setContactFormsSection(false);
+    setBannerSection(false);
   };
 
   const closePortfolioSection = () => {
@@ -275,6 +288,7 @@ export const AuthContextProvider = (props) => {
     setServiceBoxesSection(false);
     setPlansSection(false);
     setContactFormsSection(false);
+    setBannerSection(false);
   };
 
   const closesampleWorksSection = () => {
@@ -295,10 +309,32 @@ export const AuthContextProvider = (props) => {
     setSliderSection(false);
     setServiceBoxesSection(false);
     setPlansSection(false);
+    setBannerSection(false);
   };
 
   const closeContactFormsSection = () => {
     setContactFormsSection(false);
+  };
+
+  const bannerSectionTrigger = () => {
+    setBannerSection(true);
+    setContactFormsSection(false);
+    setSampleWorksSection(false);
+    setPortfolioSection(false);
+    setTableSection(false);
+    setAccordionSection(false);
+    setTeamsSection(false);
+    setSimpleSection(false);
+    setSlideDownSection(false);
+    setSectionModal(false);
+    setShowPage(false);
+    setSliderSection(false);
+    setServiceBoxesSection(false);
+    setPlansSection(false);
+  };
+
+  const closeBannerSection = () => {
+    setBannerSection(false);
   };
 
   const showPageHandler = () => {
@@ -358,6 +394,9 @@ export const AuthContextProvider = (props) => {
     contactFormsSection,
     contactFormsSectionTrigger,
     closeContactFormsSection,
+    bannerSection,
+    bannerSectionTrigger,
+    closeBannerSection,
     openSectionModal,
     closeSectionModal,
   };

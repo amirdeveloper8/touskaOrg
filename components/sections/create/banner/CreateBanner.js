@@ -10,7 +10,7 @@ import NewRich from "../../../richtexteditor/NewRich";
 
 const isText = (value) => value.trim().length > 0;
 
-const CreateSimple = (props) => {
+const CreateBanner = (props) => {
   const [dataError, setdataError] = useState();
   const [notification, setNotification] = useState();
   const [selectedFile, setSelectedFile] = useState(null);
@@ -70,7 +70,7 @@ const CreateSimple = (props) => {
     event.preventDefault();
     setNotification("pending");
 
-    const connectDB = ConnectToDB("create/section/simple");
+    const connectDB = ConnectToDB("create/section/banner");
 
     const headers = {
       Authorization: `Bearer ${login_token}`,
@@ -79,9 +79,9 @@ const CreateSimple = (props) => {
     const fData = new FormData();
 
     fData.append("page_id", props.pageId);
-    fData.append("type_id", 1);
+    fData.append("type_id", 12);
     fData.append("title", titleValue);
-    fData.append("text", JSON.stringify(textValue));
+    fData.append("subtitle", JSON.stringify(textValue));
     fData.append("image", selectedFile);
     console.log(props.pageId);
     axios({
@@ -95,9 +95,10 @@ const CreateSimple = (props) => {
         if (res.data.status === "success created") {
           console.log(res.data);
           setNotification(res.data.status);
+
           setTimeout(() => {
             authCtx.showPageHandler();
-            authCtx.closeSimpleSection();
+            authCtx.closeBannerSection();
           }, 3000);
         }
       })
@@ -200,4 +201,4 @@ const CreateSimple = (props) => {
   );
 };
 
-export default CreateSimple;
+export default CreateBanner;
