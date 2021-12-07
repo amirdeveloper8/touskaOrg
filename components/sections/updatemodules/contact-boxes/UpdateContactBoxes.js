@@ -1,41 +1,45 @@
-import classes from "./update.module.css";
+import classes from "../update.module.css";
 import { Form, Row, Col, Badge, Alert, CloseButton } from "react-bootstrap";
-import { ConnectToDB } from "../../../lib/connect-to-db";
-import useInput from "../../../hooks/use-input";
+import { ConnectToDB } from "../../../../lib/connect-to-db";
+import useInput from "../../../../hooks/use-input";
 import { useContext, useEffect, useState } from "react";
-import AuthContext from "../../../store/auth-context";
+import AuthContext from "../../../../store/auth-context";
 import { useRouter } from "next/router";
-import Notification from "../../ui/notification";
+import Notification from "../../../ui/notification";
 import axios from "axios";
+
+import { RiMapPinFill } from "react-icons/ri";
+import { RiPhoneFill } from "react-icons/ri";
+import { MdMail } from "react-icons/md";
+import { getData } from "../../../../lib/get-data";
 
 const isText = (value) => value.trim().length > 0;
 
-const UpdateAll = (props) => {
+const UpdateContactBoxes = (props) => {
   const [dataError, setdataError] = useState();
   const [notification, setNotification] = useState();
   const [selectedFile, setSelectedFile] = useState(null);
 
+  const [resetTypeBox, setResetTypeBox] = useState(false);
   const [resetTitleValue, setResetTitleValue] = useState(false);
   const [resetTextValue, setResetTextValue] = useState(false);
   const [resetImageValue, setResetImageValue] = useState(false);
 
+  const [valueBox, setValueBox] = useState();
+
+  const [boxes, setBoxes] = useState([]);
+
   const data = props.updateData;
+
+  console.log(data);
 
   const relId = data.title.related_id;
   const typeId = props.sec.type_id;
   const typeName = props.sec.type.name;
   const sectionId = props.sec.id;
 
-  let url = "";
-  if (typeId === 2) {
-    url = "update/slider/slide";
-  }
-  if (typeId === 3) {
-    url = "update/updateServiceBoxes";
-  }
-  if (typeId === 4) {
-    url = "update/slide/SlideDown";
-  }
+  let url = "update/box/ContactUsBoxes";
+
   const authCtx = useContext(AuthContext);
 
   const login_token = authCtx.token;
@@ -69,6 +73,13 @@ const UpdateAll = (props) => {
     reset: resetText,
   } = useInput(isText);
 
+  const resetTypeBoxHandler = async () => {
+    setResetTypeBox(true);
+    const boxDetails = await getData("get/contactform/typeBox");
+    setBoxes(boxDetails.typeBox);
+    console.log(boxes);
+  };
+
   const resetTitleHandler = () => {
     setResetTitleValue(true);
   };
@@ -79,6 +90,12 @@ const UpdateAll = (props) => {
 
   const resetImageHandler = () => {
     setResetImageValue(true);
+  };
+
+  const onChangeBox = (e) => {
+    const value = e.target.value;
+    setValueBox(value);
+    console.log(valueBox);
   };
 
   let updateIsValid = false;
@@ -174,6 +191,42 @@ const UpdateAll = (props) => {
 
       <Form onSubmit={submitHandler}>
         <Row className="mb-3" className={classes.control}>
+          {!resetTypeBox && (
+            <div className={classes.typeBox}>
+              {(data.type_box = "tel" && <RiPhoneFill />)}
+              <Badge
+                bg="secondary"
+                className={classes.edit}
+                onClick={resetTypeBoxHandler}
+              >
+                edit
+              </Badge>
+            </div>
+          )}
+          {resetTypeBox && (
+            <Form.Group
+              onBlur={() => setChecked(false)}
+              as={Col}
+              lg={12}
+              controlId="formGridFName"
+              className={classes.formGroup}
+            >
+              <Form.Select
+                onChange={onChangeBox}
+                value={valueBox}
+                aria-label="Default select example"
+              >
+                <option>Select type box</option>
+                {boxes.map((box) => (
+                  <option key={box.id} value={`${box.id}.${box.name}`}>
+                    {box.name}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+          )}
+        </Row>
+        <Row className="mb-3" className={classes.control}>
           <Form.Group
             as={Col}
             controlId="formGridFName"
@@ -184,7 +237,7 @@ const UpdateAll = (props) => {
               type="text"
               placeholder="First Name"
               required
-              value={resetTitleValue ? titleValue : data.title.content}
+              value={resetTitleValue ? titleValue : data.title}
               onChange={titleChangeHandler}
               onBlur={titleBlurHandler}
             />
@@ -206,7 +259,7 @@ const UpdateAll = (props) => {
           </Form.Group>
         </Row>
 
-        <Row className="mb-3" className={classes.control}>
+        {/* <Row className="mb-3" className={classes.control}>
           <Form.Group
             as={Col}
             controlId="formGridMobile"
@@ -237,7 +290,7 @@ const UpdateAll = (props) => {
               </Badge>
             )}
           </Form.Group>
-        </Row>
+        </Row> */}
         {data.image_url && (
           <Row className={classes.control}>
             {!resetImageValue && (
@@ -285,4 +338,4 @@ const UpdateAll = (props) => {
   );
 };
 
-export default UpdateAll;
+export default UpdateContactBoxes;

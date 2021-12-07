@@ -48,6 +48,15 @@ const AuthContext = React.createContext({
   bannerSection: false,
   bannerSectionTrigger: () => {},
   closeBannerSection: () => {},
+  simpleTextSection: false,
+  simpleTextSectionTrigger: () => {},
+  closeSimpleTextSection: () => {},
+  simpleImageSection: false,
+  simpleImageSectionTrigger: () => {},
+  closeSimpleImageSection: () => {},
+  contactUsBoxesSection: false,
+  contactUsBoxesSectionTrigger: () => {},
+  closeContactUsBoxesSectionSection: () => {},
   openSectionModal: () => {},
   closeSectionModal: () => {},
 });
@@ -90,6 +99,9 @@ export const AuthContextProvider = (props) => {
   const [sampleWorksSection, setSampleWorksSection] = useState(false);
   const [contactFormsSection, setContactFormsSection] = useState(false);
   const [bannerSection, setBannerSection] = useState(false);
+  const [simpleTextSection, setSimpleTextSection] = useState(false);
+  const [simpleImageSection, setSimpleImageSection] = useState(false);
+  const [contactUsBoxesSection, setContactUsBoxesSection] = useState(false);
 
   const simpleSectionTrigger = () => {
     setSimpleSection(true);
@@ -105,6 +117,9 @@ export const AuthContextProvider = (props) => {
     setSampleWorksSection(false);
     setContactFormsSection(false);
     setBannerSection(false);
+    setSimpleTextSection(false);
+    setSimpleImageSection(false);
+    setContactUsBoxesSection(false);
   };
 
   const closeSimpleSection = () => {
@@ -125,6 +140,9 @@ export const AuthContextProvider = (props) => {
     setSampleWorksSection(false);
     setContactFormsSection(false);
     setBannerSection(false);
+    setSimpleTextSection(false);
+    setSimpleImageSection(false);
+    setContactUsBoxesSection(false);
   };
 
   const closeSliderSection = () => {
@@ -145,6 +163,9 @@ export const AuthContextProvider = (props) => {
     setSampleWorksSection(false);
     setContactFormsSection(false);
     setBannerSection(false);
+    setSimpleTextSection(false);
+    setSimpleImageSection(false);
+    setContactUsBoxesSection(false);
   };
 
   const closeServiceBoxesSection = () => {
@@ -165,6 +186,9 @@ export const AuthContextProvider = (props) => {
     setSampleWorksSection(false);
     setContactFormsSection(false);
     setBannerSection(false);
+    setSimpleTextSection(false);
+    setSimpleImageSection(false);
+    setContactUsBoxesSection(false);
   };
 
   const closeSlideDownSection = () => {
@@ -185,6 +209,9 @@ export const AuthContextProvider = (props) => {
     setSampleWorksSection(false);
     setContactFormsSection(false);
     setBannerSection(false);
+    setSimpleTextSection(false);
+    setSimpleImageSection(false);
+    setContactUsBoxesSection(false);
   };
 
   const closePlansSection = () => {
@@ -205,6 +232,9 @@ export const AuthContextProvider = (props) => {
     setSampleWorksSection(false);
     setContactFormsSection(false);
     setBannerSection(false);
+    setSimpleTextSection(false);
+    setSimpleImageSection(false);
+    setContactUsBoxesSection(false);
   };
 
   const closeTeamsSection = () => {
@@ -226,6 +256,9 @@ export const AuthContextProvider = (props) => {
     setSampleWorksSection(false);
     setContactFormsSection(false);
     setBannerSection(false);
+    setSimpleTextSection(false);
+    setSimpleImageSection(false);
+    setContactUsBoxesSection(false);
   };
 
   const closeAccordionSection = () => {
@@ -247,6 +280,9 @@ export const AuthContextProvider = (props) => {
     setSampleWorksSection(false);
     setContactFormsSection(false);
     setBannerSection(false);
+    setSimpleTextSection(false);
+    setSimpleImageSection(false);
+    setContactUsBoxesSection(false);
   };
 
   const closeTableSection = () => {
@@ -268,6 +304,9 @@ export const AuthContextProvider = (props) => {
     setSampleWorksSection(false);
     setContactFormsSection(false);
     setBannerSection(false);
+    setSimpleTextSection(false);
+    setSimpleImageSection(false);
+    setContactUsBoxesSection(false);
   };
 
   const closePortfolioSection = () => {
@@ -289,6 +328,9 @@ export const AuthContextProvider = (props) => {
     setPlansSection(false);
     setContactFormsSection(false);
     setBannerSection(false);
+    setSimpleTextSection(false);
+    setSimpleImageSection(false);
+    setContactUsBoxesSection(false);
   };
 
   const closesampleWorksSection = () => {
@@ -310,6 +352,9 @@ export const AuthContextProvider = (props) => {
     setServiceBoxesSection(false);
     setPlansSection(false);
     setBannerSection(false);
+    setSimpleTextSection(false);
+    setSimpleImageSection(false);
+    setContactUsBoxesSection(false);
   };
 
   const closeContactFormsSection = () => {
@@ -331,14 +376,105 @@ export const AuthContextProvider = (props) => {
     setSliderSection(false);
     setServiceBoxesSection(false);
     setPlansSection(false);
+    setSimpleTextSection(false);
+    setSimpleImageSection(false);
+    setContactUsBoxesSection(false);
   };
 
   const closeBannerSection = () => {
     setBannerSection(false);
   };
 
+  const simpleTextSectionTrigger = () => {
+    setSimpleTextSection(true);
+    setSimpleImageSection(false);
+    setBannerSection(false);
+    setContactFormsSection(false);
+    setSampleWorksSection(false);
+    setPortfolioSection(false);
+    setTableSection(false);
+    setAccordionSection(false);
+    setTeamsSection(false);
+    setSimpleSection(false);
+    setSlideDownSection(false);
+    setSectionModal(false);
+    setShowPage(false);
+    setSliderSection(false);
+    setServiceBoxesSection(false);
+    setPlansSection(false);
+    setContactUsBoxesSection(false);
+  };
+
+  const closeSimpleTextSection = () => {
+    setSimpleTextSection(false);
+  };
+
+  const simpleImageSectionTrigger = () => {
+    setSimpleImageSection(true);
+    setSimpleTextSection(false);
+    setBannerSection(false);
+    setContactFormsSection(false);
+    setSampleWorksSection(false);
+    setPortfolioSection(false);
+    setTableSection(false);
+    setAccordionSection(false);
+    setTeamsSection(false);
+    setSimpleSection(false);
+    setSlideDownSection(false);
+    setSectionModal(false);
+    setShowPage(false);
+    setSliderSection(false);
+    setServiceBoxesSection(false);
+    setPlansSection(false);
+    setContactUsBoxesSection(false);
+  };
+
+  const closeSimpleImageSection = () => {
+    setSimpleImageSection(false);
+  };
+
+  const contactUsBoxesSectionTrigger = () => {
+    setContactUsBoxesSection(true);
+    setSimpleImageSection(false);
+    setSimpleTextSection(false);
+    setBannerSection(false);
+    setContactFormsSection(false);
+    setSampleWorksSection(false);
+    setPortfolioSection(false);
+    setTableSection(false);
+    setAccordionSection(false);
+    setTeamsSection(false);
+    setSimpleSection(false);
+    setSlideDownSection(false);
+    setSectionModal(false);
+    setShowPage(false);
+    setSliderSection(false);
+    setServiceBoxesSection(false);
+    setPlansSection(false);
+  };
+
+  const closeContactUsBoxesSectionSection = () => {
+    setContactUsBoxesSection(false);
+  };
+
   const showPageHandler = () => {
     setShowPage(true);
+    setContactUsBoxesSection(false);
+    setSimpleImageSection(false);
+    setSimpleTextSection(false);
+    setBannerSection(false);
+    setContactFormsSection(false);
+    setSampleWorksSection(false);
+    setPortfolioSection(false);
+    setTableSection(false);
+    setAccordionSection(false);
+    setTeamsSection(false);
+    setSimpleSection(false);
+    setSlideDownSection(false);
+    setSectionModal(false);
+    setSliderSection(false);
+    setServiceBoxesSection(false);
+    setPlansSection(false);
   };
   const closePageHandler = () => {
     setShowPage(false);
@@ -397,6 +533,15 @@ export const AuthContextProvider = (props) => {
     bannerSection,
     bannerSectionTrigger,
     closeBannerSection,
+    simpleTextSection,
+    simpleTextSectionTrigger,
+    closeSimpleTextSection,
+    simpleImageSection,
+    simpleImageSectionTrigger,
+    closeSimpleImageSection,
+    contactUsBoxesSection,
+    contactUsBoxesSectionTrigger,
+    closeContactUsBoxesSectionSection,
     openSectionModal,
     closeSectionModal,
   };

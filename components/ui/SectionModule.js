@@ -55,6 +55,18 @@ const SectionModule = () => {
     authCtx.bannerSectionTrigger();
   };
 
+  const TextHandler = () => {
+    authCtx.simpleTextSectionTrigger();
+  };
+
+  const ImageHandler = () => {
+    authCtx.simpleImageSectionTrigger();
+  };
+
+  const ContactUsBoxesHandler = () => {
+    authCtx.contactUsBoxesSectionTrigger();
+  };
+
   const closeHandler = () => {
     authCtx.closeSectionModal();
   };
@@ -127,6 +139,23 @@ const SectionModule = () => {
           <Col className="p-1 text-center">
             <Button onClick={contactFormsHandler} className="px-2">
               Contact Form
+            </Button>
+          </Col>
+          <Col className="p-1 text-center">
+            <Button onClick={TextHandler} className="px-2">
+              Simple Text
+            </Button>
+          </Col>
+        </Row>
+        <Row className={classes.row}>
+          <Col className="p-1 text-center">
+            <Button onClick={ImageHandler} className="px-2">
+              Simple Image
+            </Button>
+          </Col>
+          <Col className="p-1 text-center">
+            <Button onClick={ContactUsBoxesHandler} className="px-2">
+              Contact-us Boxes
             </Button>
           </Col>
           <Col className="p-1 text-center">

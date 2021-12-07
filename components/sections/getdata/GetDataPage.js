@@ -39,15 +39,29 @@ import UpdateContactForm from "../updatemodules/contact-form/UpdateContactForm";
 import AddInputForms from "../addnew/contact-form/AddInputForms";
 import UpdateHeadContactForm from "../updatemodules/contact-form/UpdateHeadContactForm";
 import UpdateBanner from "../updatemodules/UpdateBanner";
+import UpdateTxtImg from "../updatemodules/UpdateTxtImg";
+
+import Link from "next/link";
+
+import { RiMapPinFill } from "react-icons/ri";
+import { RiPhoneFill } from "react-icons/ri";
+import { MdMail } from "react-icons/md";
+
+import { BsTelephone } from "react-icons/bs";
+import { BsWhatsapp } from "react-icons/bs";
+import { RiMapPin2Line } from "react-icons/ri";
+import { AiOutlineInstagram } from "react-icons/ai";
+import { AiOutlineMail } from "react-icons/ai";
+import { RiTwitterLine } from "react-icons/ri";
+import { FiLinkedin } from "react-icons/fi";
+import UpdateContactBoxes from "../updatemodules/contact-boxes/UpdateContactBoxes";
 
 const GetDataPage = (props) => {
   const [updateOne, setUpdateOne] = useState(false);
   const [addNew, setaddNew] = useState(false);
   const authCtx = useContext(AuthContext);
   const closeBtnRef = useRef();
-  const closeHandler = () => {
-    authCtx.closePageHandler();
-  };
+
   if (!props.data) {
     return (
       <Alert variant="danger" className="m-2">
@@ -82,7 +96,6 @@ const GetDataPage = (props) => {
     return (
       <section className={classes.page}>
         <h1>Content Of Page</h1>
-        <CloseButton className={classes.close} onClick={closeHandler} />
 
         {sections.map((sec) => (
           <div key={sec.id} className={classes.section}>
@@ -96,6 +109,8 @@ const GetDataPage = (props) => {
               sec.type_id !== 8 &&
               sec.type_id !== 10 &&
               sec.type_id !== 11 &&
+              sec.type_id !== 13 &&
+              sec.type_id !== 14 &&
               sec.section_content.map((item, index) => (
                 <div ref={closeBtnRef} key={index} className={classes.content}>
                   <div
@@ -375,6 +390,208 @@ const GetDataPage = (props) => {
                     onClick={updateSectionHandler}
                   ></div>
                 </section>
+              ))}
+            {sec.type_id === 13 &&
+              sec.section_content.map((item, index) => (
+                <div ref={closeBtnRef} key={index} className={classes.content}>
+                  <div
+                    className={classes.fakeBtn}
+                    onClick={updateSectionHandler}
+                  ></div>
+                  <div className={`${classes.details} details`}>
+                    <div className={classes.simpleTxtImg}>
+                      {item.image_url && <img src={item.image_url} />}
+                      {item.subtitle && <ListAccordion items={item.subtitle} />}
+                    </div>
+                  </div>
+                  <div className="updateForm">
+                    {updateOne && (
+                      <UpdateTxtImg
+                        richTxt={item.subtitle}
+                        updateData={item}
+                        sec={sec}
+                      />
+                    )}
+
+                    <CloseButton
+                      className={classes.closeBtn}
+                      onClick={noUpdateHandler}
+                    />
+                  </div>
+                  <div className={classes.editBtn}>
+                    <BiEdit />
+                  </div>
+                </div>
+              ))}
+            {sec.type_id === 14 &&
+              sec.section_content.map((item, index) => (
+                <div ref={closeBtnRef} key={index} className={classes.content}>
+                  <div
+                    className={classes.fakeBtn}
+                    onClick={updateSectionHandler}
+                  ></div>
+                  <div className={`${classes.contactUsBoxes} details`}>
+                    <div className={classes.contactUsBoxesIcon}>
+                      {item.type_box === "tel" && <RiPhoneFill />}
+                      {item.type_box === "adress" && <RiMapPinFill />}
+                      {item.type_box === "socials" && <MdMail />}
+                    </div>
+                    <h4>{item.title}</h4>
+                    <div className={classes.contactUsBoxesItems}>
+                      <div className={classes.contactLinkUrls}>
+                        {item.social_urls.map((social) => (
+                          <div key={social.id}>
+                            {social.type.type === "url" &&
+                              social.type.name === "tel" && (
+                                <>
+                                  <Link href={`tel:${social.url}`}>
+                                    {social.name}
+                                  </Link>
+                                  <p> url : {social.url}</p>
+                                </>
+                              )}
+                            {social.type.type === "url" &&
+                              social.type.name === "email" && (
+                                <>
+                                  <Link href={`mailto:${social.url}`}>
+                                    {social.name}
+                                  </Link>
+                                  <p> url : {social.url}</p>
+                                </>
+                              )}
+                            {social.type.type === "url" &&
+                              social.type.name !== "email" &&
+                              social.type.name !== "tel" && (
+                                <>
+                                  <Link
+                                    href={
+                                      social.url.includes("http")
+                                        ? social.url
+                                        : `https://${social.url}`
+                                    }
+                                  >
+                                    {social.name}
+                                  </Link>
+                                  <p> url : {social.url}</p>
+                                </>
+                              )}
+                          </div>
+                        ))}
+                      </div>
+                      <div className={classes.contactLinkIcons}>
+                        {item.social_urls.map((social) => (
+                          <div key={social.id}>
+                            {social.type.type === "icon" &&
+                              social.type.name === "tel" && (
+                                <>
+                                  <a href={`tel:${social.url}`}>
+                                    <BsTelephone />
+                                  </a>
+                                  <p> url : {social.url}</p>
+                                </>
+                              )}
+                            {social.type.type === "icon" &&
+                              social.type.name === "email" && (
+                                <>
+                                  <a href={`mailto:${social.url}`}>
+                                    <AiOutlineMail />
+                                  </a>
+                                  <p> url : {social.url}</p>
+                                </>
+                              )}
+                            {social.type.type === "icon" &&
+                              social.type.name === "linkedin" && (
+                                <>
+                                  <a
+                                    href={
+                                      social.url.includes("http")
+                                        ? social.url
+                                        : `https://${social.url}`
+                                    }
+                                  >
+                                    <FiLinkedin />
+                                  </a>
+                                  <p> url : {social.url}</p>
+                                </>
+                              )}
+                            {social.type.type === "icon" &&
+                              social.type.name === "instagram" && (
+                                <>
+                                  <a
+                                    href={
+                                      social.url.includes("http")
+                                        ? social.url
+                                        : `https://${social.url}`
+                                    }
+                                  >
+                                    <AiOutlineInstagram />
+                                  </a>
+                                  <p> url : {social.url}</p>
+                                </>
+                              )}
+                            {social.type.type === "icon" &&
+                              social.type.name === "address" && (
+                                <>
+                                  <a
+                                    href={
+                                      social.url.includes("http")
+                                        ? social.url
+                                        : `https://${social.url}`
+                                    }
+                                  >
+                                    <RiMapPin2Line />
+                                  </a>
+                                  <p> url : {social.url}</p>
+                                </>
+                              )}
+                            {social.type.type === "icon" &&
+                              social.type.name === "twitter" && (
+                                <>
+                                  <a
+                                    href={
+                                      social.url.includes("http")
+                                        ? social.url
+                                        : `https://${social.url}`
+                                    }
+                                  >
+                                    <RiTwitterLine />
+                                  </a>
+                                  <p> url : {social.url}</p>
+                                </>
+                              )}
+                            {social.type.type === "icon" &&
+                              social.type.name === "whatsapp" && (
+                                <>
+                                  <a
+                                    href={
+                                      social.url.includes("http")
+                                        ? social.url
+                                        : `https://${social.url}`
+                                    }
+                                  >
+                                    <BsWhatsapp />
+                                  </a>
+                                  <p> url : {social.url}</p>
+                                </>
+                              )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="updateForm">
+                    {updateOne && (
+                      <UpdateContactBoxes updateData={item} sec={sec} />
+                    )}
+                    <CloseButton
+                      className={classes.closeBtn}
+                      onClick={noUpdateHandler}
+                    />
+                  </div>
+                  <div className={classes.editBtn}>
+                    <BiEdit />
+                  </div>
+                </div>
               ))}
             <div className="addnewcol">
               <div className="addForm">

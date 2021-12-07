@@ -7,13 +7,16 @@ import AuthContext from "../../../store/auth-context";
 import { useRouter } from "next/router";
 import Notification from "../../ui/notification";
 import axios from "axios";
+import ListAccordion from "../getdata/ListAccordion";
+import NewRich from "../../richtexteditor/NewRich";
 
 const isText = (value) => value.trim().length > 0;
 
-const UpdateAll = (props) => {
+const UpdateTxtImg = (props) => {
   const [dataError, setdataError] = useState();
   const [notification, setNotification] = useState();
   const [selectedFile, setSelectedFile] = useState(null);
+  const [textValue, setTextValue] = useState();
 
   const [resetTitleValue, setResetTitleValue] = useState(false);
   const [resetTextValue, setResetTextValue] = useState(false);
@@ -21,21 +24,11 @@ const UpdateAll = (props) => {
 
   const data = props.updateData;
 
-  const relId = data.title.related_id;
-  const typeId = props.sec.type_id;
-  const typeName = props.sec.type.name;
+  const pageId = props.sec.page_id;
   const sectionId = props.sec.id;
 
-  let url = "";
-  if (typeId === 2) {
-    url = "update/slider/slide";
-  }
-  if (typeId === 3) {
-    url = "update/updateServiceBoxes";
-  }
-  if (typeId === 4) {
-    url = "update/slide/SlideDown";
-  }
+  console.log("typeId", pageId);
+
   const authCtx = useContext(AuthContext);
 
   const login_token = authCtx.token;
@@ -60,14 +53,17 @@ const UpdateAll = (props) => {
     reset: resetTitle,
   } = useInput(isText);
 
-  const {
-    value: textValue,
-    isValid: textIsValid,
-    hasError: textHasError,
-    valueChangeHandler: textChangeHandler,
-    inputBlurHandler: textBlurHandler,
-    reset: resetText,
-  } = useInput(isText);
+  let itemsRich;
+
+  if (props.richTxt) {
+    const itemsParse = JSON.parse(props.richTxt);
+    itemsRich = itemsParse.toString().replace(/[,]+/g, "");
+  }
+
+  const getTextValue = (value) => {
+    setTextValue(value);
+    console.log("textValue", textValue);
+  };
 
   const resetTitleHandler = () => {
     setResetTitleValue(true);
@@ -95,7 +91,7 @@ const UpdateAll = (props) => {
     event.preventDefault();
     setNotification("pending");
 
-    const connectDB = ConnectToDB(url);
+    const connectDB = ConnectToDB("update/section/imageortext");
 
     const headers = {
       Authorization: `Bearer ${login_token}`,
@@ -103,15 +99,12 @@ const UpdateAll = (props) => {
 
     const fData = new FormData();
 
-    console.log(titleValue, textValue, selectedFile);
-
     fData.append("section_id", sectionId);
-    fData.append("related_id", relId);
     {
       titleValue && fData.append("title", titleValue);
     }
     {
-      textValue && fData.append("text", textValue);
+      textValue && fData.append("subtitle", JSON.stringify(textValue));
     }
     {
       selectedFile && fData.append("image", selectedFile);
@@ -170,7 +163,8 @@ const UpdateAll = (props) => {
 
   return (
     <section className={classes.auth}>
-      <h1>Update Module {typeName}</h1>
+      {data.image_url && <h1>Update Simple Image</h1>}
+      {!data.image_url && <h1>Update Simple Text</h1>}
 
       <Form onSubmit={submitHandler}>
         <Row className="mb-3" className={classes.control}>
@@ -184,7 +178,7 @@ const UpdateAll = (props) => {
               type="text"
               placeholder="First Name"
               required
-              value={resetTitleValue ? titleValue : data.title.content}
+              value={resetTitleValue ? titleValue : data.title}
               onChange={titleChangeHandler}
               onBlur={titleBlurHandler}
             />
@@ -206,38 +200,34 @@ const UpdateAll = (props) => {
           </Form.Group>
         </Row>
 
-        <Row className="mb-3" className={classes.control}>
-          <Form.Group
-            as={Col}
-            controlId="formGridMobile"
-            className={classes.formGroup}
-          >
-            <Form.Label>text*</Form.Label>
-            <Form.Control
-              as="textarea"
-              placeholder="text"
-              required
-              value={resetTextValue ? textValue : data.texts.content}
-              onChange={textChangeHandler}
-              onBlur={textBlurHandler}
-            />
-
-            {textHasError && (
-              <Alert className="mt-1" variant="danger">
-                Please enter a valid Name.
-              </Alert>
-            )}
-            {!resetTextValue && (
-              <Badge
-                className={classes.edit}
-                onClick={resetTextHandler}
-                bg="secondary"
-              >
-                edit
-              </Badge>
-            )}
-          </Form.Group>
-        </Row>
+        {props.richTxt && (
+          <Row className="mb-3" className={classes.control}>
+            <Form.Group
+              as={Col}
+              controlId="formGridMobile"
+              className={classes.formGroup}
+            >
+              <Form.Label>text*</Form.Label>
+              {resetTextValue && (
+                <NewRich getTexts={getTextValue} updateValue={itemsRich} />
+              )}
+              {!resetTextValue && (
+                <div className={classes.editTxtRich}>
+                  <ListAccordion items={props.richTxt} />
+                </div>
+              )}
+              {!resetTextValue && (
+                <Badge
+                  className={classes.edit}
+                  onClick={resetTextHandler}
+                  bg="secondary"
+                >
+                  edit
+                </Badge>
+              )}
+            </Form.Group>
+          </Row>
+        )}
         {data.image_url && (
           <Row className={classes.control}>
             {!resetImageValue && (
@@ -285,4 +275,4 @@ const UpdateAll = (props) => {
   );
 };
 
-export default UpdateAll;
+export default UpdateTxtImg;

@@ -1,0 +1,66 @@
+.simple {
+  direction: rtl;
+  max-width: 1200px;
+  margin: auto;
+  padding: 2rem 1rem;
+}
+
+.simple h2 {
+  margin-bottom: 1rem;
+  text-align: right;
+}
+
+.detailsImgTxt {
+  width: 90% !important;
+  border: 10px solid var(--purple);
+}
+
+.detailsImgTxt img {
+  width: 100% !important;
+}
+
+.textSimple {
+  padding: 1rem;
+}
+
+.imageSimple {
+  position: relative;
+}
+
+.imageSimple svg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: var(--darkGreen);
+  background-color: var(--lightGreen);
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.modalScale {
+  transform: scale(0.2);
+  transition: 0.3s ease-in;
+}
+
+.modalImage img {
+  width: 100%;
+}
+
+.modalImage {
+  position: fixed;
+  height: 100vh;
+}
+
+.modal {
+  transform: scale(1);
+}
+
+.modalImage svg {
+  position: fixed;
+  top: 0;
+  right: 0;
+  color: var(--darkGreen);
+  background-color: var(--lightGreen);
+  font-size: 2rem;
+  cursor: pointer;
+}

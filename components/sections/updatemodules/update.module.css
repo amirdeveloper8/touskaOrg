@@ -10,6 +10,10 @@
   margin-bottom: 1rem;
 }
 
+.auth input {
+  direction: rtl;
+  text-align: right !important;
+}
 .auth h1 {
   text-align: center;
   color: white;
@@ -285,4 +289,17 @@
   width: 15px !important;
   height: 15px;
   border-radius: 50px;
+}
+
+.typeBox {
+  background-color: white;
+  padding: 1rem;
+  width: 95%;
+  margin: auto;
+}
+
+.typeBox svg {
+  font-size: 3rem;
+  background-color: var(--darkGreen);
+  color: var(--white);
 }

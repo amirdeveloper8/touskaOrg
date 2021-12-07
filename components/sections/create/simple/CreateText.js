@@ -1,20 +1,22 @@
 import classes from "../create.module.css";
-import { Form, Row, Col, Alert } from "react-bootstrap";
+import { Form, Row, Col, Badge, Alert, CloseButton } from "react-bootstrap";
 import { ConnectToDB } from "../../../../lib/connect-to-db";
 import useInput from "../../../../hooks/use-input";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../../../store/auth-context";
 import Notification from "../../../ui/notification";
-
-import { MdOutlineFileDownloadDone } from "react-icons/md";
+import axios from "axios";
+import NewRich from "../../../richtexteditor/NewRich";
 
 const isText = (value) => value.trim().length > 0;
 
-const SlideDownsForm = (props) => {
+const CreateText = (props) => {
   const [dataError, setdataError] = useState();
   const [notification, setNotification] = useState();
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [textValue, setTextValue] = useState([]);
 
-  const [checked, setChecked] = useState(false);
+  console.log(props.pageId);
 
   const authCtx = useContext(AuthContext);
 
@@ -40,57 +42,97 @@ const SlideDownsForm = (props) => {
     reset: resetTitle,
   } = useInput(isText);
 
-  const {
-    value: textValue,
-    isValid: textIsValid,
-    hasError: textHasError,
-    valueChangeHandler: textChangeHandler,
-    inputBlurHandler: textBlurHandler,
-    reset: resetText,
-  } = useInput(isText);
+  // const {
+  //   value: textValue,
+  //   isValid: textIsValid,
+  //   hasError: textHasError,
+  //   valueChangeHandler: textChangeHandler,
+  //   inputBlurHandler: textBlurHandler,
+  //   reset: resetText,
+  // } = useInput(isText);
+
+  const getTextValue = (value) => {
+    setTextValue([value.split("\n")]);
+    console.log(textValue);
+  };
 
   let formIsValid = false;
 
-  if (titleIsValid && textIsValid) {
+  if (titleIsValid && textValue.length > 0) {
     formIsValid = true;
   }
 
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
+    setNotification("pending");
 
-    const connectDB = ConnectToDB("create/section/slider");
+    const connectDB = ConnectToDB("create/section/imageortext");
 
     const headers = {
       Authorization: `Bearer ${login_token}`,
     };
 
-    console.log(props.slideCount);
+    const fData = new FormData();
 
-    if (!props.titles[+props.slideNumber - 1]) {
-      props.getTitles(titleValue);
-    } else {
-      props.titles[+props.slideNumber - 1] = titleValue;
-    }
-
-    if (!props.texts[+props.slideNumber - 1]) {
-      props.getTexts(textValue);
-    } else {
-      props.texts[+props.slideNumber - 1] = textValue;
-    }
-
-    setChecked(true);
+    fData.append("page_id", props.pageId);
+    fData.append("type_id", 13);
+    fData.append("title", titleValue);
+    fData.append("subtitle", JSON.stringify(textValue));
+    console.log(props.pageId);
+    axios({
+      method: "POST",
+      url: connectDB,
+      headers: headers,
+      data: fData,
+    })
+      .then((res) => {
+        console.log("res", res.data);
+        if (res.data.status === "success created") {
+          console.log(res.data);
+          setNotification(res.data.status);
+          setTimeout(() => {
+            authCtx.showPageHandler();
+            authCtx.closeSimpleTextSection();
+          }, 3000);
+        }
+      })
+      .catch((err) => {
+        console.log("Error", err);
+      });
   };
+
+  let notifDetails;
+
+  if (notification === "pending") {
+    notifDetails = {
+      status: "pending",
+      title: "Sending message...",
+      message: "Your message is on its way!",
+    };
+  }
+
+  if (notification === "success created") {
+    notifDetails = {
+      status: "success",
+      title: "Success!",
+      message: "Message sent successfully!",
+    };
+  }
+
+  if (notification === "error") {
+    notifDetails = {
+      status: "error",
+      title: "Error!",
+      message: dataError,
+    };
+  }
 
   return (
     <section className={classes.auth}>
-      <h2>number {props.slideNumber}</h2>
+      <h1>Create Text Section</h1>
       <Form onSubmit={submitHandler}>
-        {checked && (
-          <MdOutlineFileDownloadDone className={classes.saveChecked} />
-        )}
         <Row className="mb-3" className={classes.control}>
           <Form.Group
-            onBlur={() => setChecked(false)}
             as={Col}
             controlId="formGridFName"
             className={classes.formGroup}
@@ -115,32 +157,17 @@ const SlideDownsForm = (props) => {
 
         <Row className="mb-3" className={classes.control}>
           <Form.Group
-            onBlur={() => setChecked(false)}
             as={Col}
             controlId="formGridMobile"
             className={classes.formGroup}
           >
             <Form.Label>text*</Form.Label>
-            <Form.Control
-              as="textarea"
-              placeholder="text"
-              required
-              value={textValue}
-              onChange={textChangeHandler}
-              onBlur={textBlurHandler}
-            />
-
-            {textHasError && (
-              <Alert className="mt-1" variant="danger">
-                Please enter a valid Name.
-              </Alert>
-            )}
+            <NewRich getTexts={getTextValue} />
           </Form.Group>
         </Row>
-
         <div className={classes.actions}>
           <button disabled={!formIsValid} variant="primary" type="submit">
-            Save
+            Submit
           </button>
         </div>
       </Form>
@@ -156,4 +183,4 @@ const SlideDownsForm = (props) => {
   );
 };
 
-export default SlideDownsForm;
+export default CreateText;

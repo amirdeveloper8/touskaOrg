@@ -1,14 +1,39 @@
 .tableSection {
+  direction: rtl;
   max-width: 1200px;
   margin: auto;
-  direction: rtl;
   padding: 2rem 1rem;
+}
+
+.table {
+  border: 10px solid var(--purple);
+  padding: 0;
+  width: 90%;
+  margin-right: auto;
+  font-size: 1rem;
+}
+
+.tableSection h2 {
+  margin-bottom: 1rem;
+}
+
+.table td {
+  font-size: 0.8rem;
+}
+
+.tableSection div {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
+.tableSection .nav-item {
+  border-radius: 0 !important;
 }
 
 .tableSection table {
   margin: 0 !important;
   text-align: center;
-  background-color: #fff;
+  background-color: var(--white);
   border-color: #a7d8b88e;
   border-width: 2px;
   position: relative;
@@ -16,7 +41,7 @@
 
 .thTables table,
 .thTables h3 {
-  background-color: #3cd070;
+  background-color: var(--lightGreen);
 }
 
 .thTables h3 {
@@ -36,4 +61,36 @@
 
 .navItem {
   cursor: pointer;
+}
+
+.tabTable {
+  background-color: red;
+}
+
+.buttonTable {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  margin-right: 10%;
+  min-width: 200px;
+}
+
+.comments {
+  margin: 2rem 10% 2rem 0;
+}
+
+.comments p {
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+@media (max-width: 700px) {
+  .table td {
+    font-size: 12px;
+  }
+
+  .table th {
+    font-size: 12px;
+  }
 }

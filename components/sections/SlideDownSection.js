@@ -12,11 +12,9 @@ const SlideDownSection = (props) => {
         {data.map((item, index) => (
           <Col key={index} className={classes.box} lg={4} md={6} xs={12}>
             <div className={classes.show}>
-              <img src={item.image_url} alt={item.title.content} />
               <h3>{item.title.content}</h3>
             </div>
             <div className={classes.hover}>
-              <h3>{item.title.content}</h3>
               <p>{item.texts.content}</p>
             </div>
           </Col>

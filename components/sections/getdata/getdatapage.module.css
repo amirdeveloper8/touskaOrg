@@ -8,6 +8,11 @@
   position: relative;
 }
 
+.page p {
+  text-align: right;
+  direction: rtl;
+}
+
 .section {
   background-color: rgb(203, 233, 203);
   margin: 1rem 0;
@@ -182,4 +187,55 @@
   padding: 1rem;
   width: 80%;
   margin: 0 auto 1rem;
+}
+
+.simpleTxtImg {
+  width: 100%;
+}
+
+.simpleTxtImg img {
+  width: 100%;
+  max-width: 100% !important;
+}
+
+.contactUsBoxes {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.contactUsBoxesIcon {
+  margin-bottom: 1rem;
+}
+
+.contactUsBoxesIcon svg {
+  color: rgb(10, 51, 10);
+  font-size: 3rem;
+  background-color: rgba(85, 131, 48, 0.493);
+  padding: 5px;
+}
+
+.contactUsBoxesItems svg {
+  cursor: pointer;
+  font-size: 1.3rem;
+  color: #883676;
+}
+
+.contactLinkUrls {
+  text-align: center;
+  direction: rtl;
+}
+
+.contactLinkUrls p {
+  text-align: center;
+  background-color: rgba(0, 0, 255, 0.308);
+}
+
+.contactLinkIcons svg {
+  font-size: 25px;
+}
+
+.contactLinkIcons p {
+  background-color: #88367660;
 }

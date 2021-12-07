@@ -5,11 +5,12 @@ import useInput from "../../../../hooks/use-input";
 import { ConnectToDB } from "../../../../lib/connect-to-db";
 import AuthContext from "../../../../store/auth-context";
 import classes from "../create.module.css";
+import ContactUsForm from "./ContactUsForm";
 import Notification from "../../../ui/notification";
-import SlideDownsForm from "./SlideDownForm";
+import { getData } from "../../../../lib/get-data";
 
 const isText = (value) => value.trim().length > 0;
-const CreateSlideDown = (props) => {
+const CreateContactUsBoxes = (props) => {
   const {
     value: titleValue,
     isValid: titleIsValid,
@@ -22,9 +23,14 @@ const CreateSlideDown = (props) => {
   const [notification, setNotification] = useState();
   const [dataError, setdataError] = useState();
 
-  const [slideCount, setSlideCount] = useState(1);
+  const [slideCount, setSlideCount] = useState(0);
   const [titles, setTitles] = useState([]);
-  const [texts, setTexts] = useState([]);
+  const [boxId, setBoxId] = useState([]);
+  const [images, setImages] = useState([]);
+  const [socialValues, setSocialValues] = useState([]);
+
+  const [boxes, setBoxes] = useState([]);
+  const [socials, setSocials] = useState([]);
   let sliders = [];
 
   useEffect(() => {
@@ -46,25 +52,41 @@ const CreateSlideDown = (props) => {
     setTitles([...titles, title]);
   };
 
-  const getTexts = (text) => {
-    setTexts([...texts, text]);
+  const getBoxId = (id) => {
+    setBoxId([...boxId, id]);
   };
 
-  const slideNumberHandleChange = (e) => {
-    setSlideCount(e.target.value);
+  const getImages = (image) => {
+    setImages([...images, image]);
+  };
 
-    console.log(slideCount);
+  const getSocials = (val) => {
+    setSocialValues([...socialValues, val]);
+  };
+
+  const slideNumberHandleChange = async (e) => {
+    setSlideCount(e.target.value);
+    const boxDetails = await getData("get/contactform/typeBox");
+    const socialDetails = await getData("get/contactform/typeSocial");
+    setBoxes(boxDetails.typeBox);
+    setSocials(socialDetails.typeSocial);
+    console.log(boxes);
+    console.log(socials);
   };
   for (var i = 0; i < slideCount; i++) {
     sliders[i] = (
-      <SlideDownsForm
+      <ContactUsForm
         getTitles={getTitles}
-        getTexts={getTexts}
+        getBoxId={getBoxId}
         titles={titles}
-        texts={texts}
+        boxId={boxId}
         slideCount={slideCount}
         slideNumber={i + 1}
         key={i}
+        boxes={boxes}
+        socials={socials}
+        getSocials={getSocials}
+        socialValues={socialValues}
       />
     );
   }
@@ -73,22 +95,29 @@ const CreateSlideDown = (props) => {
     e.preventDefault();
     setNotification("pending");
 
-    console.log("titles", titles);
-    console.log("texts", texts);
-    console.log("count", +slideCount);
+    console.log("page_id", props.pageId);
+    console.log("type_id", 14);
+    console.log("title", titleValue);
+    console.log("count", slideCount);
+    for (var i = 0; i < slideCount; i++) {
+      console.log(`type_box_id_${i + 1}`, +boxId[i]);
+      console.log(`body_box_${i + 1}`, JSON.stringify(socialValues[i]));
+      console.log(`title_box_${i + 1}`, titles[i]);
+    }
 
     const fData = new FormData();
 
+    fData.append("page_id", props.pageId);
+    fData.append("type_id", 14);
+    fData.append("title", titleValue);
+    fData.append("count", slideCount);
     for (var i = 0; i < slideCount; i++) {
-      fData.append("page_id", props.pageId);
-      fData.append("type_id", 4);
-      fData.append("title", titleValue);
-      fData.append("count", slideCount);
-      fData.append(`title_slidedown_${i + 1}`, titles[i]);
-      fData.append(`text_slidedown_${i + 1}`, texts[i]);
+      fData.append(`type_box_id_${i + 1}`, boxId[i]);
+      fData.append(`body_box_${i + 1}`, socialValues[i]);
+      fData.append(`title_box_${i + 1}`, titles[i]);
     }
 
-    const connectDB = ConnectToDB("create/section/slideDown");
+    const connectDB = ConnectToDB("create/ContactUsBoxes");
 
     const headers = {
       Authorization: `Bearer ${login_token}`,
@@ -107,12 +136,12 @@ const CreateSlideDown = (props) => {
           setNotification(res.data.status);
           setTimeout(() => {
             authCtx.showPageHandler();
-            authCtx.closeSlideDownSection();
+            authCtx.closeContactUsBoxesSectionSection();
           }, 3000);
         }
       })
       .catch((err) => {
-        console.log("Error", err);
+        console.log("Error", err.response.data);
       });
 
     console.log(fData);
@@ -120,7 +149,10 @@ const CreateSlideDown = (props) => {
 
   let formIsValid = false;
 
-  if (titleIsValid && (titles.length && texts.length) === +slideCount) {
+  if (
+    titleIsValid &&
+    (titles.length && boxId.length && socialValues.length) === +slideCount
+  ) {
     formIsValid = true;
   }
 
@@ -159,7 +191,7 @@ const CreateSlideDown = (props) => {
             controlId="formGridFName"
             className={classes.formGroup}
           >
-            <Form.Label>تعداد باکس‌ها</Form.Label>
+            <Form.Label>تعداد اسلایدها</Form.Label>
             <Form.Control
               type="number"
               min={1}
@@ -210,4 +242,4 @@ const CreateSlideDown = (props) => {
   );
 };
 
-export default CreateSlideDown;
+export default CreateContactUsBoxes;

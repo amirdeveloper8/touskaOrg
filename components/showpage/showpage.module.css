@@ -1,7 +1,12 @@
 .greenSec {
-  background-color: rgb(47, 156, 114);
+  background-image: url(/public/images/Green-BG.jpg);
+}
+
+.greenSec h2 {
+  text-align: left !important;
 }
 
 .whiteSec {
-  background-color: rgb(213, 226, 215);
+  background-image: url(/public/images/White-BG.jpg);
+  text-align: right !important;
 }

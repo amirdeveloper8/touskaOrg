@@ -21,6 +21,9 @@ import CreatePortfolio from "../../../components/sections/create/Portfolio/Creat
 import SampleWorks from "../../../components/sections/create/sample-works/SampleWorks";
 import CreateContactForm from "../../../components/sections/create/contact-form/CreateContactForm";
 import CreateBanner from "../../../components/sections/create/banner/CreateBanner";
+import CreateText from "../../../components/sections/create/simple/CreateText";
+import CreateImage from "../../../components/sections/create/simple/CreateImage";
+import CreateContactUsBoxes from "../../../components/sections/create/contactus-boxes/CreateContactUsBoxes";
 
 const CreatePage = (props) => {
   const authCtx = useContext(AuthContext);
@@ -36,6 +39,9 @@ const CreatePage = (props) => {
   const sampleWorksSec = authCtx.sampleWorksSection;
   const contactFormsSec = authCtx.contactFormsSection;
   const bannerSec = authCtx.bannerSection;
+  const TextSec = authCtx.simpleTextSection;
+  const ImageSec = authCtx.simpleImageSection;
+  const contactBoxSec = authCtx.contactUsBoxesSection;
   const modalSec = authCtx.sectionModal;
   const showPage = authCtx.showPage;
 
@@ -85,6 +91,9 @@ const CreatePage = (props) => {
       {sampleWorksSec && <SampleWorks pageId={pageId} />}
       {contactFormsSec && <CreateContactForm pageId={pageId} />}
       {bannerSec && <CreateBanner pageId={pageId} />}
+      {TextSec && <CreateText pageId={pageId} />}
+      {ImageSec && <CreateImage pageId={pageId} />}
+      {contactBoxSec && <CreateContactUsBoxes pageId={pageId} />}
     </section>
   );
 };

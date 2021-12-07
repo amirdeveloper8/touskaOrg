@@ -134,7 +134,7 @@ const CreateSimple = (props) => {
 
   return (
     <section className={classes.auth}>
-      <h1>Update Your Business Profile</h1>
+      <h1>Create Simple Section</h1>
       <Form onSubmit={submitHandler}>
         <Row className="mb-3" className={classes.control}>
           <Form.Group

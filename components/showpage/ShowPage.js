@@ -12,6 +12,7 @@ import WorkSamplesSection from "../sections/WorkSamplesSection";
 import ContactFormSection from "../sections/ContactFormSection";
 import MapSec from "../google-map/MapSec";
 import BannerSection from "../sections/BannerSection";
+import SimpleTxtImg from "../sections/SimpleTxtImg";
 
 const ShowPage = (props) => {
   console.log(props.secData);
@@ -26,10 +27,7 @@ const ShowPage = (props) => {
     return (
       <div>
         {sections.map((sec, index) => (
-          <section
-            key={sec.id}
-            className={index % 2 ? classes.whiteSec : classes.greenSec}
-          >
+          <section key={sec.id} className={index % 2 ? "whiteSec" : "greenSec"}>
             {sec.type_id === 1 && (
               <SimpleSection
                 key={sec.section_content.id}
@@ -68,6 +66,12 @@ const ShowPage = (props) => {
             )}
             {sec.type_id === 12 && (
               <BannerSection
+                key={sec.section_content.id}
+                details={sec.section_content}
+              />
+            )}
+            {sec.type_id === 13 && (
+              <SimpleTxtImg
                 key={sec.section_content.id}
                 details={sec.section_content}
               />

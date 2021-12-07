@@ -1,20 +1,22 @@
 import classes from "../create.module.css";
-import { Form, Row, Col, Alert } from "react-bootstrap";
+import { Form, Row, Col, Badge, Alert, CloseButton } from "react-bootstrap";
 import { ConnectToDB } from "../../../../lib/connect-to-db";
 import useInput from "../../../../hooks/use-input";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../../../store/auth-context";
 import Notification from "../../../ui/notification";
-import { MdOutlineFileDownloadDone } from "react-icons/md";
+import axios from "axios";
+import NewRich from "../../../richtexteditor/NewRich";
 
 const isText = (value) => value.trim().length > 0;
 
-const ServiceBoxesForm = (props) => {
+const CreateImage = (props) => {
   const [dataError, setdataError] = useState();
   const [notification, setNotification] = useState();
   const [selectedFile, setSelectedFile] = useState(null);
+  const [textValue, setTextValue] = useState([]);
 
-  const [checked, setChecked] = useState(false);
+  console.log(props.pageId);
 
   const authCtx = useContext(AuthContext);
 
@@ -40,14 +42,19 @@ const ServiceBoxesForm = (props) => {
     reset: resetTitle,
   } = useInput(isText);
 
-  const {
-    value: textValue,
-    isValid: textIsValid,
-    hasError: textHasError,
-    valueChangeHandler: textChangeHandler,
-    inputBlurHandler: textBlurHandler,
-    reset: resetText,
-  } = useInput(isText);
+  // const {
+  //   value: textValue,
+  //   isValid: textIsValid,
+  //   hasError: textHasError,
+  //   valueChangeHandler: textChangeHandler,
+  //   inputBlurHandler: textBlurHandler,
+  //   reset: resetText,
+  // } = useInput(isText);
+
+  const getTextValue = (value) => {
+    setTextValue([value.split("\n")]);
+    console.log(textValue);
+  };
 
   const handleChange = (file) => {
     setSelectedFile(file[0]);
@@ -55,55 +62,84 @@ const ServiceBoxesForm = (props) => {
 
   let formIsValid = false;
 
-  if (titleIsValid && textIsValid && selectedFile) {
+  if (titleIsValid && selectedFile) {
     formIsValid = true;
   }
 
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
+    setNotification("pending");
 
-    const connectDB = ConnectToDB("create/section/slider");
+    const connectDB = ConnectToDB("create/section/imageortext");
 
     const headers = {
       Authorization: `Bearer ${login_token}`,
     };
 
-    console.log(props.slideCount);
+    const fData = new FormData();
 
-    if (!props.titles[+props.slideNumber - 1]) {
-      props.getTitles(titleValue);
-    } else {
-      props.titles[+props.slideNumber - 1] = titleValue;
-    }
-
-    if (!props.texts[+props.slideNumber - 1]) {
-      props.getTexts(textValue);
-    } else {
-      props.texts[+props.slideNumber - 1] = textValue;
-    }
-
-    if (!props.images[+props.slideNumber - 1]) {
-      props.getImages(selectedFile);
-    } else {
-      props.images[+props.slideNumber - 1] = selectedFile;
-    }
-
-    setChecked(true);
+    fData.append("page_id", props.pageId);
+    fData.append("type_id", 13);
+    fData.append("title", titleValue);
+    fData.append("image", selectedFile);
+    console.log(props.pageId);
+    axios({
+      method: "POST",
+      url: connectDB,
+      headers: headers,
+      data: fData,
+    })
+      .then((res) => {
+        console.log("res", res.data);
+        if (res.data.status === "success created") {
+          console.log(res.data);
+          setNotification(res.data.status);
+          setTimeout(() => {
+            authCtx.showPageHandler();
+            authCtx.closeSimpleImageSection();
+          }, 3000);
+        }
+      })
+      .catch((err) => {
+        console.log("Error", err);
+      });
   };
+
+  let notifDetails;
+
+  if (notification === "pending") {
+    notifDetails = {
+      status: "pending",
+      title: "Sending message...",
+      message: "Your message is on its way!",
+    };
+  }
+
+  if (notification === "success created") {
+    notifDetails = {
+      status: "success",
+      title: "Success!",
+      message: "Message sent successfully!",
+    };
+  }
+
+  if (notification === "error") {
+    notifDetails = {
+      status: "error",
+      title: "Error!",
+      message: dataError,
+    };
+  }
 
   return (
     <section className={classes.auth}>
-      <h2>Box {props.slideNumber}</h2>
+      <h1>Create Simple Section</h1>
       <Form onSubmit={submitHandler}>
-        {checked && (
-          <MdOutlineFileDownloadDone className={classes.saveChecked} />
-        )}
         <Row className="mb-3" className={classes.control}>
           <Form.Group
             as={Col}
             controlId="formGridFName"
             className={classes.formGroup}
-            onBlur={() => setChecked(false)}
           >
             <Form.Label>Title*</Form.Label>
             <Form.Control
@@ -117,37 +153,12 @@ const ServiceBoxesForm = (props) => {
 
             {titleHasError && (
               <Alert className="mt-1" variant="danger">
-                Please enter a valid Name.
+                Please enter a valid Title.
               </Alert>
             )}
           </Form.Group>
         </Row>
 
-        <Row className="mb-3" className={classes.control}>
-          <Form.Group
-            as={Col}
-            controlId="formGridMobile"
-            className={classes.formGroup}
-            onBlur={() => setChecked(false)}
-          >
-            <Form.Label>text*</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={6}
-              placeholder="text"
-              required
-              value={textValue}
-              onChange={textChangeHandler}
-              onBlur={textBlurHandler}
-            />
-
-            {textHasError && (
-              <Alert className="mt-1" variant="danger">
-                Please enter a valid Name.
-              </Alert>
-            )}
-          </Form.Group>
-        </Row>
         <Row className={classes.control}>
           <Form.Group className="mb-3">
             <Form.Label>Image</Form.Label>
@@ -155,16 +166,14 @@ const ServiceBoxesForm = (props) => {
               name="image"
               id="image"
               type="file"
-              onBlur={() => setChecked(false)}
               onChange={(e) => handleChange(e.target.files)}
               size="sm"
             />
           </Form.Group>
         </Row>
-
         <div className={classes.actions}>
           <button disabled={!formIsValid} variant="primary" type="submit">
-            Save
+            Submit
           </button>
         </div>
       </Form>
@@ -180,4 +189,4 @@ const ServiceBoxesForm = (props) => {
   );
 };
 
-export default ServiceBoxesForm;
+export default CreateImage;

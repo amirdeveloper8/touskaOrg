@@ -73,7 +73,7 @@ const MainNavigation = () => {
     <Navbar className={`orgnavbar ${classes.menu}`} variant="dark">
       <Container>
         <Navbar.Brand href="#home">
-          <Image src="/logo/logo.png" width={100} height={70} />
+          <Image src="/images/logo.png" width={100} height={70} />
         </Navbar.Brand>
         <Nav className="nav-item-list">
           {details.goods.map((item) =>

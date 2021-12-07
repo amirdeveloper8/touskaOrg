@@ -5,6 +5,7 @@ import useInput from "../../../../hooks/use-input";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../../../store/auth-context";
 import Notification from "../../../ui/notification";
+import { MdOutlineFileDownloadDone } from "react-icons/md";
 
 const isText = (value) => value.trim().length > 0;
 
@@ -12,6 +13,8 @@ const SlidesForm = (props) => {
   const [dataError, setdataError] = useState();
   const [notification, setNotification] = useState();
   const [selectedFile, setSelectedFile] = useState(null);
+
+  const [checked, setChecked] = useState(false);
 
   const authCtx = useContext(AuthContext);
 
@@ -84,17 +87,21 @@ const SlidesForm = (props) => {
     } else {
       props.images[+props.slideNumber - 1] = selectedFile;
     }
+
+    setChecked(true);
   };
 
   return (
     <section className={classes.auth}>
       <h2>Slide {props.slideNumber}</h2>
+      {checked && <MdOutlineFileDownloadDone className={classes.saveChecked} />}
       <Form onSubmit={submitHandler}>
         <Row className="mb-3" className={classes.control}>
           <Form.Group
             as={Col}
             controlId="formGridFName"
             className={classes.formGroup}
+            onBlur={() => setChecked(false)}
           >
             <Form.Label>Title*</Form.Label>
             <Form.Control
@@ -119,6 +126,7 @@ const SlidesForm = (props) => {
             as={Col}
             controlId="formGridMobile"
             className={classes.formGroup}
+            onBlur={() => setChecked(false)}
           >
             <Form.Label>text*</Form.Label>
             <Form.Control
@@ -146,6 +154,7 @@ const SlidesForm = (props) => {
               type="file"
               onChange={(e) => handleChange(e.target.files)}
               size="sm"
+              onBlur={() => setChecked(false)}
             />
           </Form.Group>
         </Row>

@@ -2,8 +2,8 @@ import classes from "./button.module.css";
 
 const Button = (props) => {
   const classButton = props.className
-    ? `${props.className} ${classes.button}`
-    : `${classes.button}`;
+    ? `${props.className} customBtn ${classes.button}`
+    : `${classes.button} customBtn`;
   return (
     <button
       disabled={props.disabled}

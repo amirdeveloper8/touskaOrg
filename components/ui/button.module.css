@@ -2,24 +2,24 @@
   cursor: pointer;
   font: inherit;
   color: white;
-  background-color: #9f5ccc;
-  border: 1px solid #9f5ccc;
-  border-radius: 4px;
+  background-color: var(--purple);
+  border: 1px solid var(--purple);
   padding: 0.5rem 0;
+  transition: 0.2s ease-in;
 }
 
 .button a {
-  color: white;
+  color: var(--white);
   text-decoration: none;
   padding: 0.5rem 2.5rem;
+  font-size: 2rem;
 }
 
 .button a:hover {
   text-decoration: none;
-  color: #1ba354;
 }
 
 .button:hover {
-  background-color: #873abb;
-  border-color: #873abb;
+  background-color: var(--darkGreen);
+  border-color: var(--darkGreen);
 }
