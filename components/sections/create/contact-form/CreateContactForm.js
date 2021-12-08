@@ -10,6 +10,7 @@ import Notification from "../../../ui/notification";
 import { getData } from "../../../../lib/get-data";
 
 const isText = (value) => value.trim().length > 0;
+const isEmail = (value) => value.includes("@");
 const CreateContactForm = (props) => {
   const {
     value: titleValue,
@@ -19,6 +20,14 @@ const CreateContactForm = (props) => {
     inputBlurHandler: titleBlurHandler,
     reset: resetTitle,
   } = useInput(isText);
+  const {
+    value: emailValue,
+    isValid: emailIsValid,
+    hasError: emailHasError,
+    valueChangeHandler: emailChangeHandler,
+    inputBlurHandler: emailBlurHandler,
+    reset: resetemail,
+  } = useInput(isEmail);
   const {
     value: subtitleValue,
     isValid: subtitleIsValid,
@@ -157,6 +166,7 @@ const CreateContactForm = (props) => {
     fData.append("page_id", props.pageId);
     fData.append("type_id", 11);
     fData.append("title", titleValue);
+    fData.append("emailaction", emailValue);
     fData.append("subtitle", subtitleValue);
     fData.append("image", selectedFile);
     fData.append("count", slideCount);
@@ -270,6 +280,28 @@ const CreateContactForm = (props) => {
             {titleHasError && (
               <Alert className="mt-1" variant="danger">
                 Please enter a valid Title.
+              </Alert>
+            )}
+          </Form.Group>
+          <Form.Group
+            as={Col}
+            lg={12}
+            controlId="formGridFName"
+            className={classes.formGroup}
+          >
+            <Form.Label>Email*</Form.Label>
+            <Form.Control
+              type="email"
+              placeholder="Email"
+              required
+              value={emailValue}
+              onChange={emailChangeHandler}
+              onBlur={emailBlurHandler}
+            />
+
+            {emailHasError && (
+              <Alert className="mt-1" variant="danger">
+                Please enter a valid email.
               </Alert>
             )}
           </Form.Group>

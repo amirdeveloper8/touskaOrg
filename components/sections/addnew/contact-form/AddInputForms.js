@@ -10,6 +10,8 @@ import AddOptionForm from "./AddOptionForm";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { AiFillMinusCircle } from "react-icons/ai";
 import { getData } from "../../../../lib/get-data";
+import axios from "axios";
+import Notification from "../../../ui/notification";
 
 const isText = (value) => value.trim().length > 0;
 
@@ -88,7 +90,12 @@ const AddInputForms = (props) => {
 
   for (let i = 0; i < optionCount; i++) {
     optionSec[i] = (
-      <AddOptionForm getOptions={getOptions} options={options} number={i + 1} />
+      <AddOptionForm
+        getOptions={getOptions}
+        key={i}
+        options={options}
+        number={i + 1}
+      />
     );
   }
 
@@ -121,13 +128,73 @@ const AddInputForms = (props) => {
   const submitHandler = (event) => {
     event.preventDefault();
 
-    console.log("options", options);
-    console.log("titleValue", titleValue);
-    console.log("value", inputId);
-    console.log("labelValue", labelValue);
-    console.log("placeholderValue", placeholderValue);
-    console.log("validValue", validValue);
+    const fData = new FormData();
+
+    fData.append("section_id", props.secId);
+
+    fData.append("type_id", inputId);
+    fData.append("name", titleValue);
+    fData.append("label", labelValue);
+    fData.append("placeholder", placeholderValue);
+    fData.append("options", JSON.stringify(options));
+    fData.append("valid", validValue);
+
+    const connectDB = ConnectToDB("create/input/contactForm");
+
+    const headers = {
+      Authorization: `Bearer ${login_token}`,
+    };
+
+    axios({
+      method: "POST",
+      url: connectDB,
+      headers: headers,
+      data: fData,
+    })
+      .then((res) => {
+        console.log("res", res);
+        if (res.data.status === "success created") {
+          console.log(res.data);
+          setNotification(res.data.status);
+          setTimeout(() => {
+            authCtx.closePageHandler();
+          }, 2800);
+
+          setTimeout(() => {
+            authCtx.showPageHandler();
+            authCtx.closeSimpleSection();
+          }, 3000);
+        }
+      })
+      .catch((err) => {
+        console.log("Error", err);
+      });
   };
+  let notifDetails;
+
+  if (notification === "pending") {
+    notifDetails = {
+      status: "pending",
+      title: "Sending message...",
+      message: "Your message is on its way!",
+    };
+  }
+
+  if (notification === "success created") {
+    notifDetails = {
+      status: "success",
+      title: "Success!",
+      message: "Message sent successfully!",
+    };
+  }
+
+  if (notification === "error") {
+    notifDetails = {
+      status: "error",
+      title: "Error!",
+      message: dataError,
+    };
+  }
 
   return (
     <section className={classes.auth}>
@@ -251,7 +318,7 @@ const AddInputForms = (props) => {
               onChange={checkHandler}
               value={checkVal}
               type="checkbox"
-              label="Check me out"
+              label="valid ?"
             />
           </Form.Group>
           {checkVal && (
@@ -286,6 +353,13 @@ const AddInputForms = (props) => {
           </button>
         </div>
       </Form>
+      {notification && (
+        <Notification
+          status={notifDetails.status}
+          title={notifDetails.title}
+          message={notifDetails.message}
+        />
+      )}
     </section>
   );
 };

@@ -41,6 +41,8 @@ import UpdateHeadContactForm from "../updatemodules/contact-form/UpdateHeadConta
 import UpdateBanner from "../updatemodules/UpdateBanner";
 import UpdateTxtImg from "../updatemodules/UpdateTxtImg";
 
+import AddContactUsBoxes from "../addnew/contactus-boxes/AddContactUsBoxes";
+
 import Link from "next/link";
 
 import { RiMapPinFill } from "react-icons/ri";
@@ -55,6 +57,7 @@ import { AiOutlineMail } from "react-icons/ai";
 import { RiTwitterLine } from "react-icons/ri";
 import { FiLinkedin } from "react-icons/fi";
 import UpdateContactBoxes from "../updatemodules/contact-boxes/UpdateContactBoxes";
+import UpdateEmailContactForm from "../updatemodules/contact-form/UpdateEmailContactForm";
 
 const GetDataPage = (props) => {
   const [updateOne, setUpdateOne] = useState(false);
@@ -104,6 +107,7 @@ const GetDataPage = (props) => {
               <UpdateTable data={sec.title} tableId={sec.id} />
             )}
             {sec.type_id === 11 && <UpdateHeadContactForm data={sec} />}
+            {sec.type_id === 11 && <UpdateEmailContactForm data={sec} />}
 
             {sec.type_id !== 6 &&
               sec.type_id !== 8 &&
@@ -612,6 +616,9 @@ const GetDataPage = (props) => {
                 )}
                 {sec.type_id === 11 && addNew && (
                   <AddInputForms secId={sec.id} typeId={sec.type_id} />
+                )}
+                {sec.type_id === 14 && addNew && (
+                  <AddContactUsBoxes secId={sec.id} typeId={sec.type_id} />
                 )}
 
                 {(sec.type_id === 2 ||

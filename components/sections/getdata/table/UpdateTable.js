@@ -47,7 +47,7 @@ const UpdateTable = (props) => {
 
     fData.append("title", tabValue);
 
-    const connectDB = ConnectToDB("update/sections  ");
+    const connectDB = ConnectToDB("update/sections");
 
     const headers = {
       Authorization: `Bearer ${login_token}`,

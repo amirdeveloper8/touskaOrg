@@ -9,6 +9,7 @@ import OptionForm from "./OptionForm";
 
 import { AiFillPlusCircle } from "react-icons/ai";
 import { AiFillMinusCircle } from "react-icons/ai";
+import { MdOutlineFileDownloadDone } from "react-icons/md";
 
 const isText = (value) => value.trim().length > 0;
 
@@ -27,6 +28,8 @@ const InputForms = (props) => {
   const [checkVal, setCheckVal] = useState(false);
 
   const authCtx = useContext(AuthContext);
+
+  const [checked, setChecked] = useState(false);
 
   const login_token = authCtx.token;
 
@@ -152,15 +155,19 @@ const InputForms = (props) => {
     } else {
       props.valid[+props.slideNumber - 1] = validValue;
     }
+
+    setChecked(true);
   };
 
   return (
     <section className={classes.auth}>
+      {checked && <MdOutlineFileDownloadDone className={classes.saveChecked} />}
       <h2>Input {props.slideNumber}</h2>
       <Form onSubmit={submitHandler}>
         <Row className="mb-3" className={classes.control}>
           <Form.Group
             as={Col}
+            onBlur={() => setChecked(false)}
             lg={12}
             controlId="formGridFName"
             className={classes.formGroup}
@@ -183,6 +190,7 @@ const InputForms = (props) => {
 
           <Form.Group
             as={Col}
+            onBlur={() => setChecked(false)}
             lg={12}
             controlId="formGridFName"
             className={classes.formGroup}
@@ -206,6 +214,7 @@ const InputForms = (props) => {
 
           <Form.Group
             as={Col}
+            onBlur={() => setChecked(false)}
             lg={12}
             controlId="formGridFName"
             className={classes.formGroup}
@@ -229,6 +238,7 @@ const InputForms = (props) => {
 
           <Form.Group
             as={Col}
+            onBlur={() => setChecked(false)}
             lg={12}
             controlId="formGridFName"
             className={classes.formGroup}

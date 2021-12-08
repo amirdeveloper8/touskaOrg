@@ -1,13 +1,13 @@
 import { Fragment, useState } from "react";
 import { Alert, Col, Form } from "react-bootstrap";
 import useInput from "../../../../hooks/use-input";
-import classes from "../create.module.css";
+import classes from "../update.module.css";
 import { BsFillSaveFill } from "react-icons/bs";
 import { MdOutlineFileDownloadDone } from "react-icons/md";
 
 const isText = (value) => value.trim().length > 0;
 
-const ContactItems = (props) => {
+const AddContactItems = (props) => {
   const [valueBox, setValueBox] = useState("Open this select menu");
   const [checked, setChecked] = useState(false);
   const [boxName, setBoxName] = useState();
@@ -73,12 +73,12 @@ const ContactItems = (props) => {
 
   return (
     <Form.Group
-      onBlur={() => setChecked(false)}
       as={Col}
       lg={12}
       controlId="formGridFName"
       className={classes.ContactSocial}
     >
+      <Form.Label>Type Of Items</Form.Label>
       <Form.Select
         value={valueBox}
         onChange={changeHandler}
@@ -131,4 +131,4 @@ const ContactItems = (props) => {
   );
 };
 
-export default ContactItems;
+export default AddContactItems;
