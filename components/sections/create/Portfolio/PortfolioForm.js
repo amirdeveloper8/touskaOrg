@@ -5,10 +5,13 @@ import useInput from "../../../../hooks/use-input";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../../../store/auth-context";
 import Notification from "../../../ui/notification";
+import { MdOutlineFileDownloadDone } from "react-icons/md";
 
 const isText = (value) => value.trim().length > 0;
 
 const PortfolioForm = (props) => {
+  const [checked, setChecked] = useState(false);
+
   const [dataError, setdataError] = useState();
   const [notification, setNotification] = useState();
   const [selectedFile, setSelectedFile] = useState(null);
@@ -102,15 +105,21 @@ const PortfolioForm = (props) => {
     } else {
       props.images[+props.slideNumber - 1] = selectedFile;
     }
+
+    setChecked(true);
   };
 
   return (
     <section className={classes.auth}>
       <h2>Slide {props.slideNumber}</h2>
       <Form onSubmit={submitHandler}>
+        {checked && (
+          <MdOutlineFileDownloadDone className={classes.saveChecked} />
+        )}
         <Row className="mb-3" className={classes.control}>
           <Form.Group
             as={Col}
+            onBlur={() => setChecked(false)}
             controlId="formGridFName"
             className={classes.formGroup}
           >
@@ -135,6 +144,7 @@ const PortfolioForm = (props) => {
         <Row className="mb-3" className={classes.control}>
           <Form.Group
             as={Col}
+            onBlur={() => setChecked(false)}
             controlId="formGridMobile"
             className={classes.formGroup}
           >
@@ -157,6 +167,7 @@ const PortfolioForm = (props) => {
         <Row className="mb-3" className={classes.control}>
           <Form.Group
             as={Col}
+            onBlur={() => setChecked(false)}
             controlId="formGridMobile"
             className={classes.formGroup}
           >

@@ -37,7 +37,8 @@ p,
 th,
 td,
 tr,
-a {
+a,
+label {
   font-family: "iranFont";
 }
 

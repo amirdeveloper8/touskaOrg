@@ -6,10 +6,13 @@ import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../../../store/auth-context";
 import Notification from "../../../ui/notification";
 import NewRich from "../../../richtexteditor/NewRich";
+import { MdOutlineFileDownloadDone } from "react-icons/md";
 
 const isText = (value) => value.trim().length > 0;
 
 const AccordionForm = (props) => {
+  const [checked, setChecked] = useState(false);
+
   const [dataError, setdataError] = useState();
   const [notification, setNotification] = useState();
   const [textValue, setTextValue] = useState([]);
@@ -74,15 +77,20 @@ const AccordionForm = (props) => {
     }
 
     console.log(textValue);
+    setChecked(true);
   };
 
   return (
     <section className={classes.auth}>
       <h2>Slide {props.slideNumber}</h2>
       <Form onSubmit={submitHandler}>
+        {checked && (
+          <MdOutlineFileDownloadDone className={classes.saveChecked} />
+        )}
         <Row className="mb-3" className={classes.control}>
           <Form.Group
             as={Col}
+            onBlur={() => setChecked(false)}
             controlId="formGridFName"
             className={classes.formGroup}
           >
@@ -107,6 +115,7 @@ const AccordionForm = (props) => {
         <Row className="mb-3" className={classes.control}>
           <Form.Group
             as={Col}
+            onBlur={() => setChecked(false)}
             controlId="formGridMobile"
             className={classes.formGroup}
           >

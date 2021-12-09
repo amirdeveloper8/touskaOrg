@@ -7,10 +7,12 @@ import Notification from "../../../ui/notification";
 import PlansItem from "./PlansItem";
 
 import { IoMdAddCircle, IoMdRemoveCircle } from "react-icons/io";
+import { MdOutlineFileDownloadDone } from "react-icons/md";
 
 const isText = (value) => value.trim().length > 0;
 
 const PlansForm = (props) => {
+  const [checked, setChecked] = useState(false);
   const [dataError, setdataError] = useState();
   const [notification, setNotification] = useState();
   const [selectedFile, setSelectedFile] = useState(null);
@@ -137,15 +139,20 @@ const PlansForm = (props) => {
     console.log("prop", props.items);
     console.log("buttonUrl", props.buttonUrl);
     console.log("buttonText", props.buttonText);
+    setChecked(true);
   };
 
   return (
     <section className={classes.auth}>
       <h2>plan {props.slideNumber}</h2>
       <Form onSubmit={submitHandler}>
+        {checked && (
+          <MdOutlineFileDownloadDone className={classes.saveChecked} />
+        )}
         <Row className="mb-3" className={classes.control}>
           <Form.Group
             as={Col}
+            onBlur={() => setChecked(false)}
             controlId="formGridFName"
             className={classes.formGroup}
           >
@@ -170,6 +177,7 @@ const PlansForm = (props) => {
         <Row className="mb-3" className={classes.control}>
           <Form.Group
             as={Col}
+            onBlur={() => setChecked(false)}
             controlId="formGridMobile"
             className={classes.formGroup}
           >
@@ -219,6 +227,7 @@ const PlansForm = (props) => {
         <Row className="mb-3" className={classes.control}>
           <Form.Group
             as={Col}
+            onBlur={() => setChecked(false)}
             controlId="formGridMobile"
             className={classes.formGroup}
           >
@@ -241,6 +250,7 @@ const PlansForm = (props) => {
         <Row className="mb-3" className={classes.control}>
           <Form.Group
             as={Col}
+            onBlur={() => setChecked(false)}
             controlId="formGridMobile"
             className={classes.formGroup}
           >

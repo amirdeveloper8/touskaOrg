@@ -56,8 +56,12 @@ import { AiOutlineInstagram } from "react-icons/ai";
 import { AiOutlineMail } from "react-icons/ai";
 import { RiTwitterLine } from "react-icons/ri";
 import { FiLinkedin } from "react-icons/fi";
+
 import UpdateContactBoxes from "../updatemodules/contact-boxes/UpdateContactBoxes";
 import UpdateEmailContactForm from "../updatemodules/contact-form/UpdateEmailContactForm";
+import DeleteAll from "../delete/DeleteAll";
+import DeleteSingle from "../delete/DeleteSingle";
+import OrderSec from "../order/OrderSec";
 
 const GetDataPage = (props) => {
   const [updateOne, setUpdateOne] = useState(false);
@@ -92,8 +96,14 @@ const GetDataPage = (props) => {
     setaddNew(true);
   };
 
+  const deleteSecHandler = (id, rel) => {
+    console.log("id", id);
+    console.log("rel", rel);
+  };
+
   if (props.data.page.sections) {
     const sections = props.data.page.sections;
+    const pageId = props.data.page.id;
     console.log(sections);
 
     return (
@@ -102,7 +112,11 @@ const GetDataPage = (props) => {
 
         {sections.map((sec) => (
           <div key={sec.id} className={classes.section}>
-            <h2>type:{sec.type.name}</h2>
+            <DeleteAll id={sec.id} type={sec.type.name} />
+            <div className={classes.typeSec}>
+              <h2>type:{sec.type.name}</h2>
+            </div>
+            <OrderSec data={sec} pageId={pageId} />
             {sec.type_id !== 11 && (
               <UpdateTable data={sec.title} tableId={sec.id} />
             )}
@@ -117,6 +131,12 @@ const GetDataPage = (props) => {
               sec.type_id !== 14 &&
               sec.section_content.map((item, index) => (
                 <div ref={closeBtnRef} key={index} className={classes.content}>
+                  <DeleteSingle
+                    box={item}
+                    type={sec.type.name}
+                    id={sec.type.id}
+                    secId={sec.id}
+                  />
                   <div
                     className={classes.fakeBtn}
                     onClick={updateSectionHandler}
@@ -157,6 +177,11 @@ const GetDataPage = (props) => {
                           {JSON.parse(item.item.lists).map((list, idx) => (
                             <li key={idx}>{list}</li>
                           ))}
+                          <Button variant="light">
+                            <Link href={item.button.url}>
+                              {item.button.name}
+                            </Link>
+                          </Button>
                         </ul>
                       )}
                       {sec.type_id === 5 ||
@@ -221,6 +246,12 @@ const GetDataPage = (props) => {
             {sec.type_id === 6 &&
               sec.section_content.map((item, index) => (
                 <div ref={closeBtnRef} key={index} className={classes.content}>
+                  <DeleteSingle
+                    box={item}
+                    type={sec.type.name}
+                    id={sec.type.id}
+                    secId={sec.id}
+                  />
                   <div
                     className={classes.fakeBtn}
                     onClick={updateSectionHandler}
@@ -321,6 +352,12 @@ const GetDataPage = (props) => {
             {sec.type_id === 10 &&
               sec.section_content.map((item, index) => (
                 <section key={index} className={classes.worksamples}>
+                  <DeleteSingle
+                    box={item}
+                    type={sec.type.name}
+                    id={sec.type.id}
+                    secId={sec.id}
+                  />
                   <div className={`details ${classes.worksampleItems}`}>
                     <div className={classes.boxWorksamples}>
                       <h3>Box Items:</h3>
@@ -360,6 +397,12 @@ const GetDataPage = (props) => {
             {sec.type_id === 11 &&
               sec.section_content.map((item, index) => (
                 <section key={index} className={classes.contactforms}>
+                  <DeleteSingle
+                    box={item}
+                    type={sec.type.name}
+                    id={sec.type.id}
+                    secId={sec.id}
+                  />
                   <div className={`details ${classes.contactformItems}`}>
                     <h3>type: {item.type_namee}</h3>
                     <h5>Name: {item.name}</h5>
@@ -430,6 +473,12 @@ const GetDataPage = (props) => {
             {sec.type_id === 14 &&
               sec.section_content.map((item, index) => (
                 <div ref={closeBtnRef} key={index} className={classes.content}>
+                  <DeleteSingle
+                    box={item}
+                    type={sec.type.name}
+                    id={sec.type.id}
+                    secId={sec.id}
+                  />
                   <div
                     className={classes.fakeBtn}
                     onClick={updateSectionHandler}
