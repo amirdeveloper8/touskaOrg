@@ -2,6 +2,8 @@ import { Fragment, useContext, useEffect, useState } from "react";
 import SectionModule from "../../../components/ui/SectionModule";
 import AuthContext from "../../../store/auth-context";
 
+import Link from "next/link";
+
 import classes from "../../../styles/allpages.module.css";
 
 import Button from "../../../components/ui/Button";
@@ -73,6 +75,11 @@ const CreatePage = (props) => {
     <section className="dashboard">
       <div className={classes.buttoncreate}>
         <Button onClick={openModal}>Create New Section</Button>
+      </div>
+      <div className={classes.viewPage}>
+        <Button>
+          <Link href={`/${pageId}`}>View Page</Link>
+        </Button>
       </div>
       <div>
         <Button onClick={getDataHandler}>See the latest Sections</Button>

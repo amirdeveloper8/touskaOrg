@@ -26,12 +26,28 @@ const UpdateSimple = (props) => {
 
   const pageId = props.sec.page_id;
   const sectionId = props.sec.id;
+  const typeId = props.sec.type.id;
 
   console.log("typeId", pageId);
 
   const authCtx = useContext(AuthContext);
 
   const login_token = authCtx.token;
+
+  let url = "";
+  let title = "";
+
+  if (typeId === 1) {
+    url = "create/section/simple";
+    title = data.title;
+  }
+
+  if (typeId === 2) {
+    url = "update/slider/slide";
+    title = data.title.content;
+  }
+
+  console.log(url);
 
   useEffect(() => {
     if (notification === "success updated" || notification === "error") {
@@ -180,7 +196,7 @@ const UpdateSimple = (props) => {
               type="text"
               placeholder="First Name"
               required
-              value={resetTitleValue ? titleValue : data.title}
+              value={resetTitleValue ? titleValue : title}
               onChange={titleChangeHandler}
               onBlur={titleBlurHandler}
             />
@@ -202,7 +218,10 @@ const UpdateSimple = (props) => {
           </Form.Group>
         </Row>
 
-        <Row className="mb-3" className={classes.control}>
+        <Row
+          className="mb-3"
+          className={`${classes.richInput} ${classes.editTxtRich}`}
+        >
           <Form.Group
             as={Col}
             controlId="formGridMobile"

@@ -26,6 +26,23 @@ const CreateTable = (props) => {
     reset: resetTitle,
   } = useInput(isText);
   const {
+    value: btnNameValue,
+    isValid: btnNameIsValid,
+    hasError: btnNameHasError,
+    valueChangeHandler: btnNameChangeHandler,
+    inputBlurHandler: btnNameBlurHandler,
+    reset: resetBtnName,
+  } = useInput(isText);
+  const {
+    value: btnUrlValue,
+    isValid: btnUrlIsValid,
+    hasError: btnUrlHasError,
+    valueChangeHandler: btnUrlChangeHandler,
+    inputBlurHandler: btnUrlBlurHandler,
+    reset: resetBtnUrl,
+  } = useInput(isText);
+
+  const {
     value: tableTitleValue,
     isValid: tableTitleIsValid,
     hasError: tableTitleHasError,
@@ -158,6 +175,8 @@ const CreateTable = (props) => {
     const fData = new FormData();
     fData.append("page_id", props.pageId);
     fData.append("title", titleValue);
+    fData.append("button_name", btnNameValue);
+    fData.append("button_url", btnUrlValue);
     fData.append("type_id", 8);
     fData.append("comments", JSON.stringify(cmValues));
     fData.append("titleHeader", tableTitleValue);
@@ -203,7 +222,7 @@ const CreateTable = (props) => {
 
   let formIsValid = false;
 
-  if (titleIsValid) {
+  if (titleIsValid && btnNameIsValid && btnUrlIsValid) {
     formIsValid = true;
   }
 
@@ -270,6 +289,7 @@ const CreateTable = (props) => {
           </Form.Group>
           <Form.Group
             as={Col}
+            lg={12}
             controlId="formGridFName"
             className={classes.formGroup}
           >
@@ -289,6 +309,50 @@ const CreateTable = (props) => {
               </Alert>
             )}
           </Form.Group>
+          <Form.Group
+            as={Col}
+            lg={12}
+            controlId="formGridFName"
+            className={classes.formGroup}
+          >
+            <Form.Label>Button Name*</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Button Name"
+              required
+              value={btnNameValue}
+              onChange={btnNameChangeHandler}
+              onBlur={btnNameBlurHandler}
+            />
+
+            {btnNameHasError && (
+              <Alert className="mt-1" variant="danger">
+                Please enter a valid Button Name.
+              </Alert>
+            )}
+          </Form.Group>
+          <Form.Group
+            as={Col}
+            lg={12}
+            controlId="formGridFName"
+            className={classes.formGroup}
+          >
+            <Form.Label>Button Url*</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Button Url"
+              required
+              value={btnUrlValue}
+              onChange={btnUrlChangeHandler}
+              onBlur={btnUrlBlurHandler}
+            />
+
+            {btnUrlHasError && (
+              <Alert className="mt-1" variant="danger">
+                Please enter a valid Button Url.
+              </Alert>
+            )}
+          </Form.Group>
         </Row>
 
         <div className={`${classes.actions} ${classes.submitactions}`}>
@@ -302,6 +366,7 @@ const CreateTable = (props) => {
           <Col sm={12} className="w-25">
             <Form.Group
               as={Col}
+              lg={12}
               controlId="formGridFName"
               className={classes.formGroup}
             >
@@ -341,6 +406,7 @@ const CreateTable = (props) => {
           <Col sm={12} className="w-25">
             <Form.Group
               as={Col}
+              lg={12}
               controlId="formGridFName"
               className={classes.formGroup}
             >

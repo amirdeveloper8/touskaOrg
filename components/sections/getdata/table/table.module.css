@@ -202,6 +202,19 @@
   left: 0;
 }
 
+.deleteTable {
+  position: absolute !important;
+  height: 100%;
+  top: 0;
+  right: -1.5rem;
+  top: 0;
+}
+
+.deleteTable .editHeader {
+  background-color: red !important;
+  border-color: red !important;
+}
+
 .editTableValues .editHeader,
 .editTableValues .closeTh {
   position: absolute !important;

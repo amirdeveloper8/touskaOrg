@@ -42,14 +42,23 @@ const CreateSimple = (props) => {
     reset: resetTitle,
   } = useInput(isText);
 
-  // const {
-  //   value: textValue,
-  //   isValid: textIsValid,
-  //   hasError: textHasError,
-  //   valueChangeHandler: textChangeHandler,
-  //   inputBlurHandler: textBlurHandler,
-  //   reset: resetText,
-  // } = useInput(isText);
+  const {
+    value: btnNameValue,
+    isValid: btnNameIsValid,
+    hasError: btnNameHasError,
+    valueChangeHandler: btnNameChangeHandler,
+    inputBlurHandler: btnNameBlurHandler,
+    reset: resetBtnName,
+  } = useInput(isText);
+
+  const {
+    value: btnUrlValue,
+    isValid: btnUrlIsValid,
+    hasError: btnUrlHasError,
+    valueChangeHandler: btnUrlChangeHandler,
+    inputBlurHandler: btnUrlBlurHandler,
+    reset: resetBtnUrl,
+  } = useInput(isText);
 
   const getTextValue = (value) => {
     setTextValue([value.split("\n")]);
@@ -83,6 +92,8 @@ const CreateSimple = (props) => {
     fData.append("title", titleValue);
     fData.append("text", JSON.stringify(textValue));
     fData.append("image", selectedFile);
+    fData.append("button_name", btnNameValue);
+    fData.append("button_url", btnUrlValue);
     console.log(props.pageId);
     axios({
       method: "POST",
@@ -139,6 +150,7 @@ const CreateSimple = (props) => {
         <Row className="mb-3" className={classes.control}>
           <Form.Group
             as={Col}
+            lg={12}
             controlId="formGridFName"
             className={classes.formGroup}
           >
@@ -160,7 +172,10 @@ const CreateSimple = (props) => {
           </Form.Group>
         </Row>
 
-        <Row className="mb-3" className={classes.control}>
+        <Row
+          className="mb-3"
+          className={`${classes.richInput} ${classes.control}`}
+        >
           <Form.Group
             as={Col}
             controlId="formGridMobile"
@@ -180,6 +195,50 @@ const CreateSimple = (props) => {
               onChange={(e) => handleChange(e.target.files)}
               size="sm"
             />
+          </Form.Group>
+        </Row>
+        <Row className="mb-3" className={classes.control}>
+          <Form.Group
+            as={Col}
+            lg={12}
+            controlId="formGridFName"
+            className={classes.formGroup}
+          >
+            <Form.Label>Button Name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Button Name"
+              value={btnNameValue}
+              onChange={btnNameChangeHandler}
+              onBlur={btnNameBlurHandler}
+            />
+
+            {btnNameHasError && (
+              <Alert className="mt-1" variant="danger">
+                Please enter a valid Button Name.
+              </Alert>
+            )}
+          </Form.Group>
+          <Form.Group
+            as={Col}
+            lg={12}
+            controlId="formGridFName"
+            className={classes.formGroup}
+          >
+            <Form.Label>Button Url</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Button Url"
+              value={btnUrlValue}
+              onChange={btnUrlChangeHandler}
+              onBlur={btnUrlBlurHandler}
+            />
+
+            {btnUrlHasError && (
+              <Alert className="mt-1" variant="danger">
+                Please enter a valid Button Url.
+              </Alert>
+            )}
           </Form.Group>
         </Row>
         <div className={classes.actions}>

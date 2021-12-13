@@ -9,6 +9,9 @@ import Link from "next/link";
 
 const TableSection = (props) => {
   const data = props.details.section_content;
+  const btnDetails = props.details.button;
+  const btnName = btnDetails[0].name;
+  const btnUrl = btnDetails[0].url;
   const tabs = data.tab;
   const ths = JSON.parse(data.th);
   const tfs = JSON.parse(data.tf);
@@ -106,7 +109,7 @@ const TableSection = (props) => {
       </div>
       <div className={classes.buttonTable}>
         <Button>
-          <Link href="#">ارتباط با ما</Link>
+          <a href={`/${btnUrl}`}> {btnName} </a>
         </Button>
       </div>
     </section>

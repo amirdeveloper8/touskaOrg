@@ -13,6 +13,8 @@ import { ConnectToDB } from "../../../../lib/connect-to-db";
 import axios from "axios";
 import AuthContext from "../../../../store/auth-context";
 
+import { AiTwotoneDelete } from "react-icons/ai";
+
 const GetTable = (props) => {
   const tableId = props.tableId;
   const data = props.data;
@@ -90,6 +92,44 @@ const GetTable = (props) => {
     console.log("tr", JSON.stringify(trValues));
   };
 
+  const deleteTableHandler = () => {
+    console.log("table_id", tableId);
+    console.log("tab_id", data.id);
+
+    const fData = new FormData();
+    fData.append("table_id", tableId);
+    fData.append("tab_id", data.id);
+
+    const connectDB = ConnectToDB("delete/section/Tab");
+
+    const headers = {
+      Authorization: `Bearer ${login_token}`,
+    };
+
+    axios({
+      method: "POST",
+      url: connectDB,
+      headers: headers,
+      data: fData,
+    })
+      .then((res) => {
+        console.log("res", res);
+        if (res.data.status === "success deleted") {
+          console.log(res.data);
+          setTimeout(() => {
+            authCtx.closePageHandler();
+          }, 800);
+
+          setTimeout(() => {
+            authCtx.showPageHandler();
+          }, 1000);
+        }
+      })
+      .catch((err) => {
+        console.log("Error", err.response.data);
+      });
+  };
+
   return (
     <Tab.Pane className={classes.tables} eventKey={`table${number}`}>
       <Table striped bordered hover>
@@ -110,9 +150,16 @@ const GetTable = (props) => {
                 ))}
               </tr>
             ))}
-            <tr className={classes.editTable}>
+            {trValues.length !== 0 && (
+              <tr className={classes.editTable}>
+                <td className={classes.editHeader}>
+                  <BiEdit onClick={updateHandler} />
+                </td>
+              </tr>
+            )}
+            <tr className={classes.deleteTable}>
               <td className={classes.editHeader}>
-                <BiEdit onClick={updateHandler} />
+                <AiTwotoneDelete onClick={deleteTableHandler} />
               </td>
             </tr>
           </tbody>

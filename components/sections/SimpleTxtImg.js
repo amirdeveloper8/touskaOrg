@@ -34,8 +34,19 @@ const SimpleTxtImg = (props) => {
       {data.map((item, index) => (
         <section key={index} className={classes.simple} key={index}>
           <div className={classes.content}>
-            <h2>{item.title}</h2>
-            <div className={classes.detailsImgTxt}>
+            {item.image_url && <h2>{item.title}</h2>}
+            {!item.image_url && (
+              <h2 id="simpleTxt" className={classes.txtTitle}>
+                {item.title}
+              </h2>
+            )}
+            <div
+              className={
+                item.image_url
+                  ? `${classes.detailsImgTxt}`
+                  : `${classes.detailsTxt}`
+              }
+            >
               {item.image_url && (
                 <div className={classes.imageSimple}>
                   <img src={item.image_url} alt={item.title} />

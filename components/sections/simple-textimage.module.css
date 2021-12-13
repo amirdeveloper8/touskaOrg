@@ -1,6 +1,7 @@
 .simple {
   direction: rtl;
-  max-width: 1200px;
+  width: 90%;
+  max-width: 1980px;
   margin: auto;
   padding: 2rem 1rem;
 }
@@ -53,6 +54,7 @@
 
 .modal {
   transform: scale(1);
+  background: #213d3ada;
 }
 
 .modalImage svg {
@@ -63,4 +65,82 @@
   background-color: var(--lightGreen);
   font-size: 2rem;
   cursor: pointer;
+}
+
+.txtTitle {
+  text-align: center !important;
+}
+
+.detailsTxt {
+  width: 80%;
+  margin: auto;
+}
+
+.detailsTxt p {
+  text-align: justify;
+}
+
+.detailsTxt p,
+.detailsTxt ul {
+  font-size: 16px;
+  color: black;
+}
+
+.detailsTxt ul,
+.detailsTxt ol {
+  list-style-type: none;
+}
+
+.detailsTxt * {
+  padding: 0 3%;
+}
+
+.detailsTxt ul,
+.detailsTxt li {
+  padding: 0 !important;
+}
+
+.detailsTxt li::before,
+.detailsTxt ul li::after {
+  content: " ";
+  padding: 0 15px;
+  width: 20px;
+  height: 5px;
+  background-color: var(--purple);
+  color: var(--purple);
+  margin: 5px;
+  font-size: 6px;
+}
+
+.detailsTxt b {
+  padding: 0 !important;
+}
+
+.detailsTxt h3 {
+  color: black;
+}
+
+@media (max-width: 980px) {
+  .detailsTxt {
+    width: 100%;
+  }
+  .detailsTxt p,
+  .detailsTxt li {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .detailsTxt {
+    width: 100%;
+  }
+  .detailsTxt p,
+  .detailsTxt li {
+    font-size: 0.6rem;
+  }
+  .detailsTxt li::before,
+  .detailsTxt ul li::after {
+    content: " ";
+    padding: 0 10px;
+  }
 }

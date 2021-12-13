@@ -42,14 +42,22 @@ const CreateText = (props) => {
     reset: resetTitle,
   } = useInput(isText);
 
-  // const {
-  //   value: textValue,
-  //   isValid: textIsValid,
-  //   hasError: textHasError,
-  //   valueChangeHandler: textChangeHandler,
-  //   inputBlurHandler: textBlurHandler,
-  //   reset: resetText,
-  // } = useInput(isText);
+  const {
+    value: btnNameValue,
+    isValid: btnNameIsValid,
+    hasError: btnNameHasError,
+    valueChangeHandler: btnNameChangeHandler,
+    inputBlurHandler: btnNameBlurHandler,
+    reset: resetBtnName,
+  } = useInput(isText);
+  const {
+    value: btnUrlValue,
+    isValid: btnUrlIsValid,
+    hasError: btnUrlHasError,
+    valueChangeHandler: btnUrlChangeHandler,
+    inputBlurHandler: btnUrlBlurHandler,
+    reset: resetBtnUrl,
+  } = useInput(isText);
 
   const getTextValue = (value) => {
     setTextValue([value.split("\n")]);
@@ -77,6 +85,8 @@ const CreateText = (props) => {
     fData.append("page_id", props.pageId);
     fData.append("type_id", 13);
     fData.append("title", titleValue);
+    fData.append("button_name", btnNameValue);
+    fData.append("button_url", btnUrlValue);
     fData.append("subtitle", JSON.stringify(textValue));
     console.log(props.pageId);
     axios({
@@ -155,7 +165,10 @@ const CreateText = (props) => {
           </Form.Group>
         </Row>
 
-        <Row className="mb-3" className={classes.control}>
+        <Row
+          className="mb-3"
+          className={`${classes.richInput} ${classes.control}`}
+        >
           <Form.Group
             as={Col}
             controlId="formGridMobile"
@@ -163,6 +176,39 @@ const CreateText = (props) => {
           >
             <Form.Label>text*</Form.Label>
             <NewRich getTexts={getTextValue} />
+          </Form.Group>
+        </Row>
+
+        <Row className="mb-3" className={classes.control}>
+          <Form.Group
+            as={Col}
+            lg={12}
+            controlId="formGridFName"
+            className={classes.formGroup}
+          >
+            <Form.Label>Button Name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Button Name"
+              value={btnNameValue}
+              onChange={btnNameChangeHandler}
+              onBlur={btnNameBlurHandler}
+            />
+          </Form.Group>
+          <Form.Group
+            as={Col}
+            lg={12}
+            controlId="formGridFName"
+            className={classes.formGroup}
+          >
+            <Form.Label>Button Url</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Button Url"
+              value={btnUrlValue}
+              onChange={btnUrlChangeHandler}
+              onBlur={btnUrlBlurHandler}
+            />
           </Form.Group>
         </Row>
         <div className={classes.actions}>

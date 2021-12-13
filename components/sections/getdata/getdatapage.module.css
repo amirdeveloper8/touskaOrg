@@ -18,6 +18,7 @@
   margin: 1rem 0;
   padding: 1rem 0;
   position: relative;
+  direction: rtl;
 }
 
 .typeSec {
@@ -199,6 +200,51 @@
   width: 100%;
 }
 
+.simpleSec h3,
+.simpleTxtImg h3 {
+  color: black;
+}
+
+.simpleSec ul,
+.simpleSec ol,
+.simpleTxtImg ul,
+.simpleTxtImg ol {
+  list-style-type: none;
+}
+
+.simpleSec ul,
+.simpleTxtImg ul,
+.simpleSec ol,
+.simpleTxtImg ol {
+  padding: 0;
+}
+
+.simpleSec ol li::before,
+.simpleTxtImg ol li::before {
+  content: " ";
+  padding: 0 15px;
+  width: 20px;
+  height: 5px;
+  background-color: var(--purple);
+  color: var(--purple);
+  margin: 5px;
+  font-size: 6px;
+}
+
+.simpleSec ul li::before,
+.simpleSec ul li::after,
+.simpleTxtImg ul li::before,
+.simpleTxtImg ul li::after {
+  content: " ";
+  padding: 0 15px;
+  width: 20px;
+  height: 5px;
+  background-color: var(--purple);
+  color: var(--purple);
+  margin: 5px;
+  font-size: 6px;
+}
+
 .simpleTxtImg img {
   width: 100%;
   max-width: 100% !important;
@@ -244,4 +290,13 @@
 
 .contactLinkIcons p {
   background-color: #88367660;
+}
+
+.ListAccordionItems {
+  background-color: var(--green);
+}
+
+.ListAccordionItems h3 {
+  font-size: 1.8rem !important;
+  color: black;
 }

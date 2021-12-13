@@ -201,7 +201,10 @@ const UpdateTxtImg = (props) => {
         </Row>
 
         {props.richTxt && (
-          <Row className="mb-3" className={classes.control}>
+          <Row
+            className="mb-3"
+            className={`${classes.richInput} ${classes.control}`}
+          >
             <Form.Group
               as={Col}
               controlId="formGridMobile"

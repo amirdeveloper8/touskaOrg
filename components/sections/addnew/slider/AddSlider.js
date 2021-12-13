@@ -1,23 +1,24 @@
-import classes from "../create.module.css";
-import { Form, Row, Col, Alert } from "react-bootstrap";
+import classes from "../add.module.css";
+import { Form, Row, Col, Badge, Alert, CloseButton } from "react-bootstrap";
 import { ConnectToDB } from "../../../../lib/connect-to-db";
 import useInput from "../../../../hooks/use-input";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../../../store/auth-context";
 import Notification from "../../../ui/notification";
-import { MdOutlineFileDownloadDone } from "react-icons/md";
+import axios from "axios";
+import ListAccordion from "../../getdata/ListAccordion";
 import NewRich from "../../../richtexteditor/NewRich";
 
 const isText = (value) => value.trim().length > 0;
 
-const SlidesForm = (props) => {
+const AddSlider = (props) => {
   const [dataError, setdataError] = useState();
   const [notification, setNotification] = useState();
+  const [textValue, setTextValue] = useState();
 
-  const [textValue, setTextValue] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
 
-  const [checked, setChecked] = useState(false);
+  const url = "create/slider/slide";
 
   const authCtx = useContext(AuthContext);
 
@@ -44,65 +45,100 @@ const SlidesForm = (props) => {
   } = useInput(isText);
 
   const getTextValue = (value) => {
-    setTextValue([value.split("\n")]);
-    console.log(textValue);
+    setTextValue(value);
   };
 
   const handleChange = (file) => {
     setSelectedFile(file[0]);
   };
 
-  let formIsValid = false;
+  let updateIsValid = true;
 
-  if (titleIsValid && textValue.length !== 0 && selectedFile) {
-    formIsValid = true;
-  }
+  //   if (resetTitleValue || resetTextValue) {
+  //     updateIsValid = true;
+  //   }
 
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
+    setNotification("pending");
 
-    const connectDB = ConnectToDB("create/section/slider");
+    const connectDB = ConnectToDB(url);
 
     const headers = {
       Authorization: `Bearer ${login_token}`,
     };
 
-    console.log(JSON.stringify(textValue));
+    const fData = new FormData();
 
-    if (!props.titles[+props.slideNumber - 1]) {
-      props.getTitles(titleValue);
-    } else {
-      props.titles[+props.slideNumber - 1] = titleValue;
-    }
+    fData.append("section_id", props.secId);
+    fData.append("title_slide", titleValue);
+    fData.append("text_slide", JSON.stringify(textValue));
+    fData.append("image_slide", selectedFile);
 
-    if (!props.texts[+props.slideNumber - 1]) {
-      props.getTexts(JSON.stringify(textValue));
-    } else {
-      props.texts[+props.slideNumber - 1] = JSON.stringify(textValue);
-    }
+    axios({
+      method: "POST",
+      url: connectDB,
+      headers: headers,
+      data: fData,
+    })
+      .then((res) => {
+        console.log("res", res.data);
+        if (res.data.status === "success created") {
+          console.log(res.data);
+          setNotification(res.data.status);
+          setTimeout(() => {
+            authCtx.closePageHandler();
+          }, 2800);
 
-    if (!props.images[+props.slideNumber - 1]) {
-      props.getImages(selectedFile);
-    } else {
-      props.images[+props.slideNumber - 1] = selectedFile;
-    }
-
-    setChecked(true);
+          setTimeout(() => {
+            authCtx.showPageHandler();
+            authCtx.closeSimpleSection();
+          }, 3000);
+        }
+      })
+      .catch((err) => {
+        console.log("Error", err);
+      });
   };
+
+  let notifDetails;
+
+  if (notification === "pending") {
+    notifDetails = {
+      status: "pending",
+      title: "Sending message...",
+      message: "Your message is on its way!",
+    };
+  }
+
+  if (notification === "success created") {
+    notifDetails = {
+      status: "success",
+      title: "Success!",
+      message: "Message sent successfully!",
+    };
+  }
+
+  if (notification === "error") {
+    notifDetails = {
+      status: "error",
+      title: "Error!",
+      message: dataError,
+    };
+  }
 
   return (
     <section className={classes.auth}>
-      <h2>Slide {props.slideNumber}</h2>
-      {checked && <MdOutlineFileDownloadDone className={classes.saveChecked} />}
+      <h1>Add New Slide</h1>
+
       <Form onSubmit={submitHandler}>
         <Row className="mb-3" className={classes.control}>
           <Form.Group
             as={Col}
             controlId="formGridFName"
             className={classes.formGroup}
-            onBlur={() => setChecked(false)}
           >
-            <Form.Label>Title*</Form.Label>
+            <Form.Label>Title</Form.Label>
             <Form.Control
               type="text"
               placeholder="First Name"
@@ -125,7 +161,6 @@ const SlidesForm = (props) => {
             as={Col}
             controlId="formGridMobile"
             className={classes.formGroup}
-            onBlur={() => setChecked(false)}
           >
             <Form.Label>text*</Form.Label>
             <NewRich getTexts={getTextValue} />
@@ -140,14 +175,13 @@ const SlidesForm = (props) => {
               type="file"
               onChange={(e) => handleChange(e.target.files)}
               size="sm"
-              onBlur={() => setChecked(false)}
             />
           </Form.Group>
         </Row>
 
         <div className={classes.actions}>
-          <button disabled={!formIsValid} variant="primary" type="submit">
-            Save
+          <button disabled={!updateIsValid} variant="primary" type="submit">
+            Submit
           </button>
         </div>
       </Form>
@@ -163,4 +197,4 @@ const SlidesForm = (props) => {
   );
 };
 
-export default SlidesForm;
+export default AddSlider;

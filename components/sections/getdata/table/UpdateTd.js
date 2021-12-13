@@ -42,16 +42,15 @@ const UpdateTd = (props) => {
 
   const trueValueHanler = () => {
     setValue("true");
-    setEdit(false);
+    props.allValue[props.count] = value;
   };
 
   const falseValueHanler = () => {
     setValue("false");
-    setEdit(false);
+    props.allValue[props.count] = value;
   };
 
   const submitEdit = () => {
-    setValue(tabValue);
     console.log(value);
     props.allValue[props.count] = value;
     setEdit(false);
@@ -146,7 +145,7 @@ const UpdateTd = (props) => {
               <GrEdit className={classes.iconThEdit} onClick={editHandler} />
             )}
           </div>
-          {showInput && (
+          {edit && (
             <Button onClick={submitEdit} variant="success">
               save
             </Button>

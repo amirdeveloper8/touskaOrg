@@ -10,12 +10,14 @@ const SimpleSection = (props) => {
     <Fragment>
       {data.map((item, index) => (
         <section key={index} className={classes.simple} key={item.texts.id}>
-          <div className={classes.content}>
-            <h2>{item.title}</h2>
-            <ListAccordion items={item.texts.content} />
-          </div>
-          <div className={classes.image}>
-            <img src={item.image_url} />
+          <h2>{item.title}</h2>
+          <div className={classes.items}>
+            <div className={classes.content}>
+              <ListAccordion items={item.texts.content} />
+            </div>
+            <div className={classes.image}>
+              <img src={item.image_url} />
+            </div>
           </div>
         </section>
       ))}

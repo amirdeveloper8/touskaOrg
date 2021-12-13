@@ -62,6 +62,9 @@ import UpdateEmailContactForm from "../updatemodules/contact-form/UpdateEmailCon
 import DeleteAll from "../delete/DeleteAll";
 import DeleteSingle from "../delete/DeleteSingle";
 import OrderSec from "../order/OrderSec";
+import UpdateTitleSub from "../updatemodules/UpdateTitleSub";
+import AddSlider from "../addnew/slider/AddSlider";
+import UpdateButtons from "../updatemodules/UpdateButtons";
 
 const GetDataPage = (props) => {
   const [updateOne, setUpdateOne] = useState(false);
@@ -111,15 +114,24 @@ const GetDataPage = (props) => {
         <h1>Content Of Page</h1>
 
         {sections.map((sec) => (
-          <div key={sec.id} className={classes.section}>
+          <div
+            key={sec.id}
+            className={
+              sec.type_id === 1
+                ? `${classes.section} ${classes.simpleSec}`
+                : `${classes.section}`
+            }
+          >
             <DeleteAll id={sec.id} type={sec.type.name} />
             <div className={classes.typeSec}>
               <h2>type:{sec.type.name}</h2>
             </div>
             <OrderSec data={sec} pageId={pageId} />
-            {sec.type_id !== 11 && (
+
+            {sec.type_id !== 11 && sec.type_id !== 5 && (
               <UpdateTable data={sec.title} tableId={sec.id} />
             )}
+            {sec.type_id === 5 && <UpdateTitleSub data={sec} />}
             {sec.type_id === 11 && <UpdateHeadContactForm data={sec} />}
             {sec.type_id === 11 && <UpdateEmailContactForm data={sec} />}
 
@@ -160,14 +172,19 @@ const GetDataPage = (props) => {
                       <p>
                         {sec.type_id !== 5 &&
                           sec.type_id !== 1 &&
+                          sec.type_id !== 2 &&
                           sec.type_id !== 7 &&
                           sec.type_id !== 9 &&
                           sec.type_id !== 12 &&
                           item.texts.content}
                         {sec.type_id === 5 && item.title.subtitle}
                       </p>
-                      {(sec.type_id === 7 || sec.type_id === 1) && (
-                        <ListAccordion items={item.texts.content} />
+                      {(sec.type_id === 7 ||
+                        sec.type_id === 1 ||
+                        sec.type_id === 2) && (
+                        <div className={classes.ListAccordionItems}>
+                          <ListAccordion items={item.texts.content} />
+                        </div>
                       )}
                       {sec.type_id === 12 && (
                         <ListAccordion items={item.subtitle} />
@@ -178,10 +195,13 @@ const GetDataPage = (props) => {
                             <li key={idx}>{list}</li>
                           ))}
                           <Button variant="light">
-                            <Link href={item.button.url}>
+                            <Link href={`/${item.button.url}`}>
                               {item.button.name}
                             </Link>
                           </Button>
+                          <a href={`/${item.button.url}`}>
+                            href: {item.button.url}
+                          </a>
                         </ul>
                       )}
                       {sec.type_id === 5 ||
@@ -199,7 +219,7 @@ const GetDataPage = (props) => {
                     </div>
                   </div>
                   <div className="updateForm">
-                    {sec.type_id === 1 && updateOne && (
+                    {(sec.type_id === 1 || sec.type_id === 2) && updateOne && (
                       <UpdateSimple
                         richTxt={item.texts.content}
                         updateData={item}
@@ -227,6 +247,7 @@ const GetDataPage = (props) => {
                       />
                     )}
                     {sec.type_id !== 1 &&
+                      sec.type_id !== 2 &&
                       sec.type_id !== 5 &&
                       sec.type_id !== 7 &&
                       sec.type_id !== 9 &&
@@ -369,7 +390,8 @@ const GetDataPage = (props) => {
                       <h4>title: {item.title_project}</h4>
                       <h5>name: {item.name_project}</h5>
                       <p>
-                        url: <a href={item.url_project}>{item.url_project}</a>
+                        url:{" "}
+                        <a href={`/${item.url_project}`}>{item.url_project}</a>
                       </p>
                       <p>button name: {item.buttons.name}</p>
                       <img src={item.image_project_url} />
@@ -648,6 +670,9 @@ const GetDataPage = (props) => {
               ))}
             <div className="addnewcol">
               <div className="addForm">
+                {sec.type_id === 2 && addNew && (
+                  <AddSlider secId={sec.id} typeId={sec.type_id} />
+                )}
                 {sec.type_id === 5 && addNew && (
                   <AddPlans secId={sec.id} typeId={sec.type_id} />
                 )}
@@ -670,10 +695,9 @@ const GetDataPage = (props) => {
                   <AddContactUsBoxes secId={sec.id} typeId={sec.type_id} />
                 )}
 
-                {(sec.type_id === 2 ||
-                  sec.type_id === 3 ||
-                  sec.type_id === 4) &&
-                  addNew && <AddAll secId={sec.id} typeId={sec.type_id} />}
+                {(sec.type_id === 3 || sec.type_id === 4) && addNew && (
+                  <AddAll secId={sec.id} typeId={sec.type_id} />
+                )}
                 <CloseButton
                   className={classes.closeBtn}
                   onClick={noUpdateHandler}
@@ -699,6 +723,8 @@ const GetDataPage = (props) => {
                 </div>
               )}
             </div>
+            {(sec.type_id === 8 || sec.type_id === 1 || sec.type_id === 13) &&
+              sec.button.length !== 0 && <UpdateButtons data={sec} />}
           </div>
         ))}
       </section>

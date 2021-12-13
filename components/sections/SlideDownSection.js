@@ -6,9 +6,9 @@ const SlideDownSection = (props) => {
   const title = props.details.title;
   console.log(data);
   return (
-    <Container className="py-5">
+    <section className={classes.slideDownSec}>
       <h2 className="text-center py-3">{title}</h2>
-      <section className={classes.boxes}>
+      <div className={classes.boxes}>
         {data.map((item, index) => (
           <Col key={index} className={classes.box} lg={4} md={6} xs={12}>
             <div className={classes.show}>
@@ -19,8 +19,8 @@ const SlideDownSection = (props) => {
             </div>
           </Col>
         ))}
-      </section>
-    </Container>
+      </div>
+    </section>
   );
 };
 

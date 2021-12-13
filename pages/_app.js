@@ -9,7 +9,9 @@ function MyApp({ Component, pageProps }) {
     <AuthContextProvider>
       <Layout>
         <Head>
+          <meta charset="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <html lang="fa-IR" />
         </Head>
         <Component {...pageProps} />
       </Layout>

@@ -1,8 +1,15 @@
+.slideDownSec {
+  direction: rtl;
+  width: 90%;
+  max-width: 1980px;
+  margin: auto;
+  padding: 2rem 1rem;
+}
+
 .boxes {
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 1200px;
   flex-wrap: wrap;
   direction: rtl;
 }

@@ -44,6 +44,17 @@
   cursor: pointer;
 }
 
+.editTitleSub {
+  right: 1rem;
+  width: 2rem;
+  bottom: 6px;
+  cursor: pointer;
+  height: 1.5rem;
+  margin: auto 0;
+  cursor: pointer;
+  z-index: 999;
+}
+
 .control label {
   display: block;
   color: white;
@@ -377,4 +388,161 @@
 
 .itemsRow h3 {
   margin-top: 0;
+}
+
+.inputTitle {
+  margin: 1rem 1.1rem;
+  margin-bottom: 1rem !important;
+  justify-content: flex-start;
+  background-color: rgba(0, 0, 0, 0.274);
+  padding: 1rem;
+  position: relative;
+  direction: rtl;
+  width: 60%;
+  margin: auto;
+}
+
+.inputTitle input,
+.inputTitle textarea {
+  width: 60%;
+  margin-right: 2%;
+}
+
+.inputTitle textarea {
+  height: 150px;
+}
+
+.inputTitle label {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  direction: ltr;
+}
+
+.inputTitle svg {
+  font-size: 20px;
+  background-color: rgb(0, 73, 18);
+  color: white;
+  position: absolute;
+  width: 30px;
+  height: 70%;
+  padding: 2px;
+  left: -29px;
+  top: 0;
+  cursor: pointer;
+  transition: 0.3s ease-in;
+}
+
+.inputTitle svg:hover {
+  height: 100%;
+  transition: 0.3s ease-in;
+}
+
+.cancelIcon {
+  background-color: red !important;
+  right: -29px !important;
+}
+
+.inputTitle input {
+  z-index: 999;
+}
+
+.richInput h1,
+.richInput h2,
+.richInput h3,
+.richInput h4,
+.richInput h5,
+.richInput h6 {
+  padding: 0 !important;
+  text-align: right;
+  text-shadow: none !important;
+}
+
+.richInput h1 div,
+.richInput h2 div,
+.richInput h3 div,
+.richInput h4 div,
+.richInput h5 div,
+.richInput h6 div {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.richInput h1 span,
+.richInput h2 span,
+.richInput h3 span,
+.richInput h4 span,
+.richInput h5 span,
+.richInput h6 span {
+  font-family: var(--ordibehesht);
+}
+
+.richInput h1 span {
+  font-size: 3rem;
+}
+
+.richInput h2 span {
+  font-size: 2.5rem;
+}
+
+.richInput h3 span {
+  font-size: 2rem;
+}
+
+.richInput h4 span {
+  font-size: 1.5rem;
+}
+
+.richInput h5 span {
+  font-size: 1.3rem;
+}
+
+.richInput h6 span {
+  font-size: 1;
+}
+
+.richInput ul li {
+  list-style-type: none !important;
+  margin-right: 40px;
+}
+
+.richInput li {
+  position: relative;
+
+  text-align: right;
+}
+
+.richInput ul li::before {
+  content: " ";
+  background: var(--purple);
+  position: absolute;
+  right: -40px;
+  width: 20px;
+  height: 5px;
+  top: 50%;
+}
+.richInput ul li::after {
+  content: " ";
+  background: var(--purple);
+  position: absolute;
+  margin-right: 5px;
+  width: 20px;
+  left: 0;
+  height: 5px;
+  top: 50%;
+}
+.richInput ol li {
+  list-style-type: none !important;
+}
+
+.richInput ol li::before {
+  content: " ";
+  background: var(--purple);
+  position: absolute;
+  right: -25px !important;
+  width: 20px !important;
+  height: 5px !important;
+  top: 50% !important;
 }

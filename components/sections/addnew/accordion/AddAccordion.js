@@ -66,7 +66,7 @@ const AddAccordion = (props) => {
 
     fData.append("section_id", props.secId);
     fData.append("title", titleValue);
-    fData.append("text", textValue);
+    fData.append("text", JSON.stringify(textValue));
 
     axios({
       method: "POST",

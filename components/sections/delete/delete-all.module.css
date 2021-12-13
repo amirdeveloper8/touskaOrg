@@ -26,3 +26,14 @@
   width: 40px;
   height: 40px;
 }
+
+.modal {
+  width: 350px;
+  background-color: #659e99bb;
+  margin: auto;
+  padding: 1rem;
+}
+
+.modal button {
+  width: 100%;
+}

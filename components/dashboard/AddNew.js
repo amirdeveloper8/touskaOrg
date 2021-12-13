@@ -159,15 +159,6 @@ const AddNew = () => {
                 Please enter a valid Name.
               </Alert>
             )}
-            {authCtx.businessName && authCtx.businessName !== "" && (
-              <Badge
-                className={classes.edit}
-                onClick={authCtx.resetBusinessName}
-                bg="secondary"
-              >
-                edit
-              </Badge>
-            )}
           </Form.Group>
         </Row>
 
@@ -192,15 +183,6 @@ const AddNew = () => {
                 Please enter a valid Name.
               </Alert>
             )}
-            {authCtx.businessName && authCtx.businessName !== "" && (
-              <Badge
-                className={classes.edit}
-                onClick={authCtx.resetBusinessName}
-                bg="secondary"
-              >
-                edit
-              </Badge>
-            )}
           </Form.Group>
         </Row>
         <Row className="mb-3" className={classes.control}>
@@ -223,15 +205,6 @@ const AddNew = () => {
               <Alert className="mt-1" variant="danger">
                 Please enter a valid Name.
               </Alert>
-            )}
-            {authCtx.businessName && authCtx.businessName !== "" && (
-              <Badge
-                className={classes.edit}
-                onClick={authCtx.resetBusinessName}
-                bg="secondary"
-              >
-                edit
-              </Badge>
             )}
           </Form.Group>
         </Row>

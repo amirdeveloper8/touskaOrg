@@ -41,6 +41,7 @@ const AddTable = (props) => {
   for (let i = 0; i < countRow; i++) {
     tr[i] = (
       <AddTr
+        key={i}
         getRow={getRow}
         getRowHandler={getRowHandler}
         columnsCount={numberCol}

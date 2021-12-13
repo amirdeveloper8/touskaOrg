@@ -1,6 +1,7 @@
 .servBoxes {
   direction: rtl;
-  max-width: 1200px;
+  width: 90%;
+  max-width: 1980px;
   margin: auto;
   padding: 2rem 1rem;
 }
@@ -11,7 +12,7 @@
 
 .boxes {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
 }
@@ -25,11 +26,17 @@
   border: 10px solid var(--purple);
   direction: rtl;
   text-align: center;
-  margin: 0 5px 10px 0;
-  height: 500px;
+  margin: 1%;
+  height: 600px;
   width: 30%;
+  min-width: 250px;
+  max-width: 400px;
   position: relative;
   transition: all 0.3s ease-in;
+}
+
+.box p {
+  color: black;
 }
 
 .box:hover {
@@ -37,6 +44,10 @@
   transform: translateY(20px) scale(1.08);
   transition: all 0.3s ease-in;
   z-index: 99;
+}
+
+.box:hover p {
+  text-shadow: 1px 1px 5px white;
 }
 
 .box img {
@@ -49,12 +60,12 @@
 .content {
   z-index: 11;
   height: 100%;
-  margin-top: 50%;
+  margin-top: 70%;
 }
 
 @media (max-width: 980px) {
   .box {
-    width: 90%;
-    max-width: 300px;
+    max-width: 500px;
+    width: 100%;
   }
 }
