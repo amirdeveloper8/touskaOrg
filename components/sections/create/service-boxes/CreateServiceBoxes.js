@@ -25,6 +25,8 @@ const CreateServiceBoxes = (props) => {
   const [slideCount, setSlideCount] = useState(1);
   const [titles, setTitles] = useState([]);
   const [texts, setTexts] = useState([]);
+  const [btnNames, setBtnNames] = useState([]);
+  const [btnUrls, setBtnUrls] = useState([]);
   const [images, setImages] = useState([]);
   let sliders = [];
 
@@ -51,6 +53,14 @@ const CreateServiceBoxes = (props) => {
     setTexts([...texts, text]);
   };
 
+  const getBtnNames = (name) => {
+    setBtnNames([...btnNames, name]);
+  };
+
+  const getBtnUrls = (url) => {
+    setBtnUrls([...btnUrls, url]);
+  };
+
   const getImages = (image) => {
     setImages([...images, image]);
   };
@@ -70,6 +80,10 @@ const CreateServiceBoxes = (props) => {
         texts={texts}
         images={images}
         slideCount={slideCount}
+        getBtnNames={getBtnNames}
+        btnNames={btnNames}
+        getBtnUrls={getBtnUrls}
+        btnUrls={btnUrls}
         slideNumber={i + 1}
         key={i}
       />
@@ -83,6 +97,8 @@ const CreateServiceBoxes = (props) => {
     console.log("images", images);
     console.log("titles", titles);
     console.log("texts", texts);
+    console.log("btnNames", btnNames);
+    console.log("btnUrls", btnUrls);
     console.log("count", +slideCount);
 
     const fData = new FormData();
@@ -94,6 +110,8 @@ const CreateServiceBoxes = (props) => {
       fData.append("count", slideCount);
       fData.append(`title_box_${i + 1}`, titles[i]);
       fData.append(`text_box_${i + 1}`, texts[i]);
+      fData.append(`button_name_box_${i + 1}`, btnNames[i]);
+      fData.append(`button_url_box_${i + 1}`, btnUrls[i]);
       fData.append(`image_box_${i + 1}`, images[i]);
     }
 

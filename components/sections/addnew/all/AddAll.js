@@ -47,6 +47,15 @@ const AddAll = (props) => {
     reset: resetText,
   } = useInput(isText);
 
+  const {
+    value: urlValue,
+    isValid: urlIsValid,
+    hasError: urlHasError,
+    valueChangeHandler: urlChangeHandler,
+    inputBlurHandler: urlBlurHandler,
+    reset: resetUrl,
+  } = useInput(isText);
+
   const handleChange = (file) => {
     setSelectedFile(file[0]);
   };
@@ -80,6 +89,11 @@ const AddAll = (props) => {
     fData.append("title_slide", titleValue);
     fData.append("text_slide", textValue);
     fData.append("image_slide", selectedFile);
+
+    if (props.typeId === 3) {
+      fData.append("button_name", urlValue);
+      fData.append("button_url", urlValue);
+    }
 
     const connectDB = ConnectToDB(url);
 
@@ -188,6 +202,30 @@ const AddAll = (props) => {
             )}
           </Form.Group>
         </Row>
+        {props.typeId === 3 && (
+          <Row className="mb-3" className={classes.control}>
+            <Form.Group
+              as={Col}
+              controlId="formGridMobile"
+              className={classes.formGroup}
+            >
+              <Form.Label>Url*</Form.Label>
+              <Form.Control
+                placeholder="text"
+                required
+                value={urlValue}
+                onChange={urlChangeHandler}
+                onBlur={urlBlurHandler}
+              />
+
+              {urlHasError && (
+                <Alert className="mt-1" variant="danger">
+                  Please enter a valid Name.
+                </Alert>
+              )}
+            </Form.Group>
+          </Row>
+        )}
         <Row className={classes.control}>
           <Form.Group className="mb-3">
             <Form.Label>Image</Form.Label>

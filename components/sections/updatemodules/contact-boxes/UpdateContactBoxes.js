@@ -149,9 +149,12 @@ const UpdateContactBoxes = (props) => {
     setUpdateItems(true);
   };
 
-  const addItemsHandler = (e) => {
+  const addItemsHandler = async (e) => {
     e.preventDefault();
     setOldSocials(oldValues);
+
+    const socialDetails = await getData("get/contactform/typeSocial");
+    setSocialSelect(socialDetails.typeSocial);
     setAddItems(true);
   };
 
@@ -173,12 +176,7 @@ const UpdateContactBoxes = (props) => {
   for (let i = 0; i < newSocialCount; i++) {
     newSocial[i] = (
       <AddContactItems
-        socialValues={socialValues}
-        socialUrls={socialUrls}
-        socialNames={socialNames}
-        getSocials={getSocials}
-        getUrls={getUrls}
-        getNames={getNames}
+        boxId={boxId}
         socials={socialSelect}
         key={i}
         slideNumber={i + 1}
@@ -401,23 +399,7 @@ const UpdateContactBoxes = (props) => {
           </div>
         )}
 
-        {addItems && (
-          <Row className="mb-3">
-            {newSocial}
-            <div className={classes.socialContactIcons}>
-              <RiAddBoxFill
-                onClick={increaseSocial}
-                className={classes.addSocialContact}
-              />
-              {newSocialCount > 1 && (
-                <RiDeleteBin7Fill
-                  onClick={decreaseSocial}
-                  className={classes.delSocialContact}
-                />
-              )}
-            </div>
-          </Row>
-        )}
+        {addItems && <Row className="mb-3">{newSocial}</Row>}
 
         <div className={classes.actions}>
           <button

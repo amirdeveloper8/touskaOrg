@@ -17,6 +17,7 @@ const UpdateAll = (props) => {
 
   const [resetTitleValue, setResetTitleValue] = useState(false);
   const [resetTextValue, setResetTextValue] = useState(false);
+  const [resetUrl, setResetUrl] = useState(false);
   const [resetImageValue, setResetImageValue] = useState(false);
 
   const data = props.updateData;
@@ -69,6 +70,15 @@ const UpdateAll = (props) => {
     reset: resetText,
   } = useInput(isText);
 
+  const {
+    value: urlValue,
+    isValid: urlIsValid,
+    hasError: urlHasError,
+    valueChangeHandler: urlChangeHandler,
+    inputBlurHandler: urlBlurHandler,
+    reset: resetUrlValue,
+  } = useInput(isText);
+
   const resetTitleHandler = () => {
     setResetTitleValue(true);
   };
@@ -77,13 +87,17 @@ const UpdateAll = (props) => {
     setResetTextValue(true);
   };
 
+  const resetUrlHandler = () => {
+    setResetUrl(true);
+  };
+
   const resetImageHandler = () => {
     setResetImageValue(true);
   };
 
   let updateIsValid = false;
 
-  if (resetTitleValue || resetTextValue || resetImageValue) {
+  if (resetTitleValue || resetTextValue || resetImageValue || resetUrl) {
     updateIsValid = true;
   }
 
@@ -112,6 +126,9 @@ const UpdateAll = (props) => {
     }
     {
       textValue && fData.append("text", textValue);
+    }
+    {
+      urlValue && fData.append("text", urlValue);
     }
     {
       selectedFile && fData.append("image", selectedFile);
@@ -209,6 +226,7 @@ const UpdateAll = (props) => {
         <Row className="mb-3" className={classes.control}>
           <Form.Group
             as={Col}
+            lg={12}
             controlId="formGridMobile"
             className={classes.formGroup}
           >
@@ -237,6 +255,38 @@ const UpdateAll = (props) => {
               </Badge>
             )}
           </Form.Group>
+          {data.buttons && (
+            <Form.Group
+              as={Col}
+              lg={12}
+              controlId="formGridMobile"
+              className={classes.formGroup}
+            >
+              <Form.Label>Url*</Form.Label>
+              <Form.Control
+                placeholder="Url"
+                required
+                value={resetUrl ? urlValue : data.buttons.url}
+                onChange={urlChangeHandler}
+                onBlur={urlBlurHandler}
+              />
+
+              {urlHasError && (
+                <Alert className="mt-1" variant="danger">
+                  Please enter a valid Url.
+                </Alert>
+              )}
+              {!resetUrl && (
+                <Badge
+                  className={classes.edit}
+                  onClick={resetUrlHandler}
+                  bg="secondary"
+                >
+                  edit
+                </Badge>
+              )}
+            </Form.Group>
+          )}
         </Row>
         {data.image_url && (
           <Row className={classes.control}>

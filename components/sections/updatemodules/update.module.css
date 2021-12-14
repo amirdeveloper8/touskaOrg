@@ -328,6 +328,17 @@
   font-weight: 700;
 }
 
+.deleteSocial {
+  background: white;
+  color: red;
+  padding: 5px;
+  width: 40px;
+  height: 40px;
+  border-radius: 30px;
+  left: 0;
+  cursor: pointer;
+}
+
 .socialContactIcons {
   width: 100%;
   display: flex;

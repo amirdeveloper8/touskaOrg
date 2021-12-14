@@ -1,4 +1,4 @@
-import { Container, Row, Col } from "react-bootstrap";
+import Link from "next/link";
 
 import classes from "./service-boxes-section.module.css";
 
@@ -11,13 +11,13 @@ const ServiceBoxesSection = (props) => {
       <h2>{title}</h2>
       <div className={classes.boxes}>
         {data.map((item, index) => (
-          <div key={index} className={classes.box}>
+          <a href={`/${item.buttons.url}`} key={index} className={classes.box}>
             <img src={item.image_url} alt={item.title.content} />
             <div className={classes.content}>
               <h3>{item.title.content}</h3>
               <p>{item.texts.content}</p>
             </div>
-          </div>
+          </a>
         ))}
       </div>
     </section>

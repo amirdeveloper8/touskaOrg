@@ -29,3 +29,34 @@
   flex-direction: column;
   align-items: center;
 }
+
+.headerItem {
+  position: relative;
+  background: var(--darkGreen);
+  padding: 1rem;
+  width: 90%;
+  margin: auto;
+  margin-bottom: 1rem;
+}
+
+.closeMenu {
+  position: absolute;
+  top: 5px;
+  right: 20px;
+}
+
+.openItemMenu {
+  width: 40%;
+  margin-left: 30%;
+  margin-right: 30%;
+  transition: 0.2s ease-in;
+  font-weight: 900;
+  font-family: var(--ordibehesht);
+  font-size: 2rem;
+}
+
+.openItemMenu:hover {
+  transform: scale(1.1);
+  background: var(--white);
+  color: var(--purple);
+}

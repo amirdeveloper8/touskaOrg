@@ -49,13 +49,22 @@ const ServiceBoxesForm = (props) => {
     reset: resetText,
   } = useInput(isText);
 
+  const {
+    value: btnUrlValue,
+    isValid: btnUrlIsValid,
+    hasError: btnUrlHasError,
+    valueChangeHandler: btnUrlChangeHandler,
+    inputBlurHandler: btnUrlBlurHandler,
+    reset: resetBtnUrl,
+  } = useInput(isText);
+
   const handleChange = (file) => {
     setSelectedFile(file[0]);
   };
 
   let formIsValid = false;
 
-  if (titleIsValid && textIsValid && selectedFile) {
+  if (titleIsValid && textIsValid && selectedFile && btnUrlValue) {
     formIsValid = true;
   }
 
@@ -80,6 +89,18 @@ const ServiceBoxesForm = (props) => {
       props.getTexts(textValue);
     } else {
       props.texts[+props.slideNumber - 1] = textValue;
+    }
+
+    if (!props.btnNames[+props.slideNumber - 1]) {
+      props.getBtnNames(btnUrlValue);
+    } else {
+      props.btnNames[+props.slideNumber - 1] = btnUrlValue;
+    }
+
+    if (!props.btnUrls[+props.slideNumber - 1]) {
+      props.getBtnUrls(btnUrlValue);
+    } else {
+      props.btnUrls[+props.slideNumber - 1] = btnUrlValue;
     }
 
     if (!props.images[+props.slideNumber - 1]) {
@@ -144,6 +165,31 @@ const ServiceBoxesForm = (props) => {
             {textHasError && (
               <Alert className="mt-1" variant="danger">
                 Please enter a valid Name.
+              </Alert>
+            )}
+          </Form.Group>
+        </Row>
+
+        <Row className="mb-3" className={classes.control}>
+          <Form.Group
+            as={Col}
+            controlId="formGridMobile"
+            className={classes.formGroup}
+            onBlur={() => setChecked(false)}
+          >
+            <Form.Label>Url*</Form.Label>
+            <Form.Control
+              rows={6}
+              placeholder="Url"
+              required
+              value={btnUrlValue}
+              onChange={btnUrlChangeHandler}
+              onBlur={btnUrlBlurHandler}
+            />
+
+            {btnUrlHasError && (
+              <Alert className="mt-1" variant="danger">
+                Please enter a valid Url.
               </Alert>
             )}
           </Form.Group>

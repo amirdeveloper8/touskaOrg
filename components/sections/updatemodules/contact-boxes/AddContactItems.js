@@ -1,13 +1,19 @@
-import { Fragment, useState } from "react";
+import { Fragment, useContext, useState } from "react";
 import { Alert, Col, Form } from "react-bootstrap";
 import useInput from "../../../../hooks/use-input";
 import classes from "../update.module.css";
 import { BsFillSaveFill } from "react-icons/bs";
 import { MdOutlineFileDownloadDone } from "react-icons/md";
+import axios from "axios";
+import { ConnectToDB } from "../../../../lib/connect-to-db";
+import AuthContext from "../../../../store/auth-context";
+import Notification from "../../../ui/notification";
 
 const isText = (value) => value.trim().length > 0;
 
 const AddContactItems = (props) => {
+  const [dataError, setdataError] = useState("Something went Wrong!");
+  const [notification, setNotification] = useState();
   const [valueBox, setValueBox] = useState("Open this select menu");
   const [checked, setChecked] = useState(false);
   const [boxName, setBoxName] = useState();
@@ -40,6 +46,10 @@ const AddContactItems = (props) => {
     setTypeValue(val[2]);
   };
 
+  const authCtx = useContext(AuthContext);
+
+  const login_token = authCtx.token;
+
   let boxId = 0;
 
   const submitHandler = () => {
@@ -47,29 +57,79 @@ const AddContactItems = (props) => {
     boxId = boxVal[0];
     setBoxName(boxVal[1]);
 
-    console.log(boxId);
-    if (props.socialValues[+props.slideNumber - 1]) {
-      props.socialValues[+props.slideNumber - 1] = +boxId;
-    }
-    if (!props.socialValues[+props.slideNumber - 1]) {
-      props.getSocials(+boxId);
-    }
+    const connectDB = ConnectToDB("add/social/box/ContactUsBoxes");
 
-    if (props.socialUrls[+props.slideNumber - 1]) {
-      props.socialUrls[+props.slideNumber - 1] = urlValue;
-    }
-    if (!props.socialUrls[+props.slideNumber - 1]) {
-      props.getUrls(urlValue);
-    }
+    console.log("box_id", props.boxId);
+    console.log("type_id", +boxId);
+    console.log("url", urlValue);
+    console.log("name", titleValue);
 
-    if (props.socialNames[+props.slideNumber - 1]) {
-      props.socialNames[+props.slideNumber - 1] = titleValue;
-    }
-    if (!props.socialNames[+props.slideNumber - 1]) {
-      props.getNames(titleValue);
-    }
+    const headers = {
+      Authorization: `Bearer ${login_token}`,
+    };
+
+    const fData = new FormData();
+
+    fData.append("box_id", props.boxId);
+    fData.append("type_id", +boxId);
+    fData.append("url", urlValue);
+    fData.append("name", titleValue);
+
+    axios({
+      method: "POST",
+      url: connectDB,
+      headers: headers,
+      data: fData,
+    })
+      .then((res) => {
+        console.log("res", res.data);
+        if (res.data.status === "success created") {
+          console.log(res.data);
+          setNotification(res.data.status);
+          setTimeout(() => {
+            authCtx.closePageHandler();
+          }, 2800);
+
+          setTimeout(() => {
+            authCtx.showPageHandler();
+            authCtx.closeSimpleSection();
+          }, 3000);
+        }
+      })
+      .catch((err) => {
+        console.log("Error", err.response.data);
+        setNotification("error");
+        setdataError(err.response.data.status);
+      });
+
     setChecked(true);
   };
+
+  let notifDetails;
+
+  if (notification === "pending") {
+    notifDetails = {
+      status: "pending",
+      title: "Sending message...",
+      message: "Your message is on its way!",
+    };
+  }
+
+  if (notification === "success created") {
+    notifDetails = {
+      status: "success",
+      title: "Success!",
+      message: "Message sent successfully!",
+    };
+  }
+
+  if (notification === "error") {
+    notifDetails = {
+      status: "error",
+      title: "Error!",
+      message: dataError,
+    };
+  }
 
   return (
     <Form.Group
@@ -127,6 +187,13 @@ const AddContactItems = (props) => {
       )}
 
       <BsFillSaveFill className={classes.saveSocials} onClick={submitHandler} />
+      {notification && (
+        <Notification
+          status={notifDetails.status}
+          title={notifDetails.title}
+          message={notifDetails.message}
+        />
+      )}
     </Form.Group>
   );
 };

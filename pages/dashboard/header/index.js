@@ -1,46 +1,98 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Link from "next/link";
 import Button from "../../../components/ui/Button";
-import { Col, Row } from "react-bootstrap";
+import { CloseButton, Col, Row } from "react-bootstrap";
 import ConnectToDB from "../../../lib/connect-to-db";
 import { getData } from "../../../lib/get-data";
 import CreateMenu from "../../../components/header/create-menu/CreateMenu";
+
+import classes from "../../../styles/dashboard.module.css";
+import CreateHeader from "../../../components/header/create-header/CreateHeader";
+import AuthContext from "../../../store/auth-context";
 const Menu = () => {
   const [menuGet, setMenuGet] = useState();
   const [headerGet, setHeaderGet] = useState();
+  const [createMenu, setCreateMenu] = useState(false);
+  const [createHeader, setCreateHeader] = useState();
+
+  const authCtx = useContext(AuthContext);
+
+  const showPage = authCtx.showPage;
+
   useEffect(async () => {
     const menuDetails = await getData("get/menus");
     setMenuGet(menuDetails.status);
     const headerDetails = await getData("get/header");
     setHeaderGet(headerDetails.status);
-  }, []);
-  console.log(menuGet);
-  console.log(headerGet);
+  }, [showPage]);
+  console.log("menu", menuGet);
+  console.log("header", headerGet);
+
   return (
-    <section className="dashboard">
-      <Row>
-        <Col className="text-center bg-secondary py-5" lg={5}>
-          {menuGet === "not found" && <CreateMenu />}
-          {menuGet !== "not found" && (
-            <Button>
-              <Link href="#">Update Menu</Link>
-            </Button>
-          )}
-        </Col>
-        <Col className="text-centerpy-5" lg={2}></Col>
-        <Col className="text-center bg-secondary py-5" lg={5}>
-          {headerGet === "not found" && (
-            <Button>
-              <Link href="#">Create Header</Link>
-            </Button>
-          )}
-          {headerGet !== "not found" && (
-            <Button>
-              <Link href="#">Update Header</Link>
-            </Button>
-          )}
-        </Col>
-      </Row>
+    <section className="dashboard py-4">
+      {showPage && (
+        <Row className={classes.headerItems}>
+          <Col className={classes.headerItem} lg={12}>
+            {menuGet === "not found" && (
+              <div>
+                {!createMenu && (
+                  <Button
+                    className={classes.openItemMenu}
+                    onClick={() => setCreateMenu(true)}
+                  >
+                    Create Menu
+                  </Button>
+                )}
+                {createMenu && <CreateMenu />}
+              </div>
+            )}
+            {menuGet !== "not found" && (
+              <Button
+                className={classes.openItemMenu}
+                onClick={() => setCreateMenu(true)}
+              >
+                Update Menu
+              </Button>
+            )}
+            {createMenu && (
+              <CloseButton
+                className={classes.closeMenu}
+                onClick={() => setCreateMenu(false)}
+              />
+            )}
+          </Col>
+
+          <Col className={classes.headerItem} lg={12}>
+            {headerGet === "not found" && (
+              <div>
+                {!createHeader && (
+                  <Button
+                    className={classes.openItemMenu}
+                    onClick={() => setCreateHeader(true)}
+                  >
+                    Create Header
+                  </Button>
+                )}
+                {createHeader && <CreateHeader />}
+              </div>
+            )}
+            {headerGet !== "not found" && (
+              <Button
+                className={classes.openItemMenu}
+                onClick={() => setCreateHeader(true)}
+              >
+                Update Header
+              </Button>
+            )}
+            {createHeader && (
+              <CloseButton
+                className={classes.closeMenu}
+                onClick={() => setCreateHeader(false)}
+              />
+            )}
+          </Col>
+        </Row>
+      )}
     </section>
   );
 };
