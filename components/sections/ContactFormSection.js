@@ -4,6 +4,7 @@ import BaseInput from "../ui/inputs/BaseInput";
 import FileInput from "../ui/inputs/FileInput";
 import RadioInput from "../ui/inputs/RadioInput";
 import SelectInput from "../ui/inputs/SelectInput";
+import Button from "../ui/Button";
 import classes from "./contactform.module.css";
 
 const ContactFormSection = (props) => {
@@ -30,6 +31,9 @@ const ContactFormSection = (props) => {
     <section className={classes.contactForm}>
       <h2 className={classes.title}>{title}</h2>
       <div className={classes.details}>
+        <div className={classes.imageC}>
+          <img src={imgSrc} />
+        </div>
         <Form onSubmit={submitHandler}>
           {data.map((item, index) => (
             <Row key={index}>
@@ -72,17 +76,15 @@ const ContactFormSection = (props) => {
                   number={index + 1}
                 />
               )}
+
               {item.type_namee === "submit" && (
-                <button type="submit" key={index}>
-                  {item.name}
-                </button>
+                <div className={classes.actions}>
+                  <Button>ارسال پیام</Button>
+                </div>
               )}
             </Row>
           ))}
         </Form>
-        <div className={classes.imageC}>
-          <img src={imgSrc} />
-        </div>
       </div>
     </section>
   );

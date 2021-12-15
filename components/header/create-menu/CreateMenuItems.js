@@ -15,7 +15,7 @@ import { BiUpArrow } from "react-icons/bi";
 import CreateSubMenu from "./CreateSubMenu";
 
 const isText = (value) => value.trim().length > 0;
-const isUrl = (value) => value.trim().includes("http");
+const isUrl = (value) => value.trim().length > 0;
 
 const CreateMenuItems = (props) => {
   const [valueBox, setValueBox] = useState("Open this select menu");
@@ -65,6 +65,7 @@ const CreateMenuItems = (props) => {
     setMenuItems(pageValues);
     console.log(data);
     console.log(pageValues);
+    setChecked(false);
   };
 
   const changeHandler = (e) => {
@@ -88,16 +89,16 @@ const CreateMenuItems = (props) => {
 
   const submitHandler = () => {
     if (!urlValue) {
-      props.urlValues[props.number] = { id: typeValue, url: "" };
-      if (props.urlValues[props.number] === { id: typeValue, url: "" }) {
+      props.urlValues[props.number] = { id: typeValue };
+      if (props.urlValues[props.number] === { id: typeValue }) {
         setChecked(true);
       } else {
         setChecked(false);
       }
     }
     if (urlValue) {
-      props.urlValues[props.number] = { id: "", url: urlValue };
-      if (props.urlValues[props.number] === { id: "", url: urlValue }) {
+      props.urlValues[props.number] = { url: urlValue };
+      if (props.urlValues[props.number] === { url: urlValue }) {
         setChecked(true);
       } else {
         setChecked(false);
@@ -112,11 +113,18 @@ const CreateMenuItems = (props) => {
     }
 
     for (let i = 0; i < subCount; i++) {
-      subs[i] = {
-        page_id: urlValues[i].id,
-        url: urlValues[i].url,
-        name: nameValues[i],
-      };
+      if (urlValues[i].url) {
+        subs[i] = {
+          url: urlValues[i].url,
+          name: nameValues[i],
+        };
+      }
+      if (urlValues[i].id) {
+        subs[i] = {
+          page_id: urlValues[i].id,
+          name: nameValues[i],
+        };
+      }
       props.subValues[props.number] = subs;
     }
 
@@ -177,7 +185,7 @@ const CreateMenuItems = (props) => {
 
           {urlHasError && (
             <Alert className="mt-1" variant="danger">
-              Please enter a valid Url (includes "http").
+              Please enter a valid Url .
             </Alert>
           )}
           <Badge className={classes.badge} onClick={changeTypeUrl}>
@@ -190,6 +198,7 @@ const CreateMenuItems = (props) => {
         lg={12}
         controlId="formGridFName"
         className={classes.formGroup}
+        onBlur={() => setChecked(false)}
       >
         <Form.Label>Name*</Form.Label>
         <Form.Control

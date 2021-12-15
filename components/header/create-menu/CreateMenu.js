@@ -62,15 +62,16 @@ const CreateMenu = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     const fData = new FormData();
-    fData.append(`count`, itemCount);
+    fData.append(`count`, +itemCount);
     for (let i = 0; i < itemCount; i++) {
       {
-        urlValues[i].id !== "" &&
-          fData.append(`page_id_${i + 1}`, urlValues[i].id);
+        urlValues[i].id && fData.append(`page_id_${i + 1}`, +urlValues[i].id);
       }
       {
-        urlValues[i].url !== "" &&
-          fData.append(`url_${i + 1}`, urlValues[i].url);
+        urlValues[i].id && console.log(`page_id_${i + 1}`, +urlValues[i].id);
+      }
+      {
+        urlValues[i].url && fData.append(`url_${i + 1}`, urlValues[i].url);
       }
       fData.append(`name_${i + 1}`, nameValues[i]);
       {
@@ -95,12 +96,12 @@ const CreateMenu = () => {
         if (res.data.status === "success created") {
           console.log(res.data);
           setNotification(res.data.status);
-          setTimeout(() => {
-            authCtx.closePageHandler();
-          }, 500);
-          setTimeout(() => {
-            authCtx.showPageHandler();
-          }, 2000);
+          // setTimeout(() => {
+          //   authCtx.closePageHandler();
+          // }, 500);
+          // setTimeout(() => {
+          //   authCtx.showPageHandler();
+          // }, 2000);
         }
       })
       .catch((err) => {

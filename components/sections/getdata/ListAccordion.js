@@ -14,7 +14,7 @@ const ListAccordion = (props) => {
 
   // const test = itemsParse.toString().replace(/[,]+/g, "");
 
-  console.log("itemsParse", itemsParse);
+  // console.log("itemsParse", itemsParse);
 
   // console.log("Aaaasa", test);
 

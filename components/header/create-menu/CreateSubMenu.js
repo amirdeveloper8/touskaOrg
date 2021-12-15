@@ -8,7 +8,7 @@ import classes from "./menu.module.css";
 import { AiFillCheckSquare } from "react-icons/ai";
 
 const isText = (value) => value.trim().length > 0;
-const isUrl = (value) => value.trim().includes("http");
+const isUrl = (value) => value.trim().length > 0;
 
 const CreateSubMenu = (props) => {
   const [valueBox, setValueBox] = useState("Open this select menu");
@@ -41,6 +41,7 @@ const CreateSubMenu = (props) => {
     setMenuItems(pageValues);
     console.log(data);
     console.log(pageValues);
+    setChecked(false);
   };
 
   const changeHandler = (e) => {
@@ -62,16 +63,16 @@ const CreateSubMenu = (props) => {
 
   const submitHandler = () => {
     if (!urlValue) {
-      props.urlValues[props.number] = { id: typeValue, url: "" };
-      if (props.urlValues[props.number] === { id: typeValue, url: "" }) {
+      props.urlValues[props.number] = { id: typeValue };
+      if (props.urlValues[props.number] === { id: typeValue }) {
         setChecked(true);
       } else {
         setChecked(false);
       }
     }
     if (urlValue) {
-      props.urlValues[props.number] = { id: "", url: urlValue };
-      if (props.urlValues[props.number] === { id: "", url: urlValue }) {
+      props.urlValues[props.number] = { url: urlValue };
+      if (props.urlValues[props.number] === { url: urlValue }) {
         setChecked(true);
       } else {
         setChecked(false);
@@ -151,6 +152,7 @@ const CreateSubMenu = (props) => {
         lg={12}
         controlId="formGridFName"
         className={classes.formGroup}
+        onBlur={() => setChecked(false)}
       >
         <Form.Label>Name sub {props.number + 1}*</Form.Label>
         <Form.Control

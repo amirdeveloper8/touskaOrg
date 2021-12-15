@@ -9,11 +9,15 @@ import CreateMenu from "../../../components/header/create-menu/CreateMenu";
 import classes from "../../../styles/dashboard.module.css";
 import CreateHeader from "../../../components/header/create-header/CreateHeader";
 import AuthContext from "../../../store/auth-context";
+import UpdateMenu from "../../../components/header/update-menu/UpdateMenu";
 const Menu = () => {
   const [menuGet, setMenuGet] = useState();
   const [headerGet, setHeaderGet] = useState();
   const [createMenu, setCreateMenu] = useState(false);
   const [createHeader, setCreateHeader] = useState();
+
+  const [menuData, setMenuData] = useState();
+  const [headerData, setHeaderData] = useState();
 
   const authCtx = useContext(AuthContext);
 
@@ -21,12 +25,16 @@ const Menu = () => {
 
   useEffect(async () => {
     const menuDetails = await getData("get/menus");
+    setMenuData(menuDetails.menus);
     setMenuGet(menuDetails.status);
     const headerDetails = await getData("get/header");
+    setHeaderData(headerDetails.header);
     setHeaderGet(headerDetails.status);
   }, [showPage]);
   console.log("menu", menuGet);
   console.log("header", headerGet);
+  console.log("menuData", menuData);
+  console.log("headerData", headerData);
 
   return (
     <section className="dashboard py-4">
@@ -47,12 +55,15 @@ const Menu = () => {
               </div>
             )}
             {menuGet !== "not found" && (
-              <Button
-                className={classes.openItemMenu}
-                onClick={() => setCreateMenu(true)}
-              >
-                Update Menu
-              </Button>
+              <div>
+                <Button
+                  className={classes.openItemMenu}
+                  onClick={() => setCreateMenu(true)}
+                >
+                  Update Menu
+                </Button>
+                {createMenu && <UpdateMenu data={menuData} />}
+              </div>
             )}
             {createMenu && (
               <CloseButton

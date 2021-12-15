@@ -29,10 +29,7 @@ const ShowPage = (props) => {
         {sections.map((sec, index) => (
           <section key={sec.id} className={index % 2 ? "whiteSec" : "greenSec"}>
             {sec.type_id === 1 && (
-              <SimpleSection
-                key={sec.section_content.id}
-                details={sec.section_content}
-              />
+              <SimpleSection key={sec.section_content.id} details={sec} />
             )}
             {sec.type_id === 2 && (
               <SliderSection key={sec.section_content.id} details={sec} />
@@ -74,6 +71,7 @@ const ShowPage = (props) => {
               <SimpleTxtImg
                 key={sec.section_content.id}
                 details={sec.section_content}
+                sec={sec}
               />
             )}
           </section>

@@ -315,17 +315,16 @@ const CreateContactForm = (props) => {
             <Form.Control
               type="text"
               placeholder="Subtitle"
-              required
               value={subtitleValue}
               onChange={subtitleChangeHandler}
               onBlur={subtitleBlurHandler}
             />
 
-            {subtitleHasError && (
+            {/* {subtitleHasError && (
               <Alert className="mt-1" variant="danger">
                 Please enter a valid Subtitle.
               </Alert>
-            )}
+            )} */}
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Image</Form.Label>

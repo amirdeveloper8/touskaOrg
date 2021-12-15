@@ -90,8 +90,13 @@ a {
   background-image: url(/images/Green-BG.jpg);
 }
 
+.greenSec section {
+  direction: ltr !important;
+  text-align: right;
+}
+
 .greenSec h2 {
-  text-align: left !important;
+  text-align: left;
 }
 
 .customBtn a {
@@ -103,8 +108,12 @@ a {
   background-image: url(/images/White-BG.jpg);
 }
 
+.whiteSec section {
+  direction: rtl !important;
+}
+
 .whiteSec h2 {
-  text-align: right !important;
+  text-align: right;
 }
 
 .nav-item-list {

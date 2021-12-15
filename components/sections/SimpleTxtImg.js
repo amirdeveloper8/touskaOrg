@@ -6,10 +6,14 @@ import classes from "./simple-textimage.module.css";
 import { AiOutlineFullscreen } from "react-icons/ai";
 import { AiOutlineFullscreenExit } from "react-icons/ai";
 
+import Button from "../ui/Button";
+import Link from "next/link";
+
 import Modal from "../ui/Modal";
 
 const SimpleTxtImg = (props) => {
   const data = props.details;
+  const btn = props.sec.button[0];
   const [fullscreen, setFullscreen] = useState(false);
   const [modalClass, setModalClass] = useState();
 
@@ -29,6 +33,7 @@ const SimpleTxtImg = (props) => {
       setFullscreen(false);
     }, 400);
   };
+  console.log("txtttt", btn);
   return (
     <Fragment>
       {data.map((item, index) => (
@@ -60,6 +65,13 @@ const SimpleTxtImg = (props) => {
               )}
             </div>
           </div>
+          {btn.name && (
+            <div className="text-center my-3">
+              <Button>
+                <Link href={btn.url}>{btn.name}</Link>
+              </Button>
+            </div>
+          )}
         </section>
       ))}
       {fullscreen && (
