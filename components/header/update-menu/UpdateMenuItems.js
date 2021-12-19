@@ -1,21 +1,32 @@
 import useInput from "../../../hooks/use-input";
 import { Alert, Badge, Col, Form, Row, Button } from "react-bootstrap";
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import classes from "./update-menu.module.css";
 
 import { AiFillPlusSquare } from "react-icons/ai";
 import { AiFillMinusSquare } from "react-icons/ai";
 import { AiFillEdit } from "react-icons/ai";
+import { MdDelete } from "react-icons/md";
 import { getData } from "../../../lib/get-data";
 import UpdateSubs from "./UpdateSubs";
 import UpdateAddSub from "./UpdateAddSub";
+import Notification from "../../ui/notification";
+import axios from "axios";
+import AuthContext from "../../../store/auth-context";
+import { ConnectToDB } from "../../../lib/connect-to-db";
+
+import Modal from "../../ui/Modal";
 
 const isText = (value) => value.trim().length > 0;
 
 const UpdateMenuItems = (props) => {
+  const [dataError, setdataError] = useState("Something went Wrong!");
+  const [notification, setNotification] = useState();
+
   const item = props.item;
   const subs = item.submenu;
+  const itemId = item.id;
 
   const [checked, setChecked] = useState(false);
 
@@ -27,7 +38,7 @@ const UpdateMenuItems = (props) => {
   const [resetItemValue, setResetItemValue] = useState(false);
   const [resetUrlValue, setResetUrlValue] = useState(false);
 
-  const [subValues, setSubValues] = useState(subs);
+  const [showDelete, setShowDelete] = useState(false);
 
   const [viewSubs, setViewSubs] = useState(false);
 
@@ -88,9 +99,12 @@ const UpdateMenuItems = (props) => {
   let subItems = [];
   let subItemsForSend = [];
 
+  let updatedSubs = [];
+
   for (let i = 0; i < subs.length; i++) {
     if (subs[i].url) {
       subItemsForSend[i] = {
+        id: subs[i].id,
         name: subs[i].name,
         page_id: "",
         url: subs[i].url,
@@ -98,13 +112,20 @@ const UpdateMenuItems = (props) => {
     }
     if (!subs[i].url) {
       subItemsForSend[i] = {
+        id: subs[i].id,
         name: subs[i].name,
         page_id: subs[i].page_id,
         url: "",
       };
     }
     subItems[i] = (
-      <UpdateSubs key={i} number={i} subs={subItemsForSend} item={subs[i]} />
+      <UpdateSubs
+        key={i}
+        number={i}
+        subs={subItemsForSend}
+        item={subs[i]}
+        id={subs[i].id}
+      />
     );
   }
 
@@ -114,25 +135,158 @@ const UpdateMenuItems = (props) => {
     newSubs[i] = <UpdateAddSub key={i} number={i} item={newSubsValue} />;
   }
 
+  const authCtx = useContext(AuthContext);
+
+  const login_token = authCtx.token;
+
   const submitHandler = (e) => {
     e.preventDefault();
-    {
-      itemValue && console.log("name", itemValue);
+    for (let i = 0; i < subs.length; i++) {
+      if (subItemsForSend[i].url !== "") {
+        updatedSubs[i] = {
+          id: subItemsForSend[i].id,
+          name: subItemsForSend[i].name,
+          url: subItemsForSend[i].url,
+        };
+      }
+      if (subItemsForSend[i].url === "") {
+        updatedSubs[i] = {
+          id: subItemsForSend[i].id,
+          name: subItemsForSend[i].name,
+          page_id: subItemsForSend[i].page_id,
+        };
+      }
     }
+    const allValues = updatedSubs.concat(newSubsValue);
+
+    const fData = new FormData();
+
+    console.log(allValues);
+
+    fData.append("id", itemId);
     {
-      urlValue && console.log("url", itemValue);
+      itemValue && fData.append("name", itemValue);
     }
+
     {
-      typeValue && console.log("page_id", typeValue);
+      !itemValue && fData.append("name", item.name);
     }
-    console.log(subValues);
-    console.log(subItemsForSend);
-    console.log(newSubsValue);
+
+    {
+      urlValue && fData.append("url", urlValue);
+    }
+
+    {
+      typeValue && fData.append("page_id", typeValue);
+    }
+
+    fData.append("subs", JSON.stringify(allValues));
+
+    const connectDB = ConnectToDB("update/menus");
+
+    const headers = {
+      Authorization: `Bearer ${login_token}`,
+    };
+
+    axios({
+      method: "POST",
+      url: connectDB,
+      headers: headers,
+      data: fData,
+    })
+      .then((res) => {
+        console.log("res", res.data);
+        if (res.data.status === "success updated") {
+          console.log(res.data);
+          setNotification(res.data.status);
+          setTimeout(() => {
+            authCtx.closePageHandler();
+          }, 500);
+          setTimeout(() => {
+            authCtx.showPageHandler();
+          }, 1500);
+        }
+      })
+      .catch((err) => {
+        console.log("Error", err.response.data);
+        setNotification("error");
+        setdataError(err.response.data.status);
+      });
   };
+
+  const deleteHandler = () => {
+    setNotification("pending");
+    const fData = new FormData();
+
+    fData.append("id", itemId);
+
+    const connectDB = ConnectToDB("delete/menu");
+
+    const headers = {
+      Authorization: `Bearer ${login_token}`,
+    };
+
+    axios({
+      method: "POST",
+      url: connectDB,
+      headers: headers,
+      data: fData,
+    })
+      .then((res) => {
+        console.log("res", res.data);
+        if (res.data.status === "success deleted") {
+          console.log(res.data);
+          setNotification(res.data.status);
+          setTimeout(() => {
+            authCtx.closePageHandler();
+          }, 500);
+          setTimeout(() => {
+            authCtx.showPageHandler();
+          }, 2000);
+        }
+      })
+      .catch((err) => {
+        console.log("Error", err.response.data);
+        setNotification("error");
+        setdataError(err.response.data.status);
+      });
+  };
+
+  let notifDetails;
+
+  if (notification === "pending") {
+    notifDetails = {
+      status: "pending",
+      title: "Sending message...",
+      message: "Your message is on its way!",
+    };
+  }
+
+  if (
+    notification === "success updated" ||
+    notification === "success deleted"
+  ) {
+    notifDetails = {
+      status: "success",
+      title: "Success!",
+      message: "Message sent successfully!",
+    };
+  }
+
+  if (notification === "error") {
+    notifDetails = {
+      status: "error",
+      title: "Error!",
+      message: dataError,
+    };
+  }
 
   const url = !item.page_id ? item.url : item.page.url;
   return (
     <Row className="mb-3" className={classes.control}>
+      <div className={classes.delIcon}>
+        <MdDelete onClick={() => setShowDelete(true)} />
+      </div>
       <Form.Group
         as={Col}
         lg={12}
@@ -293,11 +447,38 @@ const UpdateMenuItems = (props) => {
       )}
       <Button
         onClick={submitHandler}
-        className={classes.saveItem}
+        className={`${classes.submitItem} ${classes.saveItem}`}
         variant="success"
       >
-        Save
+        Submit
       </Button>
+      {showDelete && (
+        <Modal className={classes.modal}>
+          <Row className={classes.deleteRow}>
+            <Col lg={12}>
+              <h3>Are You Sure ?</h3>
+            </Col>
+            <Col lg={6}>
+              <Button variant="success" onClick={deleteHandler}>
+                Yes
+              </Button>
+            </Col>
+            <Col lg={6}>
+              <Button variant="danger" onClick={() => setShowDelete(false)}>
+                No
+              </Button>
+            </Col>
+          </Row>
+        </Modal>
+      )}
+
+      {notification && (
+        <Notification
+          status={notifDetails.status}
+          title={notifDetails.title}
+          message={notifDetails.message}
+        />
+      )}
     </Row>
   );
 };

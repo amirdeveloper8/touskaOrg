@@ -67,3 +67,73 @@
 .actions button:disabled:hover {
   color: var(--white);
 }
+
+.imageLogo {
+  background-color: var(--white);
+  width: 250px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  margin-top: 1rem;
+  position: relative;
+}
+
+.imageLogo img {
+  width: 200px;
+}
+
+.formGroup {
+  position: relative;
+}
+
+.edit {
+  position: absolute;
+  bottom: 0;
+  right: -2rem;
+  font-size: 2rem;
+  background-color: green;
+  color: var(--white);
+  cursor: pointer;
+  height: 48px;
+}
+
+.editInput {
+  bottom: 4px;
+  right: 1rem;
+}
+
+.edit:hover {
+  background-color: rgb(0, 128, 68);
+}
+
+.deleteIcons {
+  font-size: 3rem;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+  color: var(--white);
+  background-color: rgb(128, 0, 0);
+  transition: 0.3s ease-in-out;
+}
+
+.deleteIcons:hover {
+  background-color: var(--white);
+  color: rgb(128, 0, 0);
+  transform: scale(1.1);
+  box-shadow: 2px 2px 2px grey;
+}
+
+.deleteRow {
+  width: 300px;
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba(255, 255, 255, 0.603);
+  padding: 1rem;
+}
+
+.deleteRow button {
+  font-size: 1.5rem;
+  width: 100%;
+}

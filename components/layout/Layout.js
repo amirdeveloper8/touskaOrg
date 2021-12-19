@@ -12,9 +12,10 @@ const Layout = (props) => {
   console.log("url", pathName);
   const authCtx = useContext(AuthContext);
   const isLoggedIn = authCtx.isLoggedIn;
+
   return (
     <Fragment>
-      <MainNavigation />
+      <MainNavigation list={props.list} btn={props.btn} logo={props.logo} />
       {isLoggedIn && pathName && <Sidebar />}
       <main className={classes.main}>{props.children}</main>
     </Fragment>

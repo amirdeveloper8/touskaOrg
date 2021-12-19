@@ -10,6 +10,7 @@ import classes from "../../../styles/dashboard.module.css";
 import CreateHeader from "../../../components/header/create-header/CreateHeader";
 import AuthContext from "../../../store/auth-context";
 import UpdateMenu from "../../../components/header/update-menu/UpdateMenu";
+import UpdateHeader from "../../../components/header/create-header/UpdateHeader";
 const Menu = () => {
   const [menuGet, setMenuGet] = useState();
   const [headerGet, setHeaderGet] = useState();
@@ -31,10 +32,6 @@ const Menu = () => {
     setHeaderData(headerDetails.header);
     setHeaderGet(headerDetails.status);
   }, [showPage]);
-  console.log("menu", menuGet);
-  console.log("header", headerGet);
-  console.log("menuData", menuData);
-  console.log("headerData", headerData);
 
   return (
     <section className="dashboard py-4">
@@ -56,12 +53,14 @@ const Menu = () => {
             )}
             {menuGet !== "not found" && (
               <div>
-                <Button
-                  className={classes.openItemMenu}
-                  onClick={() => setCreateMenu(true)}
-                >
-                  Update Menu
-                </Button>
+                {!createMenu && (
+                  <Button
+                    className={classes.openItemMenu}
+                    onClick={() => setCreateMenu(true)}
+                  >
+                    Update Menu
+                  </Button>
+                )}
                 {createMenu && <UpdateMenu data={menuData} />}
               </div>
             )}
@@ -88,12 +87,17 @@ const Menu = () => {
               </div>
             )}
             {headerGet !== "not found" && (
-              <Button
-                className={classes.openItemMenu}
-                onClick={() => setCreateHeader(true)}
-              >
-                Update Header
-              </Button>
+              <div>
+                {!createHeader && (
+                  <Button
+                    className={classes.openItemMenu}
+                    onClick={() => setCreateHeader(true)}
+                  >
+                    Update Header
+                  </Button>
+                )}
+                {createHeader && <UpdateHeader item={headerData} />}
+              </div>
             )}
             {createHeader && (
               <CloseButton

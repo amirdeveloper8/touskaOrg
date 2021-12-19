@@ -4,22 +4,21 @@ import { useContext, useState } from "react";
 
 import classes from "./update-menu.module.css";
 
+import { AiFillPlusSquare } from "react-icons/ai";
+import { AiFillMinusSquare } from "react-icons/ai";
 import { AiFillEdit } from "react-icons/ai";
 import { MdDelete } from "react-icons/md";
-
 import { getData } from "../../../lib/get-data";
-
-import { AiFillCheckSquare } from "react-icons/ai";
-import { ConnectToDB } from "../../../lib/connect-to-db";
-import AuthContext from "../../../store/auth-context";
-import axios from "axios";
+import UpdateSubs from "./UpdateSubs";
+import UpdateAddSub from "./UpdateAddSub";
 import Notification from "../../ui/notification";
-
-import Modal from "../../ui/Modal";
+import axios from "axios";
+import AuthContext from "../../../store/auth-context";
+import { ConnectToDB } from "../../../lib/connect-to-db";
 
 const isText = (value) => value.trim().length > 0;
 
-const UpdateSubs = (props) => {
+const AddNewMenu = (props) => {
   const [dataError, setdataError] = useState("Something went Wrong!");
   const [notification, setNotification] = useState();
 
@@ -30,12 +29,10 @@ const UpdateSubs = (props) => {
   const [usePageId, setUsePageId] = useState(false);
   const [typeValue, setTypeValue] = useState();
 
-  const [resetItemValue, setResetItemValue] = useState(false);
-  const [resetUrlValue, setResetUrlValue] = useState(false);
+  const [viewSubs, setViewSubs] = useState(false);
 
-  const [showDelete, setShowDelete] = useState(false);
-
-  const item = props.item;
+  const [newSubCount, setNewSubCount] = useState(1);
+  const [newSubsValue, setNewSubsValue] = useState([]);
 
   const {
     value: itemValue,
@@ -54,14 +51,6 @@ const UpdateSubs = (props) => {
     inputBlurHandler: urlBlurHandler,
     reset: resetUrl,
   } = useInput(isText);
-
-  const resetItemHandler = () => {
-    setResetItemValue(true);
-  };
-
-  const resetUrlHandler = () => {
-    setResetUrlValue(true);
-  };
 
   const getPagesHandler = async () => {
     const data = await getData("getAllPage");
@@ -88,35 +77,40 @@ const UpdateSubs = (props) => {
     resetUrl();
   };
 
-  const submitHandler = (e) => {
-    e.preventDefault();
+  let newSubs = [];
+  let subsSend = [];
 
-    if (itemValue) {
-      props.subs[props.number].name = itemValue;
-    }
-    if (urlValue) {
-      props.subs[props.number].url = urlValue;
-      props.subs[props.number].page_id = "";
-    }
-    if (typeValue) {
-      props.subs[props.number].url = "";
-      props.subs[props.number].page_id = typeValue;
-    }
-
-    setChecked(true);
-  };
+  for (let i = 0; i < newSubCount; i++) {
+    newSubs[i] = <UpdateAddSub key={i} number={i} item={newSubsValue} />;
+  }
 
   const authCtx = useContext(AuthContext);
 
   const login_token = authCtx.token;
 
-  const deleteHandler = () => {
-    setNotification("pending");
+  const submitHandler = (e) => {
+    e.preventDefault();
+    console.log(newSubsValue);
+
+    for (let i = 0; i < newSubCount; i++) {
+      subsSend[i] = newSubsValue[i];
+    }
+
     const fData = new FormData();
 
-    fData.append("id", props.id);
+    fData.append("count", 1);
+    fData.append("name_1", itemValue);
 
-    const connectDB = ConnectToDB("delete/menu");
+    {
+      urlValue && fData.append("url_1", urlValue);
+    }
+    {
+      typeValue && fData.append("page_id_1", typeValue);
+    }
+
+    fData.append("subs_1", JSON.stringify(subsSend));
+
+    const connectDB = ConnectToDB("create/menus");
 
     const headers = {
       Authorization: `Bearer ${login_token}`,
@@ -130,7 +124,7 @@ const UpdateSubs = (props) => {
     })
       .then((res) => {
         console.log("res", res.data);
-        if (res.data.status === "success deleted") {
+        if (res.data.status === "success created") {
           console.log(res.data);
           setNotification(res.data.status);
           setTimeout(() => {
@@ -138,7 +132,7 @@ const UpdateSubs = (props) => {
           }, 500);
           setTimeout(() => {
             authCtx.showPageHandler();
-          }, 2000);
+          }, 3000);
         }
       })
       .catch((err) => {
@@ -158,7 +152,10 @@ const UpdateSubs = (props) => {
     };
   }
 
-  if (notification === "success deleted") {
+  if (
+    notification === "success created" ||
+    notification === "success deleted"
+  ) {
     notifDetails = {
       status: "success",
       title: "Success!",
@@ -174,36 +171,20 @@ const UpdateSubs = (props) => {
     };
   }
 
-  let formIsValid = false;
-
-  if (itemValue || urlValue || typeValue) {
-    formIsValid = true;
-  }
-
-  const url = !item.page_id ? item.url : item.page.url;
   return (
-    <Row className="mb-3" className={`${classes.subs} ${classes.control}`}>
-      <div className={classes.delIcon}>
-        <MdDelete onClick={() => setShowDelete(true)} />
-      </div>
-      {checked && (
-        <div className={classes.check}>
-          <AiFillCheckSquare />
-        </div>
-      )}
+    <Row className="mb-3" className={classes.control}>
       <Form.Group
         as={Col}
         lg={12}
         controlId="formGridFName"
         className={classes.formGroup}
-        onBlur={() => setChecked(false)}
       >
         <Form.Label>Name</Form.Label>
         <Form.Control
           type="text"
           placeholder="Name"
           required
-          value={resetItemValue ? itemValue : item.name}
+          value={itemValue}
           onChange={itemChangeHandler}
           onBlur={itemBlurHandler}
         />
@@ -213,9 +194,6 @@ const UpdateSubs = (props) => {
             Please enter a valid Name.
           </Alert>
         )}
-        {!resetItemValue && (
-          <AiFillEdit className={classes.edit} onClick={resetItemHandler} />
-        )}
       </Form.Group>
       {!usePageId && (
         <Form.Group
@@ -223,14 +201,13 @@ const UpdateSubs = (props) => {
           lg={12}
           controlId="formGridFName"
           className={classes.formGroup}
-          onBlur={() => setChecked(false)}
         >
           <Form.Label>Url</Form.Label>
           <Form.Control
             type="text"
             placeholder="Url"
             required
-            value={resetUrlValue ? urlValue : url}
+            value={urlValue}
             onChange={urlChangeHandler}
             onBlur={urlBlurHandler}
           />
@@ -240,23 +217,18 @@ const UpdateSubs = (props) => {
               Please enter a valid Url.
             </Alert>
           )}
-          {!resetUrlValue && (
-            <AiFillEdit className={classes.edit} onClick={resetUrlHandler} />
-          )}
-          {resetUrlValue && (
-            <Badge className={classes.badge} onClick={changeTypeUrl}>
-              Select from Pages
-            </Badge>
-          )}
+
+          <Badge className={classes.badge} onClick={changeTypeUrl}>
+            Select from Pages
+          </Badge>
         </Form.Group>
       )}
-      {resetUrlValue && usePageId && (
+      {usePageId && (
         <Form.Group
           as={Col}
           lg={12}
           controlId="formGridFName"
           className={classes.formGroup}
-          onBlur={() => setChecked(false)}
         >
           <Form.Label>Select Page*</Form.Label>
           <Form.Select
@@ -277,33 +249,49 @@ const UpdateSubs = (props) => {
           </Badge>
         </Form.Group>
       )}
+
+      <div className="bg-dark p-3 mt-3">
+        {!viewSubs && (
+          <Button
+            onClick={() => setViewSubs(true)}
+            className={`w-100 ${classes.btnSubs}`}
+            variant="info"
+          >
+            {" "}
+            Add Subs{" "}
+          </Button>
+        )}
+        {viewSubs && (
+          <Button
+            onClick={() => setViewSubs(false)}
+            className={`w-100 ${classes.btnSubs}`}
+            variant="danger"
+          >
+            {" "}
+            Close Subs{" "}
+          </Button>
+        )}
+
+        {viewSubs && newSubs}
+        {viewSubs && (
+          <div className={classes.addNewSubsIcons}>
+            <AiFillPlusSquare onClick={() => setNewSubCount(newSubCount + 1)} />
+            {newSubCount > 0 && (
+              <AiFillMinusSquare
+                onClick={() => setNewSubCount(newSubCount - 1)}
+              />
+            )}
+          </div>
+        )}
+      </div>
+
       <Button
         onClick={submitHandler}
-        className={classes.saveItem}
+        className={`${classes.submitItem} ${classes.saveItem}`}
         variant="success"
-        disabled={!formIsValid}
       >
-        Save
+        Submit
       </Button>
-      {showDelete && (
-        <Modal className={classes.modal}>
-          <Row className={classes.deleteRow}>
-            <Col lg={12}>
-              <h3>Are You Sure ?</h3>
-            </Col>
-            <Col lg={6}>
-              <Button variant="success" onClick={deleteHandler}>
-                Yes
-              </Button>
-            </Col>
-            <Col lg={6}>
-              <Button variant="danger" onClick={() => setShowDelete(false)}>
-                No
-              </Button>
-            </Col>
-          </Row>
-        </Modal>
-      )}
       {notification && (
         <Notification
           status={notifDetails.status}
@@ -315,4 +303,4 @@ const UpdateSubs = (props) => {
   );
 };
 
-export default UpdateSubs;
+export default AddNewMenu;

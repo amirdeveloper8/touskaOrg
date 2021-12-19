@@ -4,8 +4,18 @@
   height: 90vh;
   width: 150px;
   top: 100px;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar a {
   color: white;
+}
+
+.logout {
+  width: 90%;
+  margin: auto;
+  position: absolute;
+  bottom: 1rem;
+  left: 5%;
 }

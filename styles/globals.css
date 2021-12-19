@@ -129,7 +129,8 @@ a {
 }
 
 .dashboard {
-  margin-left: 170px !important;
+  margin-left: 150px !important;
+  overflow-x: hidden;
 }
 
 .updateForm {
@@ -384,3 +385,7 @@ th {
 .rdw-dropdown-optionwrapper li::before {
   display: none;
 }
+/* 
+.nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+} */

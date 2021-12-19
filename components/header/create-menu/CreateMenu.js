@@ -96,12 +96,12 @@ const CreateMenu = () => {
         if (res.data.status === "success created") {
           console.log(res.data);
           setNotification(res.data.status);
-          // setTimeout(() => {
-          //   authCtx.closePageHandler();
-          // }, 500);
-          // setTimeout(() => {
-          //   authCtx.showPageHandler();
-          // }, 2000);
+          setTimeout(() => {
+            authCtx.closePageHandler();
+          }, 500);
+          setTimeout(() => {
+            authCtx.showPageHandler();
+          }, 2000);
         }
       })
       .catch((err) => {

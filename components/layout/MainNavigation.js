@@ -1,110 +1,201 @@
-import { useRouter } from "next/router";
-import { useContext } from "react";
-import { Button, Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
-import AuthContext from "../../store/auth-context";
+import {
+  Col,
+  Container,
+  Nav,
+  Navbar,
+  NavDropdown,
+  Offcanvas,
+} from "react-bootstrap";
 import Image from "next/image";
-import { ConnectToDB } from "../../lib/connect-to-db";
+
+import Link from "next/link";
 
 import classes from "./layout.module.css";
 
-const MainNavigation = () => {
-  const details = {
-    goods: [
-      {
-        type: "single",
-        title: "صفحه اصلی",
-        href: "/",
-      },
-      {
-        type: "multipe",
-        title: "خدمات",
-        sub: [
-          {
-            title: "سئو",
-            href: "/",
-          },
-          {
-            title: "طراحی سایت",
-            href: "/",
-          },
-          {
-            title: "گرافیک",
-            href: "/",
-          },
-        ],
-      },
-      {
-        type: "single",
-        title: "وبلاگ",
-        href: "/",
-      },
-      {
-        type: "single",
-        title: "درباره ما",
-        href: "/",
-      },
-    ],
+import { BsPersonCircle } from "react-icons/bs";
+import { Fragment, useEffect, useState } from "react";
+import { getData } from "../../lib/get-data";
+
+const MainNavigation = (props) => {
+  const [menuList, setMenuList] = useState([]);
+  const [menuButton, setMenuButton] = useState();
+  const [menuLogo, setMenuLogo] = useState();
+
+  // const [list1, setList1] = useState([]);
+  // const [list2, setList2] = useState([]);
+
+  let list1 = [];
+  let list2 = [];
+
+  useEffect(async () => {
+    const dataget = await getData("get/header");
+    setMenuList(dataget.header.list_menu);
+    setMenuButton(dataget.header.button.url);
+    setMenuLogo(dataget.header.logo_url);
+  }, []);
+
+  const showDropdownHandler = (event) => {
+    const parent = event.target.parentElement;
+    parent.setAttribute("class", "nav-item show dropdown");
+    console.log(parent);
   };
 
-  const authCtx = useContext(AuthContext);
-  const router = useRouter();
+  for (let i = 0; i < menuList.length / 2; i++) {
+    list1[i] = menuList[i];
+  }
 
-  const isLoggedIn = authCtx.isLoggedIn;
-  const login_token = authCtx.token;
+  for (let i = menuList.length / 2; i < menuList.length; i++) {
+    list2[i] = menuList[i];
+  }
 
-  const connectDB = ConnectToDB("logout");
-
-  const logoutHandler = async () => {
-    authCtx.logout();
-    const headers = {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${login_token}`,
-    };
-
-    const response = await fetch(connectDB, {
-      method: "POST",
-      headers: headers,
-    });
-
-    router.replace("/auth/login");
-  };
+  console.log("list1", list1);
+  console.log("list2", list2);
 
   return (
-    <Navbar className={`orgnavbar ${classes.menu}`} variant="dark">
-      <Container>
-        <Navbar.Brand href="#home">
-          <Image src="/images/logo.png" width={100} height={70} />
-        </Navbar.Brand>
-        <Nav className="nav-item-list">
-          {details.goods.map((item) =>
-            item.type === "single" ? (
-              <Nav.Link href={item.href} key={item.title}>
-                {item.title}
-              </Nav.Link>
-            ) : (
-              <NavDropdown
-                key={item.title}
-                title={item.title}
-                id="navbarScrollingDropdown"
-              >
-                {item.sub.map((child) => (
-                  <NavDropdown.Item key={child.title} href={child.href}>
-                    {child.title}
-                  </NavDropdown.Item>
-                ))}
-              </NavDropdown>
-            )
+    <Fragment>
+      {menuList.length > 0 && (
+        <Navbar className={`orgnavbar ${classes.menu}`} variant="dark">
+          <Col lg={1}></Col>
+          <Col className={`${classes.firstMenu} ${classes.menuItems}`} lg={4}>
+            {list1.map((item) =>
+              item.sub.length === 0 ? (
+                <div className={classes.menuItem}>
+                  <Link href={item.url}>{item.name}</Link>
+                </div>
+              ) : (
+                <div className={`${classes.menuDropdown} ${classes.menuItem}`}>
+                  <a className={classes.dropItem} href={item.url}>
+                    {item.name}
+                  </a>
+                  <ul>
+                    {item.sub.map((child, index) => (
+                      <li>
+                        <Link href={child.url}>{child.name}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )
+            )}
+          </Col>
+          {/* <Col className={classes.menuCol} lg={5}>
+            <Nav className="nav-item-list">
+              {list1.map((item, index) =>
+                item.sub.length === 0 ? (
+                  <Nav.Link href={item.url} key={index}>
+                    {item.name}
+                  </Nav.Link>
+                ) : (
+                  <NavDropdown
+                    key={index}
+                    title={item.name}
+                    id="navbarScrollingDropdown"
+                    className={classes.dropDown}
+                    onMouseOver={showDropdownHandler}
+                  >
+                    {item.sub.map((child, index) => (
+                      <NavDropdown.Item
+                        key={index}
+                        className={classes.dropDownItem}
+                        href={child.url}
+                      >
+                        {child.name}
+                      </NavDropdown.Item>
+                    ))}
+                  </NavDropdown>
+                )
+              )}
+            </Nav>
+          </Col> */}
+          <Col className={classes.menuCol} lg={2}>
+            <Navbar.Brand href="/">
+              <img src={menuLogo} />
+            </Navbar.Brand>
+          </Col>
+          <Col className={`${classes.secondMenu} ${classes.menuItems}`} lg={4}>
+            {list2.map((item) =>
+              item.sub.length === 0 ? (
+                <div className={classes.menuItem}>
+                  <Link href={item.url}>{item.name}</Link>
+                </div>
+              ) : (
+                <div className={`${classes.menuDropdown} ${classes.menuItem}`}>
+                  <a className={classes.dropItem} href={item.url}>
+                    {item.name}
+                  </a>
+                  <ul>
+                    {item.sub.map((child, index) => (
+                      <li>
+                        <Link href={child.url}>{child.name}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )
+            )}
+          </Col>
+          <Col lg={1}></Col>
+          {menuButton && (
+            <a className={classes.iconBtn} href={menuButton}>
+              <BsPersonCircle />
+            </a>
           )}
-          {!isLoggedIn && <Nav.Link href="/auth/register">ثبت نام</Nav.Link>}
-          {!isLoggedIn && <Nav.Link href="/auth/login">ورود</Nav.Link>}
-          {isLoggedIn && (
-            <Button variant="outline-danger" size="sm" onClick={logoutHandler}>
-              خروج
-            </Button>
-          )}
-        </Nav>
-      </Container>
-    </Navbar>
+        </Navbar>
+      )}
+      {menuList.length > 0 && (
+        <Navbar className={classes.mobileMenu} bg="light" expand={false}>
+          <Container fluid>
+            <Navbar.Brand className={classes.logMobile} href="/">
+              <img src={menuLogo} />
+            </Navbar.Brand>
+            <Navbar.Toggle aria-controls="offcanvasNavbar" />
+            <Navbar.Offcanvas
+              id="offcanvasNavbar"
+              aria-labelledby="offcanvasNavbarLabel"
+              placement="end"
+              className={classes.burgerMenu}
+            >
+              <Offcanvas.Header closeButton>
+                <Offcanvas.Title
+                  className={classes.logMobile}
+                  id="offcanvasNavbarLabel"
+                >
+                  <img src={menuLogo} />
+                </Offcanvas.Title>
+              </Offcanvas.Header>
+              <Offcanvas.Body>
+                <Nav className="justify-content-end flex-grow-1 pe-3">
+                  {menuList.map((item, index) =>
+                    item.sub.length === 0 ? (
+                      <Nav.Link key={index} href={item.url}>
+                        {item.name}
+                      </Nav.Link>
+                    ) : (
+                      <NavDropdown
+                        title={item.name}
+                        id={`offcanvasNavbarDropdown${index}`}
+                        className={classes.dropMobile}
+                      >
+                        {item.sub.map((child, index) => (
+                          <NavDropdown.Item key={index} href={child.url}>
+                            {child.name}
+                          </NavDropdown.Item>
+                        ))}
+                      </NavDropdown>
+                    )
+                  )}
+                  {menuButton && (
+                    <a className={classes.iconBtn} href={menuButton}>
+                      <BsPersonCircle />
+                    </a>
+                  )}
+                </Nav>
+              </Offcanvas.Body>
+            </Navbar.Offcanvas>
+          </Container>
+        </Navbar>
+      )}
+    </Fragment>
   );
 };
 

@@ -4,8 +4,9 @@ import { useState } from "react";
 
 import classes from "./update-menu.module.css";
 
-import { AiFillEdit } from "react-icons/ai";
 import { getData } from "../../../lib/get-data";
+
+import { AiFillCheckSquare } from "react-icons/ai";
 
 const isText = (value) => value.trim().length > 0;
 
@@ -73,16 +74,29 @@ const UpdateAddSub = (props) => {
       const value = { name: itemValue, page_id: typeValue };
       props.item[props.number] = value;
     }
+    setChecked(true);
   };
+
+  let formIsValid = false;
+
+  if (itemValue && (urlValue || typeValue)) {
+    formIsValid = true;
+  }
 
   const url = !item.page_id ? item.url : item.page.url;
   return (
     <Row className="mb-3" className={`${classes.subs} ${classes.control}`}>
+      {checked && (
+        <div className={classes.check}>
+          <AiFillCheckSquare />
+        </div>
+      )}
       <Form.Group
         as={Col}
         lg={12}
         controlId="formGridFName"
         className={classes.formGroup}
+        onBlur={() => setChecked(false)}
       >
         <Form.Label>Name</Form.Label>
         <Form.Control
@@ -106,6 +120,7 @@ const UpdateAddSub = (props) => {
           lg={12}
           controlId="formGridFName"
           className={classes.formGroup}
+          onBlur={() => setChecked(false)}
         >
           <Form.Label>Url</Form.Label>
           <Form.Control
@@ -134,6 +149,7 @@ const UpdateAddSub = (props) => {
           lg={12}
           controlId="formGridFName"
           className={classes.formGroup}
+          onBlur={() => setChecked(false)}
         >
           <Form.Label>Select Page*</Form.Label>
           <Form.Select
@@ -158,6 +174,7 @@ const UpdateAddSub = (props) => {
         onClick={submitHandler}
         className={classes.saveItem}
         variant="success"
+        disabled={!formIsValid}
       >
         Save
       </Button>
