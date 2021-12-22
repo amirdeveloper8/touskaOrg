@@ -26,6 +26,7 @@ import CreateBanner from "../../../components/sections/create/banner/CreateBanne
 import CreateText from "../../../components/sections/create/simple/CreateText";
 import CreateImage from "../../../components/sections/create/simple/CreateImage";
 import CreateContactUsBoxes from "../../../components/sections/create/contactus-boxes/CreateContactUsBoxes";
+import CreateVideo from "../../../components/sections/create/videosec/CreateVideo";
 
 const CreatePage = (props) => {
   const authCtx = useContext(AuthContext);
@@ -44,6 +45,7 @@ const CreatePage = (props) => {
   const TextSec = authCtx.simpleTextSection;
   const ImageSec = authCtx.simpleImageSection;
   const contactBoxSec = authCtx.contactUsBoxesSection;
+  const videoSec = authCtx.videoSection;
   const modalSec = authCtx.sectionModal;
   const showPage = authCtx.showPage;
 
@@ -101,6 +103,7 @@ const CreatePage = (props) => {
       {TextSec && <CreateText pageId={pageId} />}
       {ImageSec && <CreateImage pageId={pageId} />}
       {contactBoxSec && <CreateContactUsBoxes pageId={pageId} />}
+      {videoSec && <CreateVideo pageId={pageId} />}
     </section>
   );
 };

@@ -65,6 +65,7 @@ import OrderSec from "../order/OrderSec";
 import UpdateTitleSub from "../updatemodules/UpdateTitleSub";
 import AddSlider from "../addnew/slider/AddSlider";
 import UpdateButtons from "../updatemodules/UpdateButtons";
+import UpdateVideo from "../updatemodules/UpdateVideo";
 
 const GetDataPage = (props) => {
   const [updateOne, setUpdateOne] = useState(false);
@@ -143,12 +144,14 @@ const GetDataPage = (props) => {
               sec.type_id !== 14 &&
               sec.section_content.map((item, index) => (
                 <div ref={closeBtnRef} key={index} className={classes.content}>
-                  <DeleteSingle
-                    box={item}
-                    type={sec.type.name}
-                    id={sec.type.id}
-                    secId={sec.id}
-                  />
+                  {sec.type_id !== 15 && (
+                    <DeleteSingle
+                      box={item}
+                      type={sec.type.name}
+                      id={sec.type.id}
+                      secId={sec.id}
+                    />
+                  )}
                   <div
                     className={classes.fakeBtn}
                     onClick={updateSectionHandler}
@@ -166,7 +169,9 @@ const GetDataPage = (props) => {
                     )}
                     <div className={sec.type_id === 7 ? classes.accordion : ""}>
                       <h3 className="text-center">
-                        {sec.type_id === 1 ? item.title : item.title.content}
+                        {sec.type_id === 1 || sec.type_id === 15
+                          ? item.title
+                          : item.title.content}
                       </h3>
                       {/* <h4>{item.title.subtitle}</h4> */}
                       <p>
@@ -176,6 +181,7 @@ const GetDataPage = (props) => {
                           sec.type_id !== 7 &&
                           sec.type_id !== 9 &&
                           sec.type_id !== 12 &&
+                          sec.type_id !== 15 &&
                           item.texts.content}
                         {sec.type_id === 5 && item.title.subtitle}
                       </p>
@@ -188,6 +194,14 @@ const GetDataPage = (props) => {
                       )}
                       {sec.type_id === 12 && (
                         <ListAccordion items={item.subtitle} />
+                      )}
+                      {sec.type_id === 15 && (
+                        <p className="text-right w-100">{sec.subtitle}</p>
+                      )}
+                      {sec.type_id === 15 && (
+                        <p className="text-right w-100 bg-primary p-2">
+                          Src: <span className="bg-light">{item.src}</span>
+                        </p>
                       )}
                       {sec.type_id === 5 && (
                         <ul>
@@ -246,12 +260,16 @@ const GetDataPage = (props) => {
                         sec={sec}
                       />
                     )}
+                    {sec.type_id === 15 && (
+                      <UpdateVideo updateData={item} sec={sec} />
+                    )}
                     {sec.type_id !== 1 &&
                       sec.type_id !== 2 &&
                       sec.type_id !== 5 &&
                       sec.type_id !== 7 &&
                       sec.type_id !== 9 &&
                       sec.type_id !== 12 &&
+                      sec.type_id !== 15 &&
                       updateOne && <UpdateAll updateData={item} sec={sec} />}
 
                     <CloseButton
@@ -575,7 +593,7 @@ const GetDataPage = (props) => {
                                 </>
                               )}
                             {social.type.type === "icon" &&
-                              social.type.name === "linkedin" && (
+                              social.type.name === "linkdin" && (
                                 <>
                                   <a
                                     href={
@@ -668,6 +686,7 @@ const GetDataPage = (props) => {
                   </div>
                 </div>
               ))}
+
             <div className="addnewcol">
               <div className="addForm">
                 {sec.type_id === 2 && addNew && (

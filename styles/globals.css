@@ -8,7 +8,7 @@ body {
 
 @font-face {
   font-family: "Oridibehesht";
-  src: url("/fonts/Ordibehesht.TTF");
+  src: url("/fonts/Ordibehesht.woff");
   color: var(--purple);
 }
 
@@ -389,3 +389,21 @@ th {
 .nav-item.dropdown:hover .dropdown-menu {
   display: block;
 } */
+
+.h_iframe-aparat_embed_frame {
+  position: relative;
+}
+.h_iframe-aparat_embed_frame .ratio {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-right: auto;
+}
+.h_iframe-aparat_embed_frame iframe {
+  /* position: absolute; */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40vw;
+  border: 6px solid var(--purple);
+}

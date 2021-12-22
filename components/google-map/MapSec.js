@@ -7,13 +7,13 @@ const containerStyle = {
 };
 
 const center = {
-  lat: -3.745,
-  lng: -38.523,
+  lat: 35.7028925,
+  lng: 51.38373559999999,
 };
 
 function MapSec() {
   return (
-    <LoadScript googleMapsApiKey="YOUR_API_KEY">
+    <LoadScript googleMapsApiKey="AIzaSyCrr47MbYsLVHVdj_SBo-SUsDkWR5t12h4">
       <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={10}>
         {/* Child components, such as markers, info windows, etc. */}
         <></>

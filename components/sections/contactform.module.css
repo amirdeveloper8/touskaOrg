@@ -72,6 +72,7 @@
 .imageC img {
   width: 100%;
   border: 6px solid var(--purple);
+  max-width: 50vw;
 }
 
 .details button {
@@ -82,4 +83,10 @@
 
 .title {
   text-align: center !important;
+}
+
+@media (max-width: 980px) {
+  .details {
+    flex-direction: column;
+  }
 }

@@ -85,4 +85,49 @@
   background-color: rgba(0, 0, 0, 0.466);
   padding: 0.5rem;
   margin-bottom: 0.5rem;
+  position: relative;
+}
+
+.formLinks {
+  position: relative;
+}
+
+.edit {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 1.5rem;
+  background-color: green;
+  color: var(--white);
+  cursor: pointer;
+}
+
+.editCont {
+  bottom: 6.6rem;
+}
+
+.btnCreateSocials {
+  width: 100%;
+}
+
+.btnCloseSocials {
+  width: 100%;
+  background: red;
+}
+
+.delIcon {
+  position: absolute;
+  font-size: 2rem;
+  background: var(--white);
+  color: rgb(150, 0, 0);
+  bottom: -2rem;
+  left: 0;
+  width: 100%;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+}
+
+.delIcon:hover {
+  color: var(--white);
+  background: rgb(150, 0, 0);
 }

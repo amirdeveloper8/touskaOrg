@@ -43,6 +43,11 @@ const DeleteAll = (props) => {
     url = "delete/section/contactform";
   }
 
+  if (props.type === "video") {
+    url = "delete/section/video";
+    console.log(props.id, url);
+  }
+
   const authCtx = useContext(AuthContext);
   const login_token = authCtx.token;
   const submitHandler = (e) => {
@@ -57,7 +62,14 @@ const DeleteAll = (props) => {
       Authorization: `Bearer ${login_token}`,
     };
 
-    fData.append("id", props.id);
+    if (props.type !== "video") {
+      fData.append("id", props.id);
+    }
+
+    if (props.type === "video") {
+      fData.append("section_id", props.id);
+    }
+
     fData.append("related_id", "*");
 
     axios({

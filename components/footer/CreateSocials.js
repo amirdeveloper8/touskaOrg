@@ -39,7 +39,7 @@ const CreateSocials = (props) => {
     const boxVal = valueBox.split(".");
     boxId = boxVal[0];
 
-    const value = { content: urlValue, type_id: +boxId };
+    const value = { content: urlValue, url: urlValue, type_id: +boxId };
     console.log(value);
 
     props.value[props.number] = value;

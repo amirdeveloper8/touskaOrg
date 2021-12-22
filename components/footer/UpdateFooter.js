@@ -1,57 +1,112 @@
 import { useContext, useState } from "react";
 import { Col, Form, Alert } from "react-bootstrap";
 import useInput from "../../hooks/use-input";
-import CreateLink1 from "./CreateLink1";
+import UpdateLink1 from "./UpdateLink1";
 
 import { AiFillPlusSquare } from "react-icons/ai";
 import { AiFillMinusSquare } from "react-icons/ai";
+import { AiFillEdit } from "react-icons/ai";
 
 import Button from "../ui/Button";
 
 import classes from "./footer.module.css";
 import { getData } from "../../lib/get-data";
-import CreateSocials from "./CreateSocials";
+import UpdateSocials from "./UpdateSocials";
 import { ConnectToDB } from "../../lib/connect-to-db";
 import axios from "axios";
 import AuthContext from "../../store/auth-context";
 import Notification from "../ui/notification";
+import UpdateAddSocials from "./UpdateAddSocials";
 
 const isText = (value) => value.trim().length > 0;
-const CreateFooter = () => {
+const UpdateFooter = (props) => {
+  const details = props.details.footer;
+  const links1 = details.links1;
+  const links2 = details.links2;
+
+  const socialsVal = details.socials;
+
+  const socialTel = details.socials[0];
+  const socialAddress = details.socials[1];
+  const socialEmail = details.socials[2];
+
+  const socialIcons = socialsVal.filter(
+    (item) => item.type_id !== 5 && item.type_id !== 6 && item.type_id !== 13
+  );
+
+  let socialsOld = [];
+
+  for (let i = 0; i < socialIcons.length; i++) {
+    socialsOld[i] = {
+      content: socialIcons[i].name,
+      url: socialIcons[i].url,
+      type_id: socialIcons[i].type_id,
+      id: socialIcons[i].id,
+    };
+  }
   const [dataError, setdataError] = useState("something went wrong");
   const [notification, setNotification] = useState();
   const [selectedFile, setSelectedFile] = useState(null);
-  const [link1Count, setLink1Count] = useState(2);
-  const [link1Urls, setLink1Urls] = useState([]);
-  const [link2Count, setLink2Count] = useState(2);
-  const [link2Urls, setLink2Urls] = useState([]);
-  const [socialsCount, setSocialsCount] = useState(1);
-  const [socialsValues, setSocialsValues] = useState([]);
+  const [link1Count, setLink1Count] = useState(links1.length);
+  const [link1Urls, setLink1Urls] = useState(links1);
+  const [link2Count, setLink2Count] = useState(links2.length);
+  const [link2Urls, setLink2Urls] = useState(links2);
+  const [socialsCount, setSocialsCount] = useState(socialsVal.length - 3);
+  const [socialsValues, setSocialsValues] = useState(socialsOld);
 
   const [socials, setSocials] = useState([]);
   const [createSocials, setCreateSocials] = useState(false);
 
+  const [resetImg, setResetImg] = useState(false);
+  const [resetDesc, setResetDesc] = useState(false);
+
+  const [resetAddressContent, setResetAddressContent] = useState(false);
+  const [resetAddressUrl, setResetAddressUrl] = useState(false);
+  const [resetPhoneContent, setResetPhoneContent] = useState(false);
+  const [resetPhoneUrl, setResetPhoneUrl] = useState(false);
+  const [resetEmailContent, setResetEmailContent] = useState(false);
+  const [resetEmailUrl, setResetEmailUrl] = useState(false);
+
+  const [addSocial, setAddSocial] = useState(false);
+
   let link1 = [];
 
   for (let i = 0; i < link1Count; i++) {
-    link1[i] = <CreateLink1 linkUrls={link1Urls} number={i} key={i} />;
+    link1[i] = (
+      <UpdateLink1
+        details={links1[i]}
+        linkUrls={link1Urls}
+        number={i}
+        key={i}
+      />
+    );
   }
 
   let link2 = [];
 
   for (let i = 0; i < link2Count; i++) {
-    link2[i] = <CreateLink1 linkUrls={link2Urls} number={i} key={i} />;
+    link2[i] = (
+      <UpdateLink1
+        details={links2[i]}
+        linkUrls={link2Urls}
+        number={i}
+        key={i}
+      />
+    );
   }
+
+  console.log(socialIcons);
 
   let socialsSec = [];
 
   for (let i = 0; i < socialsCount; i++) {
     socialsSec[i] = (
-      <CreateSocials
+      <UpdateSocials
         socials={socials}
         value={socialsValues}
         key={i}
         number={i}
+        details={socialsVal[i + 3]}
       />
     );
   }
@@ -71,7 +126,6 @@ const CreateFooter = () => {
     hasError: addressHasError,
     valueChangeHandler: addressChangeHandler,
     inputBlurHandler: addressBlurHandler,
-    reset: resetAddress,
   } = useInput(isText);
 
   const {
@@ -80,7 +134,6 @@ const CreateFooter = () => {
     hasError: addressUrlHasError,
     valueChangeHandler: addressUrlChangeHandler,
     inputBlurHandler: addressUrlBlurHandler,
-    reset: resetAddressUrl,
   } = useInput(isText);
 
   const {
@@ -89,7 +142,6 @@ const CreateFooter = () => {
     hasError: emailHasError,
     valueChangeHandler: emailChangeHandler,
     inputBlurHandler: emailBlurHandler,
-    reset: resetEmail,
   } = useInput(isText);
 
   const {
@@ -98,7 +150,6 @@ const CreateFooter = () => {
     hasError: emailUrlHasError,
     valueChangeHandler: emailUrlChangeHandler,
     inputBlurHandler: emailUrlBlurHandler,
-    reset: resetEmailUrl,
   } = useInput(isText);
 
   const {
@@ -107,7 +158,6 @@ const CreateFooter = () => {
     hasError: phoneHasError,
     valueChangeHandler: phoneChangeHandler,
     inputBlurHandler: phoneBlurHandler,
-    reset: resetPhone,
   } = useInput(isText);
 
   const {
@@ -116,7 +166,6 @@ const CreateFooter = () => {
     hasError: phoneUrlHasError,
     valueChangeHandler: phoneUrlChangeHandler,
     inputBlurHandler: phoneUrlBlurHandler,
-    reset: resetPhoneUrl,
   } = useInput(isText);
 
   const handleChange = (file) => {
@@ -135,17 +184,20 @@ const CreateFooter = () => {
     }
   };
 
-  const decreaseSocialsCount = () => {
-    if (socialsCount > 1) {
-      setSocialsCount(socialsCount - 1);
-    }
-  };
-
   const createSocilasHandler = async (e) => {
     e.preventDefault();
     const socialDetails = await getData("get/contactform/typeSocial");
     setSocials(socialDetails.typeSocial);
     setCreateSocials(true);
+
+    console.log(socials);
+  };
+
+  const AddSocilasHandler = async (e) => {
+    e.preventDefault();
+    const socialDetails = await getData("get/contactform/typeSocial");
+    setSocials(socialDetails.typeSocial);
+    setAddSocial(true);
 
     console.log(socials);
   };
@@ -168,45 +220,53 @@ const CreateFooter = () => {
       link2Value[i] = link2Urls[i];
     }
 
-    const connectDB = ConnectToDB("create/footer");
+    const connectDB = ConnectToDB("update/footer");
 
     const headers = {
       Authorization: `Bearer ${login_token}`,
     };
 
     const fData = new FormData();
-    fData.append("description", descriptionValue);
-    fData.append("image", selectedFile);
+    fData.append(
+      "description",
+      resetDesc ? descriptionValue : details.description
+    );
+
+    {
+      resetImg && fData.append("image", selectedFile);
+    }
     fData.append("links1", JSON.stringify(link1Value));
     fData.append("links2", JSON.stringify(link2Value));
-
+    fData.append(
+      "social_tel",
+      JSON.stringify({
+        content: resetPhoneContent ? phoneValue : socialTel.name,
+        url: resetPhoneUrl ? `tel:${phoneUrlValue}` : socialTel.url,
+        type_id: 6,
+      })
+    );
     fData.append(
       "social_adress",
       JSON.stringify({
-        content: addressValue,
-        url: addressUrlValue,
+        content: resetAddressContent ? addressValue : socialAddress.name,
+        url: resetAddressUrl ? addressUrlValue : socialAddress.url,
         type_id: 5,
       })
     );
     fData.append(
       "social_email",
       JSON.stringify({
-        content: emailValue,
-        url: `mailto:${emailUrlValue}`,
+        content: resetEmailContent ? emailValue : socialEmail.name,
+        url: resetEmailUrl ? `mailto:${emailUrlValue}` : socialEmail.url,
         type_id: 13,
       })
     );
 
-    fData.append(
-      "social_tel",
-      JSON.stringify({
-        content: phoneValue,
-        url: `tel:${phoneUrlValue}`,
-        type_id: 6,
-      })
-    );
     for (let i = 0; i < socialsCount; i++) {
-      fData.append(`social_${i + 1}`, JSON.stringify(socialsValues[i]));
+      fData.append(`social_id_${i + 1}`, socialsValues[i].id);
+      fData.append(`social_type_id_${i + 1}`, socialsValues[i].type_id);
+      fData.append(`social_content_${i + 1}`, socialsValues[i].url);
+      fData.append(`social_url_${i + 1}`, socialsValues[i].url);
     }
 
     axios({
@@ -217,7 +277,7 @@ const CreateFooter = () => {
     })
       .then((res) => {
         console.log("res", res.data);
-        if (res.data.status === "success created") {
+        if (res.data.status === "success updated") {
           console.log(res.data);
           setNotification(res.data.status);
           setTimeout(() => {
@@ -245,7 +305,7 @@ const CreateFooter = () => {
     };
   }
 
-  if (notification === "success created") {
+  if (notification === "success updated") {
     notifDetails = {
       status: "success",
       title: "Success!",
@@ -265,15 +325,26 @@ const CreateFooter = () => {
     <Form onSubmit={submitHandler} className={classes.createFooter}>
       <div className={classes.createFooterBox} lg={3}>
         <h2>توضیحات</h2>
-        <Form.Group lg={12} className="mb-3">
+        <Form.Group lg={12} className={classes.formGroup}>
           <Form.Label>Logo*</Form.Label>
-          <Form.Control
-            name="image"
-            id="image"
-            type="file"
-            onChange={(e) => handleChange(e.target.files)}
-            size="sm"
-          />
+          {resetImg && (
+            <Form.Control
+              name="image"
+              id="image"
+              type="file"
+              onChange={(e) => handleChange(e.target.files)}
+              size="sm"
+            />
+          )}
+          {!resetImg && (
+            <img src={details.logo_url} className="w-100 bg-light" />
+          )}
+          {!resetImg && (
+            <AiFillEdit
+              className={classes.edit}
+              onClick={() => setResetImg(true)}
+            />
+          )}
         </Form.Group>
         <Form.Group
           as={Col}
@@ -287,12 +358,18 @@ const CreateFooter = () => {
             as="textarea"
             rows={5}
             placeholder="description"
-            value={descriptionValue}
+            value={resetDesc ? descriptionValue : details.description}
             onChange={descriptionChangeHandler}
             onBlur={descriptionBlurHandler}
           />
+          {!resetDesc && (
+            <AiFillEdit
+              className={classes.edit}
+              onClick={() => setResetDesc(true)}
+            />
+          )}
 
-          {descriptionHasError && (
+          {descriptionHasError && resetDesc && (
             <Alert className="mt-1" variant="danger">
               Please enter a valid description.
             </Alert>
@@ -329,12 +406,18 @@ const CreateFooter = () => {
             as="textarea"
             rows={5}
             placeholder="Address content"
-            value={addressValue}
+            value={resetAddressContent ? addressValue : socialAddress.name}
             onChange={addressChangeHandler}
             onBlur={addressBlurHandler}
           />
+          {!resetAddressContent && (
+            <AiFillEdit
+              onClick={() => setResetAddressContent(true)}
+              className={`${classes.editCont} ${classes.edit}`}
+            />
+          )}
 
-          {addressHasError && (
+          {addressHasError && resetAddressContent && (
             <Alert className="mt-1" variant="danger">
               Please enter a valid address.
             </Alert>
@@ -344,12 +427,18 @@ const CreateFooter = () => {
           <Form.Control
             type="text"
             placeholder="Address url"
-            value={addressUrlValue}
+            value={resetAddressUrl ? addressUrlValue : socialAddress.url}
             onChange={addressUrlChangeHandler}
             onBlur={addressUrlBlurHandler}
           />
+          {!resetAddressUrl && (
+            <AiFillEdit
+              onClick={() => setResetAddressUrl(true)}
+              className={classes.edit}
+            />
+          )}
 
-          {addressUrlHasError && (
+          {addressUrlHasError && resetAddressUrl && (
             <Alert className="mt-1" variant="danger">
               Please enter a valid address url.
             </Alert>
@@ -366,28 +455,40 @@ const CreateFooter = () => {
           <Form.Control
             type="text"
             placeholder="email"
-            value={emailValue}
+            value={resetEmailContent ? emailValue : socialEmail.name}
             onChange={emailChangeHandler}
             onBlur={emailBlurHandler}
           />
-          {emailHasError && (
+          {emailHasError && resetEmailContent && (
             <Alert className="mt-1" variant="danger">
               Please enter a valid email.
             </Alert>
           )}
+          {!resetEmailContent && (
+            <AiFillEdit
+              onClick={() => setResetEmailContent(true)}
+              className={`${classes.editCont} ${classes.edit}`}
+            />
+          )}
           <Form.Label>email Url</Form.Label>
           <Form.Control
-            type="email"
+            type="text"
             placeholder="email"
-            value={emailUrlValue}
+            value={resetEmailUrl ? emailUrlValue : socialEmail.url}
             onChange={emailUrlChangeHandler}
             onBlur={emailUrlBlurHandler}
           />
 
-          {emailUrlHasError && (
+          {emailUrlHasError && resetEmailUrl && (
             <Alert className="mt-1" variant="danger">
               Please enter a valid email.
             </Alert>
+          )}
+          {!resetEmailUrl && (
+            <AiFillEdit
+              onClick={() => setResetEmailUrl(true)}
+              className={classes.edit}
+            />
           )}
         </Form.Group>
 
@@ -401,13 +502,19 @@ const CreateFooter = () => {
           <Form.Control
             type="text"
             dir="ltr"
-            placeholder="phone"
-            value={phoneValue}
+            placeholder="phone Content"
+            value={resetPhoneContent ? phoneValue : socialTel.name}
             onChange={phoneChangeHandler}
             onBlur={phoneBlurHandler}
           />
+          {!resetPhoneContent && (
+            <AiFillEdit
+              onClick={() => setResetPhoneContent(true)}
+              className={`${classes.editCont} ${classes.edit}`}
+            />
+          )}
 
-          {phoneHasError && (
+          {phoneHasError && resetPhoneContent && (
             <Alert className="mt-1" variant="danger">
               Please enter a valid phone.
             </Alert>
@@ -417,11 +524,20 @@ const CreateFooter = () => {
             type="number"
             dir="ltr"
             className="text-left"
-            placeholder="phone"
-            value={phoneUrlValue}
+            placeholder="phone Url"
+            value={
+              resetPhoneUrl ? phoneUrlValue : socialTel.url.replace("tel:", "")
+            }
             onChange={phoneUrlChangeHandler}
             onBlur={phoneUrlBlurHandler}
           />
+
+          {!resetPhoneUrl && (
+            <AiFillEdit
+              onClick={() => setResetPhoneUrl(true)}
+              className={classes.edit}
+            />
+          )}
 
           {phoneUrlHasError && (
             <Alert className="mt-1" variant="danger">
@@ -434,19 +550,39 @@ const CreateFooter = () => {
             className={classes.btnCreateSocials}
             onClick={createSocilasHandler}
           >
-            Create Socials
+            Update Socials
+          </Button>
+        )}
+        {createSocials && (
+          <Button
+            className={classes.btnCloseSocials}
+            onClick={() => setCreateSocials(false)}
+          >
+            Close Socials
           </Button>
         )}
         {createSocials && socialsSec}
-        {createSocials && (
-          <div className={classes.countIcons}>
-            <AiFillPlusSquare
-              onClick={() => setSocialsCount(socialsCount + 1)}
-            />
-            <AiFillMinusSquare onClick={decreaseSocialsCount} />
-          </div>
-        )}
+        <div className="mt-2">
+          {!addSocial && (
+            <Button
+              className={classes.btnCreateSocials}
+              onClick={AddSocilasHandler}
+            >
+              Add Social
+            </Button>
+          )}
+          {addSocial && (
+            <Button
+              className={classes.btnCloseSocials}
+              onClick={() => setAddSocial(false)}
+            >
+              Cancel
+            </Button>
+          )}
+          {addSocial && <UpdateAddSocials socials={socials} />}
+        </div>
       </div>
+
       <div className={classes.actions}>
         <Button>submit</Button>
       </div>
@@ -461,4 +597,4 @@ const CreateFooter = () => {
   );
 };
 
-export default CreateFooter;
+export default UpdateFooter;

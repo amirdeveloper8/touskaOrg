@@ -36,28 +36,6 @@ const CreateLink1 = (props) => {
         controlId="formGridFName"
         onBlur={submitHandler}
       >
-        <Form.Label>link {props.number + 1}</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder={`link ${props.number + 1}`}
-          value={urlValue}
-          onChange={urlChangeHandler}
-          onBlur={urlBlurHandler}
-        />
-
-        {urlHasError && (
-          <Alert className="mt-1" variant="danger">
-            Please enter a valid url.
-          </Alert>
-        )}
-      </Form.Group>
-
-      <Form.Group
-        as={Col}
-        lg={12}
-        controlId="formGridFName"
-        onBlur={submitHandler}
-      >
         <Form.Label>Name {props.number + 1}</Form.Label>
         <Form.Control
           type="text"
@@ -70,6 +48,27 @@ const CreateLink1 = (props) => {
         {nameHasError && (
           <Alert className="mt-1" variant="danger">
             Please enter a valid Name.
+          </Alert>
+        )}
+      </Form.Group>
+      <Form.Group
+        as={Col}
+        lg={12}
+        controlId="formGridFName"
+        onBlur={submitHandler}
+      >
+        <Form.Label>link {props.number + 1}</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder={`link ${props.number + 1}`}
+          value={urlValue}
+          onChange={urlChangeHandler}
+          onBlur={urlBlurHandler}
+        />
+
+        {urlHasError && (
+          <Alert className="mt-1" variant="danger">
+            Please enter a valid url.
           </Alert>
         )}
       </Form.Group>

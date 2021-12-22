@@ -34,17 +34,11 @@ const MainNavigation = (props) => {
     setMenuLogo(dataget.header.logo_url);
   }, []);
 
-  const showDropdownHandler = (event) => {
-    const parent = event.target.parentElement;
-    parent.setAttribute("class", "nav-item show dropdown");
-    console.log(parent);
-  };
-
-  for (let i = 0; i < menuList.length / 2; i++) {
+  for (let i = 0; i < Math.ceil(menuList.length / 2); i++) {
     list1[i] = menuList[i];
   }
 
-  for (let i = menuList.length / 2; i < menuList.length; i++) {
+  for (let i = Math.ceil(menuList.length / 2); i < menuList.length; i++) {
     list2[i] = menuList[i];
   }
 
@@ -57,20 +51,23 @@ const MainNavigation = (props) => {
         <Navbar className={`orgnavbar ${classes.menu}`} variant="dark">
           <Col lg={1}></Col>
           <Col className={`${classes.firstMenu} ${classes.menuItems}`} lg={4}>
-            {list1.map((item) =>
+            {list1.map((item, index) =>
               item.sub.length === 0 ? (
-                <div className={classes.menuItem}>
-                  <Link href={item.url}>{item.name}</Link>
+                <div key={index} className={classes.menuItem}>
+                  <Link href={`/${item.url}`}>{item.name}</Link>
                 </div>
               ) : (
-                <div className={`${classes.menuDropdown} ${classes.menuItem}`}>
+                <div
+                  key={index}
+                  className={`${classes.menuDropdown} ${classes.menuItem}`}
+                >
                   <a className={classes.dropItem} href={item.url}>
                     {item.name}
                   </a>
                   <ul>
                     {item.sub.map((child, index) => (
-                      <li>
-                        <Link href={child.url}>{child.name}</Link>
+                      <li key={index}>
+                        <Link href={`/${child.url}`}>{child.name}</Link>
                       </li>
                     ))}
                   </ul>
@@ -78,44 +75,16 @@ const MainNavigation = (props) => {
               )
             )}
           </Col>
-          {/* <Col className={classes.menuCol} lg={5}>
-            <Nav className="nav-item-list">
-              {list1.map((item, index) =>
-                item.sub.length === 0 ? (
-                  <Nav.Link href={item.url} key={index}>
-                    {item.name}
-                  </Nav.Link>
-                ) : (
-                  <NavDropdown
-                    key={index}
-                    title={item.name}
-                    id="navbarScrollingDropdown"
-                    className={classes.dropDown}
-                    onMouseOver={showDropdownHandler}
-                  >
-                    {item.sub.map((child, index) => (
-                      <NavDropdown.Item
-                        key={index}
-                        className={classes.dropDownItem}
-                        href={child.url}
-                      >
-                        {child.name}
-                      </NavDropdown.Item>
-                    ))}
-                  </NavDropdown>
-                )
-              )}
-            </Nav>
-          </Col> */}
+
           <Col className={classes.menuCol} lg={2}>
             <Navbar.Brand href="/">
               <img src={menuLogo} />
             </Navbar.Brand>
           </Col>
           <Col className={`${classes.secondMenu} ${classes.menuItems}`} lg={4}>
-            {list2.map((item) =>
+            {list2.map((item, index) =>
               item.sub.length === 0 ? (
-                <div className={classes.menuItem}>
+                <div key={index} className={classes.menuItem}>
                   <Link href={item.url}>{item.name}</Link>
                 </div>
               ) : (
@@ -125,7 +94,7 @@ const MainNavigation = (props) => {
                   </a>
                   <ul>
                     {item.sub.map((child, index) => (
-                      <li>
+                      <li key={index}>
                         <Link href={child.url}>{child.name}</Link>
                       </li>
                     ))}

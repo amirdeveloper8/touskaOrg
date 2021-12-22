@@ -13,6 +13,8 @@ import ContactFormSection from "../sections/ContactFormSection";
 import MapSec from "../google-map/MapSec";
 import BannerSection from "../sections/BannerSection";
 import SimpleTxtImg from "../sections/SimpleTxtImg";
+import VideoSection from "../sections/VideoSection";
+import ContactUsBoxes from "../sections/ContactUsBoxes";
 
 const ShowPage = (props) => {
   console.log(props.secData);
@@ -71,6 +73,20 @@ const ShowPage = (props) => {
               <SimpleTxtImg
                 key={sec.section_content.id}
                 details={sec.section_content}
+                sec={sec}
+              />
+            )}
+            {sec.type_id === 14 && (
+              <ContactUsBoxes
+                key={sec.section_content.id}
+                details={sec.section_content}
+                sec={sec}
+              />
+            )}
+            {sec.type_id === 15 && (
+              <VideoSection
+                key={sec.section_content.id}
+                details={sec.section_content[0]}
                 sec={sec}
               />
             )}

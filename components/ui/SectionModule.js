@@ -67,6 +67,10 @@ const SectionModule = () => {
     authCtx.contactUsBoxesSectionTrigger();
   };
 
+  const VideoSectionHandler = () => {
+    authCtx.videoSectionTrigger();
+  };
+
   const closeHandler = () => {
     authCtx.closeSectionModal();
   };
@@ -163,6 +167,19 @@ const SectionModule = () => {
               Banner
             </Button>
           </Col>
+        </Row>
+        <Row className={classes.row}>
+          <Col className="p-1 text-center">
+            <Button onClick={VideoSectionHandler} className="px-2">
+              Video
+            </Button>
+          </Col>
+          <Col className="p-1 text-center">
+            <Button onClick={ContactUsBoxesHandler} className="px-2">
+              Map
+            </Button>
+          </Col>
+          <Col className="p-1 text-center"></Col>
         </Row>
       </Container>
     </Modal>

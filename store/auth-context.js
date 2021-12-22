@@ -57,6 +57,10 @@ const AuthContext = React.createContext({
   contactUsBoxesSection: false,
   contactUsBoxesSectionTrigger: () => {},
   closeContactUsBoxesSectionSection: () => {},
+  closeSimpleImageSection: () => {},
+  videoSection: false,
+  videoSectionTrigger: () => {},
+  closeVideoSection: () => {},
   openSectionModal: () => {},
   closeSectionModal: () => {},
 });
@@ -102,6 +106,7 @@ export const AuthContextProvider = (props) => {
   const [simpleTextSection, setSimpleTextSection] = useState(false);
   const [simpleImageSection, setSimpleImageSection] = useState(false);
   const [contactUsBoxesSection, setContactUsBoxesSection] = useState(false);
+  const [videoSection, setVideoSection] = useState(false);
 
   const simpleSectionTrigger = () => {
     setSimpleSection(true);
@@ -120,6 +125,7 @@ export const AuthContextProvider = (props) => {
     setSimpleTextSection(false);
     setSimpleImageSection(false);
     setContactUsBoxesSection(false);
+    setVideoSection(false);
   };
 
   const closeSimpleSection = () => {
@@ -143,6 +149,7 @@ export const AuthContextProvider = (props) => {
     setSimpleTextSection(false);
     setSimpleImageSection(false);
     setContactUsBoxesSection(false);
+    setVideoSection(false);
   };
 
   const closeSliderSection = () => {
@@ -166,6 +173,7 @@ export const AuthContextProvider = (props) => {
     setSimpleTextSection(false);
     setSimpleImageSection(false);
     setContactUsBoxesSection(false);
+    setVideoSection(false);
   };
 
   const closeServiceBoxesSection = () => {
@@ -189,6 +197,7 @@ export const AuthContextProvider = (props) => {
     setSimpleTextSection(false);
     setSimpleImageSection(false);
     setContactUsBoxesSection(false);
+    setVideoSection(false);
   };
 
   const closeSlideDownSection = () => {
@@ -212,6 +221,7 @@ export const AuthContextProvider = (props) => {
     setSimpleTextSection(false);
     setSimpleImageSection(false);
     setContactUsBoxesSection(false);
+    setVideoSection(false);
   };
 
   const closePlansSection = () => {
@@ -235,6 +245,7 @@ export const AuthContextProvider = (props) => {
     setSimpleTextSection(false);
     setSimpleImageSection(false);
     setContactUsBoxesSection(false);
+    setVideoSection(false);
   };
 
   const closeTeamsSection = () => {
@@ -259,6 +270,7 @@ export const AuthContextProvider = (props) => {
     setSimpleTextSection(false);
     setSimpleImageSection(false);
     setContactUsBoxesSection(false);
+    setVideoSection(false);
   };
 
   const closeAccordionSection = () => {
@@ -283,6 +295,7 @@ export const AuthContextProvider = (props) => {
     setSimpleTextSection(false);
     setSimpleImageSection(false);
     setContactUsBoxesSection(false);
+    setVideoSection(false);
   };
 
   const closeTableSection = () => {
@@ -307,6 +320,7 @@ export const AuthContextProvider = (props) => {
     setSimpleTextSection(false);
     setSimpleImageSection(false);
     setContactUsBoxesSection(false);
+    setVideoSection(false);
   };
 
   const closePortfolioSection = () => {
@@ -331,6 +345,7 @@ export const AuthContextProvider = (props) => {
     setSimpleTextSection(false);
     setSimpleImageSection(false);
     setContactUsBoxesSection(false);
+    setVideoSection(false);
   };
 
   const closesampleWorksSection = () => {
@@ -355,6 +370,7 @@ export const AuthContextProvider = (props) => {
     setSimpleTextSection(false);
     setSimpleImageSection(false);
     setContactUsBoxesSection(false);
+    setVideoSection(false);
   };
 
   const closeContactFormsSection = () => {
@@ -379,6 +395,7 @@ export const AuthContextProvider = (props) => {
     setSimpleTextSection(false);
     setSimpleImageSection(false);
     setContactUsBoxesSection(false);
+    setVideoSection(false);
   };
 
   const closeBannerSection = () => {
@@ -403,6 +420,7 @@ export const AuthContextProvider = (props) => {
     setServiceBoxesSection(false);
     setPlansSection(false);
     setContactUsBoxesSection(false);
+    setVideoSection(false);
   };
 
   const closeSimpleTextSection = () => {
@@ -427,6 +445,7 @@ export const AuthContextProvider = (props) => {
     setServiceBoxesSection(false);
     setPlansSection(false);
     setContactUsBoxesSection(false);
+    setVideoSection(false);
   };
 
   const closeSimpleImageSection = () => {
@@ -451,10 +470,36 @@ export const AuthContextProvider = (props) => {
     setSliderSection(false);
     setServiceBoxesSection(false);
     setPlansSection(false);
+    setVideoSection(false);
   };
 
   const closeContactUsBoxesSectionSection = () => {
     setContactUsBoxesSection(false);
+  };
+
+  const videoSectionTrigger = () => {
+    setVideoSection(true);
+    setContactUsBoxesSection(false);
+    setSimpleImageSection(false);
+    setSimpleTextSection(false);
+    setBannerSection(false);
+    setContactFormsSection(false);
+    setSampleWorksSection(false);
+    setPortfolioSection(false);
+    setTableSection(false);
+    setAccordionSection(false);
+    setTeamsSection(false);
+    setSimpleSection(false);
+    setSlideDownSection(false);
+    setSectionModal(false);
+    setShowPage(false);
+    setSliderSection(false);
+    setServiceBoxesSection(false);
+    setPlansSection(false);
+  };
+
+  const closeVideoSection = () => {
+    setVideoSection(false);
   };
 
   const showPageHandler = () => {
@@ -542,6 +587,9 @@ export const AuthContextProvider = (props) => {
     contactUsBoxesSection,
     contactUsBoxesSectionTrigger,
     closeContactUsBoxesSectionSection,
+    videoSection,
+    videoSectionTrigger,
+    closeVideoSection,
     openSectionModal,
     closeSectionModal,
   };

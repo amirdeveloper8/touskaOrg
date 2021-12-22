@@ -36,8 +36,7 @@ const Sidebar = () => {
       <Nav.Link href="/dashboard/allpages">All Pages</Nav.Link>
       <Nav.Link href="/dashboard/header">Header</Nav.Link>
       <Nav.Link href="/dashboard/footer">Footer</Nav.Link>
-      {!isLoggedIn && <Nav.Link href="/auth/register">ثبت نام</Nav.Link>}
-      {!isLoggedIn && <Nav.Link href="/auth/login">ورود</Nav.Link>}
+      <Nav.Link href="/dashboard/plans">Plans</Nav.Link>
       {isLoggedIn && (
         <Button
           className={classes.logout}

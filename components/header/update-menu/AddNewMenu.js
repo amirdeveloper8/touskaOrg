@@ -92,8 +92,10 @@ const AddNewMenu = (props) => {
     e.preventDefault();
     console.log(newSubsValue);
 
-    for (let i = 0; i < newSubCount; i++) {
-      subsSend[i] = newSubsValue[i];
+    if (newSubsValue.length > 0) {
+      for (let i = 0; i < newSubCount; i++) {
+        subsSend[i] = newSubsValue[i];
+      }
     }
 
     const fData = new FormData();
@@ -108,7 +110,9 @@ const AddNewMenu = (props) => {
       typeValue && fData.append("page_id_1", typeValue);
     }
 
-    fData.append("subs_1", JSON.stringify(subsSend));
+    {
+      subsSend.length > 0 && fData.append("subs_1", JSON.stringify(subsSend));
+    }
 
     const connectDB = ConnectToDB("create/menus");
 

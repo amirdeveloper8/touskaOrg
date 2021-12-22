@@ -10,16 +10,25 @@ function MyApp({ Component, pageProps }) {
   const [menuList, setMenuList] = useState();
   const [menuButton, setMenuButton] = useState();
   const [menuLogo, setMenuLogo] = useState();
+
+  const [footerDetails, setFooterDetails] = useState();
   useEffect(async () => {
     const dataget = await getData("get/header");
     setMenuList(dataget.header.list_menu);
     setMenuButton(dataget.header.button);
     setMenuLogo(dataget.header.logo_url);
+    const details = await getData("get/footer");
+    setFooterDetails(details);
   }, []);
 
   return (
     <AuthContextProvider>
-      <Layout list={menuList} btn={menuButton} logo={menuLogo}>
+      <Layout
+        list={menuList}
+        btn={menuButton}
+        logo={menuLogo}
+        footer={footerDetails}
+      >
         <Head>
           <meta charset="UTF-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
