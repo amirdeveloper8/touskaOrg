@@ -20,11 +20,13 @@ import axios from "axios";
 import { BiDownArrow } from "react-icons/bi";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { AiFillMinusCircle } from "react-icons/ai";
+import { AiFillEdit } from "react-icons/ai";
 import AddKeywords from "./AddKeywords";
 
 const isText = (value) => value.trim().length > 0;
 
-const AddNew = () => {
+const UpdateDetails = (props) => {
+  const { meta, title, keys, seoTitle, desc, url } = props;
   const [dataError, setdataError] = useState();
   const [notification, setNotification] = useState();
   const [selectedFile, setSelectedFile] = useState(null);
@@ -34,14 +36,23 @@ const AddNew = () => {
   const [keyCounts, setKeyCounts] = useState(1);
   const [keywordsValue, setKeywordsValue] = useState([]);
 
+  const [openKeysEver, setOpenKeysEver] = useState(false);
+
+  const [metaReset, setMetaReset] = useState(false);
+  const [titleReset, setTitleReset] = useState(false);
+  const [seoTitleReset, setSeoTitleReset] = useState(false);
+  const [descReset, setDescReset] = useState(false);
+  const [urlReset, setUrlReset] = useState(false);
+
   const authCtx = useContext(AuthContext);
 
   const router = useRouter();
 
   const login_token = authCtx.token;
+  const showPage = authCtx.showPage;
 
   useEffect(() => {
-    if (notification === "success created" || notification === "error") {
+    if (notification === "success updated" || notification === "error") {
       const timer = setTimeout(() => {
         setNotification(null);
         setdataError(null);
@@ -96,8 +107,14 @@ const AddNew = () => {
     reset: resetSeoDesc,
   } = useInput(isText);
 
-  const handleChange = (file) => {
-    setSelectedFile(file[0]);
+  const updateKeysHandler = () => {
+    if (keys && keys.length !== 0 && !openKeysEver) {
+      const keyWords = JSON.parse(keys);
+      setKeywordsValue(keyWords);
+      setKeyCounts(keyWords.length);
+    }
+    setOpenKeywords(true);
+    setOpenKeysEver(true);
   };
 
   let keySec = [];
@@ -108,7 +125,14 @@ const AddNew = () => {
 
   let formIsValid = false;
 
-  if (urlIsValid && titleIsValid) {
+  if (
+    urlIsValid ||
+    titleIsValid ||
+    excerptIsValid ||
+    seoTitleIsValid ||
+    seoDescIsValid ||
+    openKeysEver
+  ) {
     formIsValid = true;
   }
 
@@ -127,26 +151,41 @@ const AddNew = () => {
     event.preventDefault();
     // setNotification("pending");
 
-    const connectDB = ConnectToDB("addpage");
+    const connectDB = ConnectToDB("page/update");
 
     const headers = {
       Authorization: `Bearer ${login_token}`,
     };
 
     const fData = new FormData();
+    fData.append("id", props.pageId);
 
-    fData.append("title", titleValue);
-    fData.append("url", urlValue);
-    fData.append("excerpt", excerptValue);
-    fData.append("image", selectedFile);
+    {
+      titleValue && fData.append("title", titleValue);
+    }
+    {
+      urlValue && fData.append("url", urlValue);
+    }
+    {
+      excerptValue && fData.append("excerpt", excerptValue);
+    }
+    {
+      selectedFile && fData.append("image", selectedFile);
+    }
 
-    fData.append("title_seo", seoTitleValue);
-    fData.append("meta_description_seo", seoDescValue);
+    {
+      seoTitleValue && fData.append("title_seo", seoTitleValue);
+    }
+    {
+      seoDescValue && fData.append("meta_description_seo", seoDescValue);
+    }
     let keyVal = [];
     for (let i = 0; i < keyCounts; i++) {
       keyVal[i] = keywordsValue[i];
     }
-    fData.append("keywords_seo", JSON.stringify(keyVal));
+    {
+      openKeysEver && fData.append("keywords_seo", JSON.stringify(keyVal));
+    }
     axios({
       method: "POST",
       url: connectDB,
@@ -155,14 +194,16 @@ const AddNew = () => {
     })
       .then((res) => {
         console.log("res", res.data);
-        if (res.data.status === "success created") {
+        if (res.data.status === "success updated") {
           console.log(res.data);
           setNotification(res.data.status);
-          resetTitle();
-          resetUrl();
-          resetExcerpt();
-          const pageId = res.data.page.id;
-          router.replace(`/dashboard/createpage/${pageId}`);
+
+          setTimeout(() => {
+            authCtx.closePageHandler();
+          }, 1000);
+          setTimeout(() => {
+            authCtx.showPageHandler();
+          }, 2000);
         }
       })
       .catch((err) => {
@@ -180,7 +221,7 @@ const AddNew = () => {
     };
   }
 
-  if (notification === "success created") {
+  if (notification === "success updated") {
     notifDetails = {
       status: "success",
       title: "Success!",
@@ -198,7 +239,8 @@ const AddNew = () => {
 
   return (
     <section className={classes.auth}>
-      <h1>اطلاعات صفحه جدید را وارد کنید</h1>
+      <h1>Update</h1>
+
       <Form onSubmit={submitHandler}>
         <Row className={classes.control}>
           <Form.Group
@@ -211,7 +253,7 @@ const AddNew = () => {
               type="text"
               placeholder="Title"
               required
-              value={titleValue}
+              value={titleReset ? titleValue : title}
               onChange={titleChangeHandler}
               onBlur={titleBlurHandler}
             />
@@ -220,6 +262,12 @@ const AddNew = () => {
               <Alert className="mt-1" variant="danger">
                 Please enter a valid Title.
               </Alert>
+            )}
+            {!titleReset && (
+              <AiFillEdit
+                className={classes.edit}
+                onClick={() => setTitleReset(true)}
+              />
             )}
           </Form.Group>
         </Row>
@@ -235,7 +283,7 @@ const AddNew = () => {
               type="text"
               placeholder="type url of page"
               required
-              value={urlValue}
+              value={urlReset ? urlValue : url}
               onChange={urlChangeHandler}
               onBlur={urlBlurHandler}
             />
@@ -244,6 +292,12 @@ const AddNew = () => {
               <Alert className="mt-1" variant="danger">
                 Please enter a valid Url.
               </Alert>
+            )}
+            {!urlReset && (
+              <AiFillEdit
+                className={classes.edit}
+                onClick={() => setUrlReset(true)}
+              />
             )}
           </Form.Group>
         </Row>
@@ -257,7 +311,8 @@ const AddNew = () => {
             <Form.Control
               as="textarea"
               placeholder="excerpt"
-              value={excerptValue}
+              required
+              value={descReset ? excerptValue : desc}
               onChange={excerptChangeHandler}
               onBlur={excerptBlurHandler}
             />
@@ -267,18 +322,12 @@ const AddNew = () => {
                 Please enter a valid Excerpt.
               </Alert>
             )}
-          </Form.Group>
-        </Row>
-        <Row className={classes.control}>
-          <Form.Group>
-            <Form.Label>Image</Form.Label>
-            <Form.Control
-              name="image"
-              id="image"
-              type="file"
-              onChange={(e) => handleChange(e.target.files)}
-              size="sm"
-            />
+            {!descReset && (
+              <AiFillEdit
+                className={classes.edit}
+                onClick={() => setDescReset(true)}
+              />
+            )}
           </Form.Group>
         </Row>
         {!seoDetails && (
@@ -303,7 +352,7 @@ const AddNew = () => {
               <Form.Control
                 placeholder="Seo Title"
                 required
-                value={seoTitleValue}
+                value={seoTitleReset ? seoTitleValue : seoTitle}
                 onChange={seoTitleChangeHandler}
                 onBlur={seoTitleBlurHandler}
               />
@@ -312,6 +361,12 @@ const AddNew = () => {
                 <Alert className="mt-1" variant="danger">
                   Please enter a valid Seo Title.
                 </Alert>
+              )}
+              {!seoTitleReset && (
+                <AiFillEdit
+                  className={classes.edit}
+                  onClick={() => setSeoTitleReset(true)}
+                />
               )}
             </Form.Group>
             <Form.Group
@@ -325,7 +380,7 @@ const AddNew = () => {
                 as="textarea"
                 placeholder="Seo description"
                 required
-                value={seoDescValue}
+                value={metaReset ? seoDescValue : meta}
                 onChange={seoDescChangeHandler}
                 onBlur={seoDescBlurHandler}
               />
@@ -335,12 +390,15 @@ const AddNew = () => {
                   Please enter a valid Seo description.
                 </Alert>
               )}
+              {!metaReset && (
+                <AiFillEdit
+                  className={classes.edit}
+                  onClick={() => setMetaReset(true)}
+                />
+              )}
             </Form.Group>
             <Col lg={11} className="bg-light mx-auto mt-3">
-              <h5
-                className={classes.addKeywords}
-                onClick={() => setOpenKeywords(true)}
-              >
+              <h5 className={classes.addKeywords} onClick={updateKeysHandler}>
                 Add Seo Keywords
               </h5>
             </Col>
@@ -394,4 +452,4 @@ const AddNew = () => {
   );
 };
 
-export default AddNew;
+export default UpdateDetails;

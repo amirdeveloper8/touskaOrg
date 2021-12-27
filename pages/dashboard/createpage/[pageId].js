@@ -27,6 +27,8 @@ import CreateText from "../../../components/sections/create/simple/CreateText";
 import CreateImage from "../../../components/sections/create/simple/CreateImage";
 import CreateContactUsBoxes from "../../../components/sections/create/contactus-boxes/CreateContactUsBoxes";
 import CreateVideo from "../../../components/sections/create/videosec/CreateVideo";
+import CreateMap from "../../../components/sections/create/map/CreateMap";
+import CreateBlog from "../../../components/sections/create/blog/CreateBlog";
 
 const CreatePage = (props) => {
   const authCtx = useContext(AuthContext);
@@ -46,6 +48,8 @@ const CreatePage = (props) => {
   const ImageSec = authCtx.simpleImageSection;
   const contactBoxSec = authCtx.contactUsBoxesSection;
   const videoSec = authCtx.videoSection;
+  const mapSec = authCtx.mapSection;
+  const blogSec = authCtx.blogSection;
   const modalSec = authCtx.sectionModal;
   const showPage = authCtx.showPage;
 
@@ -75,13 +79,15 @@ const CreatePage = (props) => {
   console.log(pageData);
   return (
     <section className="dashboard">
-      <div className={classes.buttoncreate}>
-        <Button onClick={openModal}>Create New Section</Button>
-      </div>
-      <div className={classes.viewPage}>
-        <Button>
-          <Link href={`/${pageId}`}>View Page</Link>
-        </Button>
+      <div className={classes.btnsCreate}>
+        <div className={classes.buttoncreate}>
+          <Button onClick={openModal}>Create New Section</Button>
+        </div>
+        <div className={classes.viewPage}>
+          <Button>
+            <Link href={`/${pageId}`}>View Page</Link>
+          </Button>
+        </div>
       </div>
       <div>
         <Button onClick={getDataHandler}>See the latest Sections</Button>
@@ -104,6 +110,8 @@ const CreatePage = (props) => {
       {ImageSec && <CreateImage pageId={pageId} />}
       {contactBoxSec && <CreateContactUsBoxes pageId={pageId} />}
       {videoSec && <CreateVideo pageId={pageId} />}
+      {mapSec && <CreateMap pageId={pageId} />}
+      {blogSec && <CreateBlog pageId={pageId} />}
     </section>
   );
 };

@@ -168,7 +168,7 @@ const CreatePalns = (props) => {
         }
       })
       .catch((err) => {
-        console.log("Error", err.response.data);
+        console.log("Error", err.response.data.message);
       });
 
     console.log(fData);

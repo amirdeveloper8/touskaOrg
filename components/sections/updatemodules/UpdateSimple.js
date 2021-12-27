@@ -45,6 +45,7 @@ const UpdateSimple = (props) => {
   if (typeId === 2) {
     url = "update/slider/slide";
     title = data.title.content;
+    console.log("rellll", data.title.related_id);
   }
 
   console.log(url);
@@ -106,7 +107,7 @@ const UpdateSimple = (props) => {
     event.preventDefault();
     setNotification("pending");
 
-    const connectDB = ConnectToDB("create/section/simple");
+    const connectDB = ConnectToDB(url);
 
     const headers = {
       Authorization: `Bearer ${login_token}`,
@@ -116,9 +117,12 @@ const UpdateSimple = (props) => {
 
     console.log(titleValue, textValue, selectedFile);
 
-    fData.append("page_id", pageId);
-    fData.append("type_id", 1);
+    // fData.append("page_id", pageId);
     fData.append("section_id", sectionId);
+
+    if (typeId === 2) {
+      fData.append("related_id", data.title.related_id);
+    }
     {
       titleValue && fData.append("title", titleValue);
     }

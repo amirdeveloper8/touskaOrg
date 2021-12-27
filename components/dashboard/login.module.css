@@ -1,5 +1,5 @@
 .auth {
-  margin: auto;
+  margin: 8rem auto 5rem;
   width: 95%;
   max-width: 25rem;
   border-radius: 6px;
@@ -7,6 +7,10 @@
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   padding: 1rem;
   text-align: center;
+}
+
+.formGroup {
+  position: relative;
 }
 
 .auth h1 {
@@ -85,4 +89,85 @@
 .actions a:hover {
   text-decoration: none;
   color: #1ba354;
+}
+
+.seoClick {
+  background-color: var(--white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.seoClick svg {
+  background-color: var(--purple);
+  color: var(--white);
+  font-size: 2rem;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.seoClick h4 {
+  text-align: right;
+}
+
+.addKeywords {
+  cursor: pointer;
+}
+
+.keyBtns {
+  width: 50%;
+  max-width: 25rem;
+  margin: auto;
+  background-color: var(--purple);
+  direction: rtl;
+  padding: 1rem;
+}
+
+.keyBtns svg {
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.keyBtns div:nth-child(1) svg {
+  color: green;
+}
+
+.keyBtns div:nth-child(2) svg {
+  color: red;
+}
+
+.keyInputs {
+  width: 95%;
+  max-width: 25rem;
+  margin: auto;
+  background-color: var(--darkGreen);
+  padding: 1rem;
+}
+
+.modal {
+  display: block !important;
+  overflow-y: scroll;
+}
+
+.close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: red;
+}
+
+.label {
+  color: white;
+}
+
+.edit {
+  position: absolute;
+  font-size: 2rem;
+  color: white;
+  background-color: green;
+  padding: 2px;
+  cursor: pointer;
+  right: 0;
+  top: 2rem;
+  height: 35px;
 }

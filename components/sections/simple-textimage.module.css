@@ -18,6 +18,7 @@
 .detailsImgTxt {
   width: 90% !important;
   border: 10px solid var(--purple);
+  margin-right: auto;
 }
 
 .detailsImgTxt img {
@@ -53,7 +54,6 @@
 
 .modalImage {
   position: fixed;
-  height: 100vh;
 }
 
 .modal {

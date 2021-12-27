@@ -10,28 +10,16 @@ import NewRich from "../../../richtexteditor/NewRich";
 
 const isText = (value) => value.trim().length > 0;
 
-const CreateBanner = (props) => {
+const CreateBlog = (props) => {
   const [dataError, setdataError] = useState();
   const [notification, setNotification] = useState();
   const [selectedFile, setSelectedFile] = useState(null);
-  const [textValue, setTextValue] = useState([]);
 
   console.log(props.pageId);
 
   const authCtx = useContext(AuthContext);
 
   const login_token = authCtx.token;
-
-  useEffect(() => {
-    if (notification === "success created" || notification === "error") {
-      const timer = setTimeout(() => {
-        setNotification(null);
-        setdataError(null);
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [notification]);
 
   const {
     value: titleValue,
@@ -42,23 +30,32 @@ const CreateBanner = (props) => {
     reset: resetTitle,
   } = useInput(isText);
 
-  // const {
-  //   value: textValue,
-  //   isValid: textIsValid,
-  //   hasError: textHasError,
-  //   valueChangeHandler: textChangeHandler,
-  //   inputBlurHandler: textBlurHandler,
-  //   reset: resetText,
-  // } = useInput(isText);
+  const {
+    value: subValue,
+    isValid: subIsValid,
+    hasError: subHasError,
+    valueChangeHandler: subChangeHandler,
+    inputBlurHandler: subBlurHandler,
+    reset: resetSub,
+  } = useInput(isText);
 
-  const getTextValue = (value) => {
-    setTextValue([value.split("\n")]);
-    console.log(textValue);
-  };
+  const {
+    value: btnNameValue,
+    isValid: btnNameIsValid,
+    hasError: btnNameHasError,
+    valueChangeHandler: btnNameChangeHandler,
+    inputBlurHandler: btnNameBlurHandler,
+    reset: resetBtnName,
+  } = useInput(isText);
 
-  const handleChange = (file) => {
-    setSelectedFile(file[0]);
-  };
+  const {
+    value: btnUrlValue,
+    isValid: btnUrlIsValid,
+    hasError: btnUrlHasError,
+    valueChangeHandler: btnUrlChangeHandler,
+    inputBlurHandler: btnUrlBlurHandler,
+    reset: resetBtnUrl,
+  } = useInput(isText);
 
   let formIsValid = false;
 
@@ -70,7 +67,7 @@ const CreateBanner = (props) => {
     event.preventDefault();
     setNotification("pending");
 
-    const connectDB = ConnectToDB("create/section/banner");
+    const connectDB = ConnectToDB("create/section/blog");
 
     const headers = {
       Authorization: `Bearer ${login_token}`,
@@ -79,10 +76,11 @@ const CreateBanner = (props) => {
     const fData = new FormData();
 
     fData.append("page_id", props.pageId);
-    fData.append("type_id", 12);
     fData.append("title", titleValue);
-    fData.append("subtitle", JSON.stringify(textValue));
-    fData.append("image", selectedFile);
+    fData.append("subtitle", subValue);
+
+    fData.append("button_name", btnNameValue);
+    fData.append("button_url", btnUrlValue);
     console.log(props.pageId);
     axios({
       method: "POST",
@@ -95,11 +93,12 @@ const CreateBanner = (props) => {
         if (res.data.status === "success created") {
           console.log(res.data);
           setNotification(res.data.status);
-
+          setTimeout(() => {
+            authCtx.closePageHandler();
+          }, 1000);
           setTimeout(() => {
             authCtx.showPageHandler();
-            authCtx.closeBannerSection();
-          }, 3000);
+          }, 2000);
         }
       })
       .catch((err) => {
@@ -135,18 +134,19 @@ const CreateBanner = (props) => {
 
   return (
     <section className={classes.auth}>
-      <h1>Create Banner</h1>
+      <h1>Create Blog Section</h1>
       <Form onSubmit={submitHandler}>
         <Row className="mb-3" className={classes.control}>
           <Form.Group
             as={Col}
+            lg={12}
             controlId="formGridFName"
             className={classes.formGroup}
           >
             <Form.Label>Title*</Form.Label>
             <Form.Control
               type="text"
-              placeholder="First Name"
+              placeholder="Title"
               required
               value={titleValue}
               onChange={titleChangeHandler}
@@ -159,27 +159,53 @@ const CreateBanner = (props) => {
               </Alert>
             )}
           </Form.Group>
+          <Form.Group
+            as={Col}
+            lg={12}
+            controlId="formGridFName"
+            className={classes.formGroup}
+          >
+            <Form.Label>Subtitle</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Subtitle"
+              as="textarea"
+              value={subValue}
+              onChange={subChangeHandler}
+              onBlur={subBlurHandler}
+            />
+          </Form.Group>
         </Row>
 
         <Row className="mb-3" className={classes.control}>
           <Form.Group
             as={Col}
-            controlId="formGridMobile"
+            lg={12}
+            controlId="formGridFName"
             className={classes.formGroup}
           >
-            <Form.Label>text*</Form.Label>
-            <NewRich getTexts={getTextValue} />
-          </Form.Group>
-        </Row>
-        <Row className={classes.control}>
-          <Form.Group className="mb-3">
-            <Form.Label>Image</Form.Label>
+            <Form.Label>Button Name</Form.Label>
             <Form.Control
-              name="image"
-              id="image"
-              type="file"
-              onChange={(e) => handleChange(e.target.files)}
-              size="sm"
+              type="text"
+              placeholder="Button Name"
+              value={btnNameValue}
+              onChange={btnNameChangeHandler}
+              onBlur={btnNameBlurHandler}
+            />
+          </Form.Group>
+          <Form.Group
+            as={Col}
+            lg={12}
+            controlId="formGridFName"
+            className={classes.formGroup}
+          >
+            <Form.Label>Button Url</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Button Url"
+              value={btnUrlValue}
+              onChange={btnUrlChangeHandler}
+              onBlur={btnUrlBlurHandler}
             />
           </Form.Group>
         </Row>
@@ -201,4 +227,4 @@ const CreateBanner = (props) => {
   );
 };
 
-export default CreateBanner;
+export default CreateBlog;

@@ -29,9 +29,15 @@ const MainNavigation = (props) => {
 
   useEffect(async () => {
     const dataget = await getData("get/header");
-    setMenuList(dataget.header.list_menu);
-    setMenuButton(dataget.header.button.url);
-    setMenuLogo(dataget.header.logo_url);
+    if (dataget.header) {
+      setMenuList(dataget.header.list_menu);
+      setMenuButton(dataget.header.button.url);
+      setMenuLogo(dataget.header.logo_url);
+    } else {
+      setMenuList([]);
+      setMenuButton("");
+      setMenuLogo("");
+    }
   }, []);
 
   for (let i = 0; i < Math.ceil(menuList.length / 2); i++) {
@@ -49,8 +55,7 @@ const MainNavigation = (props) => {
     <Fragment>
       {menuList.length > 0 && (
         <Navbar className={`orgnavbar ${classes.menu}`} variant="dark">
-          <Col lg={1}></Col>
-          <Col className={`${classes.firstMenu} ${classes.menuItems}`} lg={4}>
+          <div className={`${classes.firstMenu} ${classes.menuItems}`} lg={4}>
             {list1.map((item, index) =>
               item.sub.length === 0 ? (
                 <div key={index} className={classes.menuItem}>
@@ -74,14 +79,14 @@ const MainNavigation = (props) => {
                 </div>
               )
             )}
-          </Col>
+          </div>
 
-          <Col className={classes.menuCol} lg={2}>
+          <div className={classes.menuCol} lg={2}>
             <Navbar.Brand href="/">
               <img src={menuLogo} />
             </Navbar.Brand>
-          </Col>
-          <Col className={`${classes.secondMenu} ${classes.menuItems}`} lg={4}>
+          </div>
+          <div className={`${classes.secondMenu} ${classes.menuItems}`} lg={4}>
             {list2.map((item, index) =>
               item.sub.length === 0 ? (
                 <div key={index} className={classes.menuItem}>
@@ -102,8 +107,7 @@ const MainNavigation = (props) => {
                 </div>
               )
             )}
-          </Col>
-          <Col lg={1}></Col>
+          </div>
           {menuButton && (
             <a className={classes.iconBtn} href={menuButton}>
               <BsPersonCircle />

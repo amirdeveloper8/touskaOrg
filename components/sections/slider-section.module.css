@@ -37,6 +37,10 @@
   margin: auto;
 }
 
+.sliderSectionItems h2 {
+  color: var(--white);
+}
+
 .sliderSectionItems h3 {
   color: var(--white) !important;
 }
@@ -103,6 +107,7 @@
 
 .contentOther li::before {
   content: ".";
+  font-family: var(--ordibehesht);
   font-size: 3rem;
   margin-left: 3px;
 }

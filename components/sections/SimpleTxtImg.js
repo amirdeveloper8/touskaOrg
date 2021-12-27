@@ -65,11 +65,13 @@ const SimpleTxtImg = (props) => {
               )}
             </div>
           </div>
-          {btn.name && (
+          {btn && (
             <div className="text-center my-3">
-              <Button>
-                <Link href={btn.url}>{btn.name}</Link>
-              </Button>
+              {btn.name && (
+                <Button>
+                  <Link href={btn.url}>{btn.name}</Link>
+                </Button>
+              )}
             </div>
           )}
         </section>

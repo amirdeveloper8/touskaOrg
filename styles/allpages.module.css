@@ -1,9 +1,15 @@
 .buttoncreate {
-  position: absolute;
-  right: 1rem;
+  margin-bottom: 10px;
 }
 
-.viewPage {
+.buttoncreate button {
+  font-family: var(--ordibehesht);
+  font-size: 2rem;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.btnsCreate {
   position: fixed;
   bottom: 0;
   left: 0;

@@ -1,23 +1,21 @@
 import classes from "../create.module.css";
-import { Form, Row, Col, Alert } from "react-bootstrap";
+import { Form, Row, Col, Badge, Alert, CloseButton } from "react-bootstrap";
 import { ConnectToDB } from "../../../../lib/connect-to-db";
 import useInput from "../../../../hooks/use-input";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../../../store/auth-context";
 import Notification from "../../../ui/notification";
-import { MdOutlineFileDownloadDone } from "react-icons/md";
-import NewRich from "../../../richtexteditor/NewRich";
+import axios from "axios";
 
 const isText = (value) => value.trim().length > 0;
 
-const SlidesForm = (props) => {
+const CreateMap = (props) => {
   const [dataError, setdataError] = useState();
   const [notification, setNotification] = useState();
-
-  const [textValue, setTextValue] = useState([]);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [textValue, setTextValue] = useState([]);
 
-  const [checked, setChecked] = useState(false);
+  console.log(props.pageId);
 
   const authCtx = useContext(AuthContext);
 
@@ -43,69 +41,102 @@ const SlidesForm = (props) => {
     reset: resetTitle,
   } = useInput(isText);
 
-  const getTextValue = (value) => {
-    setTextValue([value.split("\n")]);
-    console.log(textValue);
-  };
-
-  const handleChange = (file) => {
-    setSelectedFile(file[0]);
-  };
+  const {
+    value: srcValue,
+    isValid: srcIsValid,
+    hasError: srcHasError,
+    valueChangeHandler: srcChangeHandler,
+    inputBlurHandler: srcBlurHandler,
+    reset: resetSrc,
+  } = useInput(isText);
 
   let formIsValid = false;
 
-  if (titleIsValid && textValue.length !== 0 && selectedFile) {
+  if (titleIsValid && srcIsValid) {
     formIsValid = true;
   }
 
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
+    setNotification("pending");
 
-    const connectDB = ConnectToDB("create/section/slider");
+    const connectDB = ConnectToDB("create/section/map");
 
     const headers = {
       Authorization: `Bearer ${login_token}`,
     };
 
-    console.log(JSON.stringify(textValue));
+    const fData = new FormData();
 
-    if (!props.titles[+props.slideNumber - 1]) {
-      props.getTitles(titleValue);
-    } else {
-      props.titles[+props.slideNumber - 1] = titleValue;
-    }
+    fData.append("page_id", props.pageId);
+    fData.append("title", titleValue);
+    fData.append("subtitle", "");
+    fData.append("src", srcValue);
+    console.log(props.pageId);
+    axios({
+      method: "POST",
+      url: connectDB,
+      headers: headers,
+      data: fData,
+    })
+      .then((res) => {
+        console.log("res", res.data);
+        if (res.data.status === "success created") {
+          console.log(res.data);
+          setNotification(res.data.status);
 
-    if (!props.texts[+props.slideNumber - 1]) {
-      props.getTexts(JSON.stringify(textValue));
-    } else {
-      props.texts[+props.slideNumber - 1] = JSON.stringify(textValue);
-    }
-
-    if (!props.images[+props.slideNumber - 1]) {
-      props.getImages(selectedFile);
-    } else {
-      props.images[+props.slideNumber - 1] = selectedFile;
-    }
-
-    setChecked(true);
+          setTimeout(() => {
+            authCtx.showPageHandler();
+            authCtx.closeBannerSection();
+          }, 3000);
+        }
+      })
+      .catch((err) => {
+        console.log("Error", err.response.data);
+      });
   };
+
+  let notifDetails;
+
+  if (notification === "pending") {
+    notifDetails = {
+      status: "pending",
+      title: "Sending message...",
+      message: "Your message is on its way!",
+    };
+  }
+
+  if (notification === "success created") {
+    notifDetails = {
+      status: "success",
+      title: "Success!",
+      message: "Message sent successfully!",
+    };
+  }
+
+  if (notification === "error") {
+    notifDetails = {
+      status: "error",
+      title: "Error!",
+      message: dataError,
+    };
+  }
 
   return (
     <section className={classes.auth}>
-      <h2>Slide {props.slideNumber}</h2>
-      {checked && <MdOutlineFileDownloadDone className={classes.saveChecked} />}
+      <h1>Add Video Section</h1>
       <Form onSubmit={submitHandler}>
         <Row className="mb-3" className={classes.control}>
           <Form.Group
             as={Col}
+            lg={12}
             controlId="formGridFName"
             className={classes.formGroup}
-            onBlur={() => setChecked(false)}
           >
             <Form.Label>Title*</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Title"
+              placeholder="First Name"
               required
               value={titleValue}
               onChange={titleChangeHandler}
@@ -118,36 +149,33 @@ const SlidesForm = (props) => {
               </Alert>
             )}
           </Form.Group>
-        </Row>
 
-        <Row className="mb-3" className={classes.control}>
           <Form.Group
             as={Col}
-            controlId="formGridMobile"
+            lg={12}
+            controlId="formGridFName"
             className={classes.formGroup}
-            onBlur={() => setChecked(false)}
           >
-            <Form.Label>text*</Form.Label>
-            <NewRich getTexts={getTextValue} />
-          </Form.Group>
-        </Row>
-        <Row className={classes.control}>
-          <Form.Group className="mb-3">
-            <Form.Label>Image</Form.Label>
+            <Form.Label>Src*</Form.Label>
             <Form.Control
-              name="image"
-              id="image"
-              type="file"
-              onChange={(e) => handleChange(e.target.files)}
-              size="sm"
-              onBlur={() => setChecked(false)}
+              type="text"
+              placeholder="First Name"
+              required
+              value={srcValue}
+              onChange={srcChangeHandler}
+              onBlur={srcBlurHandler}
             />
+
+            {srcHasError && (
+              <Alert className="mt-1" variant="danger">
+                Please enter a valid Src.
+              </Alert>
+            )}
           </Form.Group>
         </Row>
-
         <div className={classes.actions}>
           <button disabled={!formIsValid} variant="primary" type="submit">
-            Save
+            Submit
           </button>
         </div>
       </Form>
@@ -163,4 +191,4 @@ const SlidesForm = (props) => {
   );
 };
 
-export default SlidesForm;
+export default CreateMap;

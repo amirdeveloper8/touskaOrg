@@ -7,11 +7,22 @@ const BannerSection = (props) => {
   return (
     <Fragment>
       {data.map((item, index) => (
-        <section key={index} className={classes.banner} key={index}>
-          <img src={item.image_url} />
-          <div className={classes.details}>
-            <h2>{item.title}</h2>
-            <ListAccordion items={item.subtitle} />
+        <section
+          style={{
+            backgroundImage: `url(/images/BG1.jpg)`,
+          }}
+          key={index}
+          className={classes.banner}
+          key={index}
+        >
+          <h1>{item.title}</h1>
+          <div className={classes.content}>
+            <div className={classes.imgSec}>
+              <img src={item.image_url} />
+            </div>
+            <div className={classes.details}>
+              <ListAccordion items={item.subtitle} />
+            </div>
           </div>
         </section>
       ))}

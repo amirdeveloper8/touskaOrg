@@ -159,7 +159,7 @@ const PlansForm = (props) => {
             <Form.Label>Title*</Form.Label>
             <Form.Control
               type="text"
-              placeholder="First Name"
+              placeholder="Title"
               required
               value={titleValue}
               onChange={titleChangeHandler}
@@ -231,7 +231,7 @@ const PlansForm = (props) => {
             controlId="formGridMobile"
             className={classes.formGroup}
           >
-            <Form.Label>Button Text</Form.Label>
+            <Form.Label>Button Name</Form.Label>
             <Form.Control
               placeholder="subtitle"
               required
@@ -242,7 +242,7 @@ const PlansForm = (props) => {
 
             {buttonTextHasError && (
               <Alert className="mt-1" variant="danger">
-                Please enter a valid button Text.
+                Please enter a valid Button Name.
               </Alert>
             )}
           </Form.Group>
@@ -256,7 +256,7 @@ const PlansForm = (props) => {
           >
             <Form.Label>Button url</Form.Label>
             <Form.Control
-              placeholder="subtitle"
+              placeholder="Button url"
               required
               value={buttonUrlValue}
               onChange={buttonUrlChangeHandler}

@@ -61,6 +61,12 @@ const AuthContext = React.createContext({
   videoSection: false,
   videoSectionTrigger: () => {},
   closeVideoSection: () => {},
+  mapSection: false,
+  mapSectionTrigger: () => {},
+  closeMapSection: () => {},
+  blogSection: false,
+  blogSectionTrigger: () => {},
+  closeBlogSection: () => {},
   openSectionModal: () => {},
   closeSectionModal: () => {},
 });
@@ -107,6 +113,8 @@ export const AuthContextProvider = (props) => {
   const [simpleImageSection, setSimpleImageSection] = useState(false);
   const [contactUsBoxesSection, setContactUsBoxesSection] = useState(false);
   const [videoSection, setVideoSection] = useState(false);
+  const [mapSection, setMapSection] = useState(false);
+  const [blogSection, setBlogSection] = useState(false);
 
   const simpleSectionTrigger = () => {
     setSimpleSection(true);
@@ -502,6 +510,58 @@ export const AuthContextProvider = (props) => {
     setVideoSection(false);
   };
 
+  const blogSectionTrigger = () => {
+    setBlogSection(true);
+    setVideoSection(false);
+    setContactUsBoxesSection(false);
+    setSimpleImageSection(false);
+    setSimpleTextSection(false);
+    setBannerSection(false);
+    setContactFormsSection(false);
+    setSampleWorksSection(false);
+    setPortfolioSection(false);
+    setTableSection(false);
+    setAccordionSection(false);
+    setTeamsSection(false);
+    setSimpleSection(false);
+    setSlideDownSection(false);
+    setSectionModal(false);
+    setShowPage(false);
+    setSliderSection(false);
+    setServiceBoxesSection(false);
+    setPlansSection(false);
+  };
+
+  const closeBlogSection = () => {
+    setBlogSection(false);
+  };
+
+  const mapSectionTrigger = () => {
+    setMapSection(true);
+    setVideoSection(false);
+    setContactUsBoxesSection(false);
+    setSimpleImageSection(false);
+    setSimpleTextSection(false);
+    setBannerSection(false);
+    setContactFormsSection(false);
+    setSampleWorksSection(false);
+    setPortfolioSection(false);
+    setTableSection(false);
+    setAccordionSection(false);
+    setTeamsSection(false);
+    setSimpleSection(false);
+    setSlideDownSection(false);
+    setSectionModal(false);
+    setShowPage(false);
+    setSliderSection(false);
+    setServiceBoxesSection(false);
+    setPlansSection(false);
+  };
+
+  const closeMapSection = () => {
+    setMapSection(false);
+  };
+
   const showPageHandler = () => {
     setShowPage(true);
     setContactUsBoxesSection(false);
@@ -520,6 +580,9 @@ export const AuthContextProvider = (props) => {
     setSliderSection(false);
     setServiceBoxesSection(false);
     setPlansSection(false);
+    setVideoSection(false);
+    setBlogSection(false);
+    setMapSection(false);
   };
   const closePageHandler = () => {
     setShowPage(false);
@@ -590,6 +653,12 @@ export const AuthContextProvider = (props) => {
     videoSection,
     videoSectionTrigger,
     closeVideoSection,
+    mapSection,
+    mapSectionTrigger,
+    closeMapSection,
+    blogSection,
+    blogSectionTrigger,
+    closeBlogSection,
     openSectionModal,
     closeSectionModal,
   };

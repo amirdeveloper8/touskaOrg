@@ -10,13 +10,13 @@ const PlansSection = (props) => {
   console.log("plans", data);
   return (
     <section className={classes.plans}>
-      <div className={classes.plansHead} lg={12}>
+      <div className={classes.plansHead}>
         <h2>{title}</h2>
         <h5>{subtitle}</h5>
       </div>
       <div className={classes.boxes}>
         {data.map((item, index) => (
-          <div className={classes.box} key={index} lg={6} xs={12}>
+          <div className={classes.box} key={index}>
             <img
               className="mb-5"
               src={item.image_url}

@@ -180,7 +180,7 @@ const DeleteSingle = (props) => {
       <MdOutlineDeleteOutline onClick={() => setReqDel(true)} />
       {reqDel && (
         <Modal>
-          <Row className={classes.modal}>
+          <Row dir="ltr" className={classes.modal}>
             <Col lg={12}>
               <h4>Are you Sure ?</h4>
             </Col>

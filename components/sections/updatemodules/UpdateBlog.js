@@ -4,43 +4,27 @@ import { ConnectToDB } from "../../../lib/connect-to-db";
 import useInput from "../../../hooks/use-input";
 import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../../store/auth-context";
-import { useRouter } from "next/router";
 import Notification from "../../ui/notification";
 import axios from "axios";
-import ListAccordion from "../getdata/ListAccordion";
-import NewRich from "../../richtexteditor/NewRich";
 
 const isText = (value) => value.trim().length > 0;
 
-const UpdateVideo = (props) => {
+const UpdateBlog = (props) => {
+  const data = props.data;
   const [dataError, setdataError] = useState();
   const [notification, setNotification] = useState();
+  const [selectedFile, setSelectedFile] = useState(null);
 
-  const [resetTitleValue, setResetTitleValue] = useState(false);
-  const [resetSubValue, setResetSubValue] = useState(false);
-  const [resetSrcValue, setResetSrcValue] = useState(false);
+  const [resetTitle, setResetTitle] = useState(false);
+  const [resetSub, setResetSub] = useState(!data.subtitle);
+  const [resetBtnName, setResetBtnName] = useState(false);
+  const [resetBtnUrl, setResetBtnUrl] = useState(false);
 
-  const data = props.updateData;
-
-  const pageId = props.sec.page_id;
-  const sectionId = props.sec.id;
-
-  console.log("typeId", pageId);
+  console.log(props.pageId);
 
   const authCtx = useContext(AuthContext);
 
   const login_token = authCtx.token;
-
-  useEffect(() => {
-    if (notification === "success updated" || notification === "error") {
-      const timer = setTimeout(() => {
-        setNotification(null);
-        setdataError(null);
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [notification]);
 
   const {
     value: titleValue,
@@ -48,7 +32,6 @@ const UpdateVideo = (props) => {
     hasError: titleHasError,
     valueChangeHandler: titleChangeHandler,
     inputBlurHandler: titleBlurHandler,
-    reset: resetTitle,
   } = useInput(isText);
 
   const {
@@ -57,41 +40,31 @@ const UpdateVideo = (props) => {
     hasError: subHasError,
     valueChangeHandler: subChangeHandler,
     inputBlurHandler: subBlurHandler,
-    reset: resetSub,
   } = useInput(isText);
 
   const {
-    value: srcValue,
-    isValid: srcIsValid,
-    hasError: srcHasError,
-    valueChangeHandler: srcChangeHandler,
-    inputBlurHandler: srcBlurHandler,
-    reset: resetSrc,
+    value: btnNameValue,
+    isValid: btnNameIsValid,
+    hasError: btnNameHasError,
+    valueChangeHandler: btnNameChangeHandler,
+    inputBlurHandler: btnNameBlurHandler,
   } = useInput(isText);
 
-  const resetTitleHandler = () => {
-    setResetTitleValue(true);
-  };
+  const {
+    value: btnUrlValue,
+    isValid: btnUrlIsValid,
+    hasError: btnUrlHasError,
+    valueChangeHandler: btnUrlChangeHandler,
+    inputBlurHandler: btnUrlBlurHandler,
+  } = useInput(isText);
 
-  const resetSubHandler = () => {
-    setResetSubValue(true);
-  };
-
-  const resetSrcHandler = () => {
-    setResetSrcValue(true);
-  };
-
-  let updateIsValid = false;
-
-  if (resetTitleValue || resetSubValue || resetSrcValue) {
-    updateIsValid = true;
-  }
+  let formIsValid = true;
 
   const submitHandler = async (event) => {
     event.preventDefault();
     setNotification("pending");
 
-    const connectDB = ConnectToDB("update/section/video");
+    const connectDB = ConnectToDB("update/section/blog");
 
     const headers = {
       Authorization: `Bearer ${login_token}`,
@@ -99,18 +72,21 @@ const UpdateVideo = (props) => {
 
     const fData = new FormData();
 
-    console.log(titleValue, subValue, srcValue);
-
-    fData.append("section_id", sectionId);
+    fData.append("section_id", data.id);
     {
       titleValue && fData.append("title", titleValue);
     }
     {
       subValue && fData.append("subtitle", subValue);
     }
+
     {
-      srcValue && fData.append("src", srcValue);
+      btnNameValue && fData.append("button_name", btnNameValue);
     }
+    {
+      btnUrlValue && fData.append("button_url", btnUrlValue);
+    }
+    console.log(props.pageId);
     axios({
       method: "POST",
       url: connectDB,
@@ -124,18 +100,14 @@ const UpdateVideo = (props) => {
           setNotification(res.data.status);
           setTimeout(() => {
             authCtx.closePageHandler();
-          }, 2800);
-
+          }, 1000);
           setTimeout(() => {
             authCtx.showPageHandler();
-            authCtx.closeSimpleSection();
-          }, 3000);
+          }, 2000);
         }
       })
       .catch((err) => {
-        console.log("Error", err.response.data);
-        setNotification("error");
-        setdataError(err.response.data.status);
+        console.log("Error", err.response);
       });
   };
 
@@ -167,8 +139,7 @@ const UpdateVideo = (props) => {
 
   return (
     <section className={classes.auth}>
-      <h1>Update Module Simple</h1>
-
+      <h1>Create Blog Section</h1>
       <Form onSubmit={submitHandler}>
         <Row className="mb-3" className={classes.control}>
           <Form.Group
@@ -180,98 +151,104 @@ const UpdateVideo = (props) => {
             <Form.Label>Title*</Form.Label>
             <Form.Control
               type="text"
-              placeholder="First Name"
+              placeholder="Title"
               required
-              value={resetTitleValue ? titleValue : props.sec.title}
+              value={resetTitle ? titleValue : data.title}
               onChange={titleChangeHandler}
               onBlur={titleBlurHandler}
             />
 
-            {titleHasError && (
+            {titleHasError && resetTitle && (
               <Alert className="mt-1" variant="danger">
-                Please enter a valid Title.
+                Please enter a valid Name.
               </Alert>
             )}
-            {!resetTitleValue && (
+            {!resetTitle && (
               <Badge
+                onClick={() => setResetTitle(true)}
                 className={classes.edit}
-                onClick={resetTitleHandler}
-                bg="secondary"
               >
                 edit
               </Badge>
             )}
           </Form.Group>
-          {props.sec.subtitle && (
-            <Form.Group
-              as={Col}
-              lg={12}
-              controlId="formGridFName"
-              className={classes.formGroup}
-            >
-              <Form.Label>Subtitle*</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="First Name"
-                required
-                as="textarea"
-                rows={4}
-                value={resetSubValue ? subValue : props.sec.subtitle}
-                onChange={subChangeHandler}
-                onBlur={subBlurHandler}
-              />
-
-              {subHasError && (
-                <Alert className="mt-1" variant="danger">
-                  Please enter a valid Name.
-                </Alert>
-              )}
-              {!resetSubValue && (
-                <Badge
-                  className={classes.edit}
-                  onClick={resetSubHandler}
-                  bg="secondary"
-                >
-                  edit
-                </Badge>
-              )}
-            </Form.Group>
-          )}
           <Form.Group
             as={Col}
             lg={12}
             controlId="formGridFName"
             className={classes.formGroup}
           >
-            <Form.Label>Src</Form.Label>
+            <Form.Label>Subtitle</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Src"
-              required
-              value={resetSrcValue ? srcValue : data.src}
-              onChange={srcChangeHandler}
-              onBlur={srcBlurHandler}
+              placeholder="Subtitle"
+              as="textarea"
+              value={resetSub ? subValue : data.subtitle}
+              onChange={subChangeHandler}
+              onBlur={subBlurHandler}
             />
-
-            {srcHasError && (
-              <Alert className="mt-1" variant="danger">
-                Please enter a valid Name.
-              </Alert>
-            )}
-            {!resetSrcValue && (
-              <Badge
-                className={classes.edit}
-                onClick={resetSrcHandler}
-                bg="secondary"
-              >
+            {!resetSub && (
+              <Badge onClick={() => setResetSub(true)} className={classes.edit}>
                 edit
               </Badge>
             )}
           </Form.Group>
         </Row>
 
+        <Row className="mb-3" className={classes.control}>
+          <Form.Group
+            as={Col}
+            lg={12}
+            controlId="formGridFName"
+            className={classes.formGroup}
+          >
+            <Form.Label>Button Name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Button Name"
+              value={
+                resetBtnName ? btnNameValue : data.section_content.button.name
+              }
+              onChange={btnNameChangeHandler}
+              onBlur={btnNameBlurHandler}
+            />
+            {!resetBtnName && (
+              <Badge
+                onClick={() => setResetBtnName(true)}
+                className={classes.edit}
+              >
+                edit
+              </Badge>
+            )}
+          </Form.Group>
+          <Form.Group
+            as={Col}
+            lg={12}
+            controlId="formGridFName"
+            className={classes.formGroup}
+          >
+            <Form.Label>Button Url</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Button Url"
+              value={
+                resetBtnUrl ? btnUrlValue : data.section_content.button.url
+              }
+              onChange={btnUrlChangeHandler}
+              onBlur={btnUrlBlurHandler}
+            />
+            {!resetBtnUrl && (
+              <Badge
+                onClick={() => setResetBtnUrl(true)}
+                className={classes.edit}
+              >
+                edit
+              </Badge>
+            )}
+          </Form.Group>
+        </Row>
         <div className={classes.actions}>
-          <button disabled={!updateIsValid} variant="primary" type="submit">
+          <button disabled={!formIsValid} variant="primary" type="submit">
             Submit
           </button>
         </div>
@@ -288,4 +265,4 @@ const UpdateVideo = (props) => {
   );
 };
 
-export default UpdateVideo;
+export default UpdateBlog;

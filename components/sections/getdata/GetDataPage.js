@@ -41,6 +41,8 @@ import UpdateHeadContactForm from "../updatemodules/contact-form/UpdateHeadConta
 import UpdateBanner from "../updatemodules/UpdateBanner";
 import UpdateTxtImg from "../updatemodules/UpdateTxtImg";
 
+import { Markup } from "interweave";
+
 import AddContactUsBoxes from "../addnew/contactus-boxes/AddContactUsBoxes";
 
 import Link from "next/link";
@@ -66,6 +68,7 @@ import UpdateTitleSub from "../updatemodules/UpdateTitleSub";
 import AddSlider from "../addnew/slider/AddSlider";
 import UpdateButtons from "../updatemodules/UpdateButtons";
 import UpdateVideo from "../updatemodules/UpdateVideo";
+import UpdateBlog from "../updatemodules/UpdateBlog";
 
 const GetDataPage = (props) => {
   const [updateOne, setUpdateOne] = useState(false);
@@ -135,6 +138,15 @@ const GetDataPage = (props) => {
             {sec.type_id === 5 && <UpdateTitleSub data={sec} />}
             {sec.type_id === 11 && <UpdateHeadContactForm data={sec} />}
             {sec.type_id === 11 && <UpdateEmailContactForm data={sec} />}
+            {sec.type_id === 17 && sec.subtitle && (
+              <div>
+                <h5 className="text-center">
+                  subtitle:
+                  <br />
+                  {sec.subtitle}
+                </h5>
+              </div>
+            )}
 
             {sec.type_id !== 6 &&
               sec.type_id !== 8 &&
@@ -142,9 +154,10 @@ const GetDataPage = (props) => {
               sec.type_id !== 11 &&
               sec.type_id !== 13 &&
               sec.type_id !== 14 &&
+              sec.type_id !== 17 &&
               sec.section_content.map((item, index) => (
                 <div ref={closeBtnRef} key={index} className={classes.content}>
-                  {sec.type_id !== 15 && (
+                  {sec.type_id !== 15 && sec.type_id !== 16 && (
                     <DeleteSingle
                       box={item}
                       type={sec.type.name}
@@ -167,9 +180,15 @@ const GetDataPage = (props) => {
                         <img src={item.image} />
                       </div>
                     )}
-                    <div className={sec.type_id === 7 ? classes.accordion : ""}>
+                    <div
+                      className={
+                        sec.type_id === 7 ? classes.accordion : "w-100"
+                      }
+                    >
                       <h3 className="text-center">
-                        {sec.type_id === 1 || sec.type_id === 15
+                        {sec.type_id === 1 ||
+                        sec.type_id === 15 ||
+                        sec.type_id === 16
                           ? item.title
                           : item.title.content}
                       </h3>
@@ -182,6 +201,7 @@ const GetDataPage = (props) => {
                           sec.type_id !== 9 &&
                           sec.type_id !== 12 &&
                           sec.type_id !== 15 &&
+                          sec.type_id !== 16 &&
                           item.texts.content}
                         {sec.type_id === 5 && item.title.subtitle}
                       </p>
@@ -198,11 +218,12 @@ const GetDataPage = (props) => {
                       {sec.type_id === 15 && (
                         <p className="text-right w-100">{sec.subtitle}</p>
                       )}
-                      {sec.type_id === 15 && (
-                        <p className="text-right w-100 bg-primary p-2">
-                          Src: <span className="bg-light">{item.src}</span>
-                        </p>
-                      )}
+                      {sec.type_id === 15 ||
+                        (sec.type_id === 16 && (
+                          <p className="text-right w-100 bg-primary p-2">
+                            Src: <span className="bg-light">{item.src}</span>
+                          </p>
+                        ))}
                       {sec.type_id === 5 && (
                         <ul>
                           {JSON.parse(item.item.lists).map((list, idx) => (
@@ -260,7 +281,7 @@ const GetDataPage = (props) => {
                         sec={sec}
                       />
                     )}
-                    {sec.type_id === 15 && (
+                    {(sec.type_id === 15 || sec.type_id === 16) && (
                       <UpdateVideo updateData={item} sec={sec} />
                     )}
                     {sec.type_id !== 1 &&
@@ -270,6 +291,7 @@ const GetDataPage = (props) => {
                       sec.type_id !== 9 &&
                       sec.type_id !== 12 &&
                       sec.type_id !== 15 &&
+                      sec.type_id !== 16 &&
                       updateOne && <UpdateAll updateData={item} sec={sec} />}
 
                     <CloseButton
@@ -687,6 +709,59 @@ const GetDataPage = (props) => {
                 </div>
               ))}
 
+            {sec.type_id === 17 && (
+              <div>
+                {sec.section_content.blogs.map((item, index) => (
+                  <div
+                    ref={closeBtnRef}
+                    key={index}
+                    className={classes.content}
+                  >
+                    <div
+                      className={classes.fakeBtn}
+                      onClick={updateSectionHandler}
+                    ></div>
+                    <div className={`${classes.details} details`}>
+                      <div>
+                        <h3>{item.title}</h3>
+
+                        <Markup content={item.excerpt} />
+                        {item.image_link && <img src={item.image_link} />}
+                        <Button variant="info">
+                          <Link href={item.link}>view more</Link>
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                <div className="d-block w-75 m-auto" dir="ltr">
+                  <Button variant="success">
+                    {sec.section_content.button.name}
+                  </Button>
+                  <p className="text-left">
+                    button url: <br />
+                    <Link href={sec.section_content.button.url}>
+                      {sec.section_content.button.url}
+                    </Link>
+                  </p>
+                  <div className="updateForm">
+                    {updateOne && <UpdateBlog data={sec} />}
+                    <CloseButton
+                      className={classes.closeBtn}
+                      onClick={noUpdateHandler}
+                    />
+                  </div>
+                  <div className={classes.editBtn}>
+                    <BiEdit />
+                  </div>
+                  <div
+                    className={classes.fakeBtn}
+                    onClick={updateSectionHandler}
+                  ></div>
+                </div>
+              </div>
+            )}
+
             <div className="addnewcol">
               <div className="addForm">
                 {sec.type_id === 2 && addNew && (
@@ -731,16 +806,19 @@ const GetDataPage = (props) => {
                   />
                 )}
               </div>
-              {sec.type_id !== 1 && (
-                <div className={classes.addColumn}>
-                  <button
-                    type="button"
-                    onClick={addColumnHandler}
-                    value={sec.type_id}
-                  ></button>
-                  <FcAddRow />
-                </div>
-              )}
+              {sec.type_id !== 1 &&
+                sec.type_id !== 15 &&
+                sec.type_id !== 16 &&
+                sec.type_id !== 17 && (
+                  <div className={classes.addColumn}>
+                    <button
+                      type="button"
+                      onClick={addColumnHandler}
+                      value={sec.type_id}
+                    ></button>
+                    <FcAddRow />
+                  </div>
+                )}
             </div>
             {(sec.type_id === 8 || sec.type_id === 1 || sec.type_id === 13) &&
               sec.button.length !== 0 && <UpdateButtons data={sec} />}

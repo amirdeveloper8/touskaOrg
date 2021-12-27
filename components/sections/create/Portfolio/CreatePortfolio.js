@@ -115,8 +115,8 @@ const CreatePortfolio = (props) => {
       fData.append("page_id", props.pageId);
       fData.append("type_id", 9);
       fData.append("title", titleValue);
-      fData.append("button_url", btnNameValue);
-      fData.append("button_name", btnUrlValue);
+      // fData.append("button_url", btnNameValue);
+      // fData.append("button_name", btnUrlValue);
       fData.append("count", slideCount);
       fData.append(`title_item_${i + 1}`, titles[i]);
       fData.append(`button_name_${i + 1}`, buttonNames[i]);
@@ -158,8 +158,6 @@ const CreatePortfolio = (props) => {
 
   if (
     titleIsValid &&
-    btnNameIsValid &&
-    btnUrlIsValid &&
     (titles.length &&
       images.length &&
       buttonNames.length &&
@@ -235,7 +233,7 @@ const CreatePortfolio = (props) => {
               </Alert>
             )}
           </Form.Group>
-          <Form.Group
+          {/* <Form.Group
             as={Col}
             lg={12}
             controlId="formGridFName"
@@ -245,7 +243,6 @@ const CreatePortfolio = (props) => {
             <Form.Control
               type="text"
               placeholder="Button name"
-              required
               value={btnNameValue}
               onChange={btnNameChangeHandler}
               onBlur={btnNameBlurHandler}
@@ -256,8 +253,8 @@ const CreatePortfolio = (props) => {
                 Please enter a valid Name.
               </Alert>
             )}
-          </Form.Group>
-          <Form.Group
+          </Form.Group> */}
+          {/* <Form.Group
             as={Col}
             lg={12}
             controlId="formGridFName"
@@ -267,7 +264,6 @@ const CreatePortfolio = (props) => {
             <Form.Control
               type="text"
               placeholder="Button Url"
-              required
               value={btnUrlValue}
               onChange={btnUrlChangeHandler}
               onBlur={btnUrlBlurHandler}
@@ -278,7 +274,7 @@ const CreatePortfolio = (props) => {
                 Please enter a valid Name.
               </Alert>
             )}
-          </Form.Group>
+          </Form.Group> */}
         </Row>
 
         <div className={`${classes.actions} ${classes.submitactions}`}>

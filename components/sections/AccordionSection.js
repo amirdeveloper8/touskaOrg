@@ -10,7 +10,7 @@ const AccordionSection = (props) => {
   console.log("accccord", content);
   return (
     <section className={classes.accordionSec}>
-      <h2 className="text-center">{title}</h2>
+      <h2>{title}</h2>
       <Accordion className={classes.accordion} defaultActiveKey="0">
         {content.map((item, index) => (
           <Accordion.Item

@@ -166,7 +166,7 @@ const ProjectsForm = (props) => {
             <Form.Label>Title*</Form.Label>
             <Form.Control
               type="text"
-              placeholder="First Name"
+              placeholder="Title"
               required
               value={titleValue}
               onChange={titleChangeHandler}
@@ -203,7 +203,7 @@ const ProjectsForm = (props) => {
             <Form.Label>Title*</Form.Label>
             <Form.Control
               type="text"
-              placeholder="First Name"
+              placeholder="Title"
               required
               value={titleProjectValue}
               onChange={titleProjectChangeHandler}
@@ -227,7 +227,7 @@ const ProjectsForm = (props) => {
             <Form.Label>Name*</Form.Label>
             <Form.Control
               type="text"
-              placeholder="First Name"
+              placeholder="Name"
               required
               value={nameProjectValue}
               onChange={nameProjectChangeHandler}

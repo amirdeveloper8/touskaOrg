@@ -2,7 +2,8 @@ import classes from "./worksamples.module.css";
 import Modal from "../ui/Modal";
 import Link from "next/link";
 
-import { CloseButton, Button } from "react-bootstrap";
+import { CloseButton } from "react-bootstrap";
+import Button from "../ui/Button";
 
 const WorkSamplePrjs = (props) => {
   const data = props.data;
@@ -11,16 +12,25 @@ const WorkSamplePrjs = (props) => {
     props.showProjectHandler(null);
   };
   return (
-    <Modal>
+    <Modal className={classes.modal}>
+      <h2 className="text-center w-100">{data.title_project}</h2>
       <CloseButton className={classes.close} onClick={closeHandler} />
       <div className={classes.projects}>
         <div className={classes.prjDetails}>
-          <h2>{data.title_project}</h2>
-          <div className={classes.divider}></div>
-          <p>{data.name_project}</p>
-          <Button>
-            <Link href={data.url_project}>{data.buttons.name}</Link>
-          </Button>
+          <p>
+            {" "}
+            <span>نام وبسایت: </span> {data.name_project}
+          </p>
+          <p>
+            {" "}
+            <span>نام دامنه: </span>{" "}
+            <Link href={data.url_project}>{data.url_project}</Link>
+          </p>
+          <div className={classes.actions}>
+            <Button className={classes.buttonPrj}>
+              <Link href={data.url_project}>{data.buttons.name}</Link>
+            </Button>
+          </div>
         </div>
         <div className={classes.prjImg}>
           <img src={data.image_project_url} />

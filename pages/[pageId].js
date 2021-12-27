@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import SimpleSection from "../components/sections/SimpleSection";
 import classes from "../styles/dashboard.module.css";
 import ShowPage from "../components/showpage/ShowPage";
+import Head from "next/head";
 
 const ViewPage = (props) => {
   const authCtx = useContext(AuthContext);
@@ -14,6 +15,7 @@ const ViewPage = (props) => {
   const showPage = authCtx.showPage;
 
   const [pageData, setPageData] = useState();
+  const [seo, setSeo] = useState();
 
   const pageId = props.pageId;
 
@@ -26,6 +28,7 @@ const ViewPage = (props) => {
   useEffect(async () => {
     const dataget = await getData(`getPage/${pageId}`);
     setPageData(dataget);
+    setSeo(dataget.seo);
   }, []);
 
   console.log("pageData", pageData);
@@ -36,13 +39,26 @@ const ViewPage = (props) => {
     setPageData(dataget.page.sections);
   };
 
+  console.log(seo);
+
   // const secData = pageData.page.sections;
 
   return (
-    <section>
+    <Fragment>
+      {/* {seo && (
+        <Head>
+          <meta name="description" content={seo.meta_description} />
+        </Head>
+      )} */}
+      <Head>
+        <meta
+          name="description"
+          content={seo ? seo.meta_description : `someeeeeeething`}
+        />
+      </Head>
       <ShowPage secData={pageData} />
       {/* <SimpleSection /> */}
-    </section>
+    </Fragment>
   );
 };
 

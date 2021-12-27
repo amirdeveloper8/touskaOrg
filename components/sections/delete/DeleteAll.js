@@ -48,6 +48,16 @@ const DeleteAll = (props) => {
     console.log(props.id, url);
   }
 
+  if (props.type === "map") {
+    url = "delete/section/map";
+    console.log(props.id, url);
+  }
+
+  if (props.type === "blog") {
+    url = "delete/section/blog";
+    console.log(props.id, url);
+  }
+
   const authCtx = useContext(AuthContext);
   const login_token = authCtx.token;
   const submitHandler = (e) => {
@@ -62,11 +72,19 @@ const DeleteAll = (props) => {
       Authorization: `Bearer ${login_token}`,
     };
 
-    if (props.type !== "video") {
+    if (
+      props.type !== "video" &&
+      props.type !== "map" &&
+      props.type !== "blog"
+    ) {
       fData.append("id", props.id);
     }
 
-    if (props.type === "video") {
+    if (
+      props.type === "video" ||
+      props.type === "map" ||
+      props.type === "blog"
+    ) {
       fData.append("section_id", props.id);
     }
 
@@ -138,7 +156,7 @@ const DeleteAll = (props) => {
       <AiTwotoneDelete onClick={() => setReqDel(true)} />
       {reqDel && (
         <Modal>
-          <Row className={classes.modal}>
+          <Row dir="ltr" className={classes.modal}>
             <Col lg={12}>
               <h4>Are you Sure ?</h4>
             </Col>

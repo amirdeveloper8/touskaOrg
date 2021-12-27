@@ -15,6 +15,8 @@ import BannerSection from "../sections/BannerSection";
 import SimpleTxtImg from "../sections/SimpleTxtImg";
 import VideoSection from "../sections/VideoSection";
 import ContactUsBoxes from "../sections/ContactUsBoxes";
+import MapSection from "../sections/MapSection";
+import BlogSection from "../sections/BlogSection";
 
 const ShowPage = (props) => {
   console.log(props.secData);
@@ -87,6 +89,27 @@ const ShowPage = (props) => {
               <VideoSection
                 key={sec.section_content.id}
                 details={sec.section_content[0]}
+                sec={sec}
+              />
+            )}
+            {sec.type_id === 15 && (
+              <VideoSection
+                key={sec.section_content.id}
+                details={sec.section_content[0]}
+                sec={sec}
+              />
+            )}
+            {sec.type_id === 16 && (
+              <MapSection
+                key={sec.section_content.id}
+                details={sec.section_content[0]}
+                sec={sec}
+              />
+            )}
+            {sec.type_id === 17 && (
+              <BlogSection
+                key={sec.id}
+                details={sec.section_content}
                 sec={sec}
               />
             )}

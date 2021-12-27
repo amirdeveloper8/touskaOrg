@@ -3,6 +3,7 @@ import AliceCarousel, { Classnames } from "react-alice-carousel";
 import { SiTwitter, SiInstagram } from "react-icons/si";
 import "react-alice-carousel/lib/alice-carousel.css";
 import classes from "./teamsection.module.css";
+
 const TeamSection = (props) => {
   console.log("carousel", props.details);
   const boxes = props.details.section_content;
@@ -34,7 +35,13 @@ const TeamSection = (props) => {
               </a>
             )}
             {social.url.includes("instagram") && (
-              <a href={social.url}>
+              <a
+                href={
+                  social.url.includes("http")
+                    ? social.url
+                    : `https://${social.url}`
+                }
+              >
                 <SiInstagram className={classes.instagram} />
               </a>
             )}
@@ -55,7 +62,9 @@ const TeamSection = (props) => {
   };
   return (
     <section className={classes.carousel}>
-      <h2 className="text-center m-5">{props.details.title}</h2>
+      <h2 className="text-center m-5" dir="rtl">
+        {props.details.title}
+      </h2>
       <AliceCarousel
         mouseTracking
         items={items}
