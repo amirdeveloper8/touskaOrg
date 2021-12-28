@@ -71,7 +71,7 @@ const CreateSimple = (props) => {
 
   let formIsValid = false;
 
-  if (titleIsValid && textValue.length > 0) {
+  if (titleIsValid && textValue.length > 0 && selectedFile) {
     formIsValid = true;
   }
 
@@ -113,7 +113,7 @@ const CreateSimple = (props) => {
         }
       })
       .catch((err) => {
-        console.log("Error", err);
+        console.log("Error", err.response);
       });
   };
 

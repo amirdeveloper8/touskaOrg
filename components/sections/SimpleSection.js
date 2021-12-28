@@ -18,11 +18,13 @@ const SimpleSection = (props) => {
           <div className={classes.items}>
             <div className={classes.content}>
               <ListAccordion items={item.texts.content} />
-              {btn.name && (
+              {btn && (
                 <div className="text-center my-3">
-                  <Button>
-                    <Link href={btn.url}>{btn.name}</Link>
-                  </Button>
+                  {btn.name && (
+                    <Button>
+                      <Link href={btn.url}>{btn.name}</Link>
+                    </Button>
+                  )}
                 </div>
               )}
             </div>

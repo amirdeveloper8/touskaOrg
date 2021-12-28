@@ -53,7 +53,9 @@ const CreatePage = (props) => {
   const modalSec = authCtx.sectionModal;
   const showPage = authCtx.showPage;
 
-  const [pageData, setPageData] = useState();
+  const [pageData, setPageData] = useState(props.data);
+
+  console.log("cllllienttt", props.data);
 
   const pageId = props.pageId;
 
@@ -61,12 +63,12 @@ const CreatePage = (props) => {
     authCtx.openSectionModal();
   };
 
-  useEffect(async () => {
-    const dataget = await getData(`getPage/${pageId}`);
-    setPageData(dataget);
-  }, [showPage]);
+  // useEffect(async () => {
+  //   const dataget = await getData(`getPage/${pageId}`);
+  //   setPageData(dataget);
+  // }, [showPage]);
 
-  console.log(pageData);
+  // console.log(pageData);
 
   const getDataHandler = async () => {
     const dataget = await getData(`getPage/${pageId}`);
@@ -123,9 +125,38 @@ export const getServerSideProps = async (context) => {
 
   const pageId = params.pageId;
 
+  const res = await fetch(`http://api.touskaweb.com/api/getPage/${pageId}`);
+  const data = await res.json();
+  console.log(res);
+
+  if (!res) {
+    return {
+      notFound: true,
+    };
+  }
+
   return {
     props: {
       pageId,
+      data,
     },
   };
 };
+
+// export async function getStaticProps(props) {
+//   // const { params } = context;
+
+//   const pageId = props.pageId;
+//   const res = await fetch(`http://api.touskaweb.com/api/getPage/40`);
+//   const data = await res.json();
+
+//   if (!data) {
+//     return {
+//       notFound: true,
+//     };
+//   }
+
+//   return {
+//     props: { data }, // will be passed to the page component as props
+//   };
+// }
