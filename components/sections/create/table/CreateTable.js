@@ -69,7 +69,7 @@ const CreateTable = (props) => {
   const [thValues, setThValues] = useState([]);
   const [tfValues, setTfValues] = useState([]);
   const [cmValues, setCmValues] = useState([]);
-  const [Rows, setRows] = useState({});
+  const [Rows, setRows] = useState([]);
   let sliders = [];
 
   useEffect(() => {
@@ -96,6 +96,8 @@ const CreateTable = (props) => {
   const authCtx = useContext(AuthContext);
 
   const login_token = authCtx.token;
+
+  const saveTable = authCtx.saveTable;
 
   const getTitles = (title) => {
     setTitles(title);
@@ -222,7 +224,7 @@ const CreateTable = (props) => {
 
   let formIsValid = false;
 
-  if (titleIsValid && btnNameIsValid && btnUrlIsValid) {
+  if (titleIsValid && btnNameIsValid && btnUrlIsValid && saveTable) {
     formIsValid = true;
   }
 

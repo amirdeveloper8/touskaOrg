@@ -212,7 +212,7 @@ const GetDataPage = (props) => {
                           <ListAccordion items={item.texts.content} />
                         </div>
                       )}
-                      {sec.type_id === 12 && (
+                      {sec.type_id === 12 && item.subtitle && (
                         <ListAccordion items={item.subtitle} />
                       )}
                       {sec.type_id === 15 && (
@@ -807,6 +807,7 @@ const GetDataPage = (props) => {
                 )}
               </div>
               {sec.type_id !== 1 &&
+                sec.type_id !== 12 &&
                 sec.type_id !== 15 &&
                 sec.type_id !== 16 &&
                 sec.type_id !== 17 && (

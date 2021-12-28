@@ -220,6 +220,7 @@ const CreateTeams = (props) => {
             <Form.Control
               type="number"
               min={1}
+              max={4}
               placeholder="slide Number"
               required
               value={slideCount}

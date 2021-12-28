@@ -18,7 +18,9 @@ const SliderSection = (props) => {
               <div className={classes.firstSlide}>
                 <h1>{item.title.content}</h1>
                 <img src={item.image_url} alt={item.title.content} />
-                <ListAccordion items={item.texts.content} />
+                <div className={classes.firsText}>
+                  <ListAccordion items={item.texts.content} />
+                </div>
               </div>
             )}
 

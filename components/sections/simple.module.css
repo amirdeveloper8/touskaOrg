@@ -9,7 +9,7 @@
 .items {
   display: flex;
   justify-content: space-evenly;
-  align-items: center;
+  align-items: flex-start;
   margin-top: 1rem;
 }
 
@@ -40,8 +40,11 @@
   color: black;
 }
 
-.content ul {
+.content ul,
+.content ol {
   list-style-type: none;
+  color: black;
+  font-weight: 500;
 }
 
 .content * {
@@ -93,5 +96,9 @@
   .content ul {
     font-size: 12px;
     color: black;
+  }
+
+  .content {
+    margin-left: 0;
   }
 }

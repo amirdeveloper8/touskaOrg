@@ -88,11 +88,13 @@
 .detailsTxt ul {
   font-size: 16px;
   color: black;
+  font-weight: 500;
 }
 
 .detailsTxt ul,
 .detailsTxt ol {
   list-style-type: none;
+  color: black;
 }
 
 .detailsTxt * {
@@ -102,6 +104,7 @@
 .detailsTxt ul,
 .detailsTxt li {
   padding: 0 !important;
+  font-weight: 500;
 }
 
 .detailsTxt li::before,

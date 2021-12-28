@@ -59,7 +59,7 @@ const MainNavigation = (props) => {
             {list1.map((item, index) =>
               item.sub.length === 0 ? (
                 <div key={index} className={classes.menuItem}>
-                  <Link href={`/${item.url}`}>{item.name}</Link>
+                  <a href={`/${item.url}`}>{item.name}</a>
                 </div>
               ) : (
                 <div
@@ -72,7 +72,7 @@ const MainNavigation = (props) => {
                   <ul>
                     {item.sub.map((child, index) => (
                       <li key={index}>
-                        <Link href={`/${child.url}`}>{child.name}</Link>
+                        <a href={`/${child.url}`}>{child.name}</a>
                       </li>
                     ))}
                   </ul>
@@ -90,7 +90,7 @@ const MainNavigation = (props) => {
             {list2.map((item, index) =>
               item.sub.length === 0 ? (
                 <div key={index} className={classes.menuItem}>
-                  <Link href={item.url}>{item.name}</Link>
+                  <a href={item.url}>{item.name}</a>
                 </div>
               ) : (
                 <div className={`${classes.menuDropdown} ${classes.menuItem}`}>
@@ -100,7 +100,7 @@ const MainNavigation = (props) => {
                   <ul>
                     {item.sub.map((child, index) => (
                       <li key={index}>
-                        <Link href={child.url}>{child.name}</Link>
+                        <a href={child.url}>{child.name}</a>
                       </li>
                     ))}
                   </ul>

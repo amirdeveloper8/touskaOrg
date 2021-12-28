@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import classes from "../create.module.css";
 import { Button, Col, Form, Nav, Row, Table, Tab } from "react-bootstrap";
 import ThForms from "./ThForm";
@@ -10,6 +10,7 @@ import { MdFullscreen } from "react-icons/md";
 import TabForms from "./TabForm";
 import ContentForm from "./ContentForm";
 import { Fragment } from "react";
+import AuthContext from "../../../../store/auth-context";
 
 const isText = (value) => value.trim().length > 0;
 const InfoForm = (props) => {
@@ -19,6 +20,9 @@ const InfoForm = (props) => {
 
   const [getRow, setGetRow] = useState([]);
   const [getTab, setGetTab] = useState([]);
+
+  const authCtx = useContext(AuthContext);
+  const saveTable = authCtx.saveTableHandler;
 
   const getRowHandler = (row) => {
     setGetRow([...getRow, row]);
@@ -70,6 +74,7 @@ const InfoForm = (props) => {
     console.log("getTab", getTab, getTab.length);
     props.getTitles(getTab);
     props.getRows(getRow);
+    saveTable();
     // if (!props.getRow[+props.numberColumn - 1]) {
     //   props.getRowHandler(getRow);
     // } else {

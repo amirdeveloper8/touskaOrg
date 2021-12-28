@@ -311,17 +311,11 @@ const UpdateDetails = (props) => {
             <Form.Control
               as="textarea"
               placeholder="excerpt"
-              required
               value={descReset ? excerptValue : desc}
               onChange={excerptChangeHandler}
               onBlur={excerptBlurHandler}
             />
 
-            {excerptHasError && (
-              <Alert className="mt-1" variant="danger">
-                Please enter a valid Excerpt.
-              </Alert>
-            )}
             {!descReset && (
               <AiFillEdit
                 className={classes.edit}

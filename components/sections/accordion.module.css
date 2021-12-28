@@ -1,17 +1,24 @@
 .accordionSec {
-  direction: rtl;
+  direction: rtl !important;
   width: 90%;
   max-width: 1980px;
   margin: auto;
   padding: 2rem 1rem;
 }
 
+.accordionSec h2 {
+  direction: rtl !important;
+  text-align: right !important;
+}
+
 .accordion {
   margin-right: 10%;
+  direction: rtl !important;
 }
 
 .accordionItem {
   margin: 1rem 0;
+  direction: rtl !important;
 }
 
 .accordionItem,

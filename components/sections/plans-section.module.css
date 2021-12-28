@@ -15,9 +15,9 @@
 }
 
 .box {
-  width: 45%;
+  width: 31.33%;
   max-width: 500px;
-  margin: 2%;
+  margin: 1%;
   border: 10px solid var(--purple);
   text-align: center;
   height: 700px;

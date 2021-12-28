@@ -14,7 +14,7 @@ const PortfolioSection = (props) => {
             <h3>{item.title.content}</h3>
             <img src={item.image} />
             <Button>
-              <Link href={item.button.url}>{item.button.name}</Link>
+              <a href={item.button.url}>{item.button.name}</a>
             </Button>
           </div>
         ))}

@@ -90,7 +90,13 @@ const PlansForm = (props) => {
 
   let formIsValid = false;
 
-  if (titleIsValid && textIsValid) {
+  if (
+    titleIsValid &&
+    textIsValid &&
+    selectedFile &&
+    buttonTextIsValid &&
+    buttonUrlIsValid
+  ) {
     formIsValid = true;
   }
 

@@ -161,7 +161,7 @@ const SampleWorks = (props) => {
         }
       })
       .catch((err) => {
-        console.log("Error", err.response.data);
+        console.log("Error", err.response);
       });
 
     console.log(fData);
@@ -221,6 +221,7 @@ const SampleWorks = (props) => {
             <Form.Control
               type="number"
               min={1}
+              max={4}
               placeholder="slide Number"
               required
               value={slideCount}

@@ -1,5 +1,5 @@
 .tableSection {
-  direction: rtl;
+  direction: rtl !important;
   width: 90%;
   max-width: 1980px;
   margin: auto;
@@ -12,10 +12,12 @@
   width: 90%;
   margin-right: auto;
   font-size: 1rem;
+  direction: rtl !important;
 }
 
 .tableSection h2 {
   margin-bottom: 1rem;
+  text-align: right !important;
 }
 
 .table td {

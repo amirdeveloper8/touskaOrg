@@ -13,19 +13,19 @@ import NewRich from "../../richtexteditor/NewRich";
 const isText = (value) => value.trim().length > 0;
 
 const UpdateBanner = (props) => {
+  const data = props.updateData;
+
+  const pageId = props.sec.page_id;
+  const sectionId = props.sec.id;
+
   const [dataError, setdataError] = useState();
   const [notification, setNotification] = useState();
   const [selectedFile, setSelectedFile] = useState(null);
   const [textValue, setTextValue] = useState();
 
   const [resetTitleValue, setResetTitleValue] = useState(false);
-  const [resetTextValue, setResetTextValue] = useState(false);
-  const [resetImageValue, setResetImageValue] = useState(false);
-
-  const data = props.updateData;
-
-  const pageId = props.sec.page_id;
-  const sectionId = props.sec.id;
+  const [resetTextValue, setResetTextValue] = useState(!props.richTxt);
+  const [resetImageValue, setResetImageValue] = useState(!data.image_url);
 
   console.log("typeId", pageId);
 
@@ -53,11 +53,13 @@ const UpdateBanner = (props) => {
     reset: resetTitle,
   } = useInput(isText);
 
-  const itemsParse = JSON.parse(props.richTxt);
+  if (props.richTxt) {
+    const itemsParse = JSON.parse(props.richTxt);
 
-  let itemsRich;
+    let itemsRich;
 
-  itemsRich = itemsParse.toString().replace(/[,]+/g, "");
+    itemsRich = itemsParse.toString().replace(/[,]+/g, "");
+  }
 
   const getTextValue = (value) => {
     setTextValue(value);
@@ -132,7 +134,7 @@ const UpdateBanner = (props) => {
         }
       })
       .catch((err) => {
-        console.log("Error", err);
+        console.log("Error", err.response);
       });
   };
 

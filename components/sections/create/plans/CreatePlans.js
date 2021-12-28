@@ -168,7 +168,7 @@ const CreatePalns = (props) => {
         }
       })
       .catch((err) => {
-        console.log("Error", err.response.data.message);
+        console.log("Error", err.response.data);
       });
 
     console.log(fData);
@@ -222,6 +222,7 @@ const CreatePalns = (props) => {
             <Form.Control
               type="number"
               min={1}
+              max={4}
               placeholder="slide Number"
               required
               value={slideCount}

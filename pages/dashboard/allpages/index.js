@@ -80,7 +80,7 @@ const AllPage = () => {
                     <Link href={`/dashboard/createpage/${page.id}`}>Edit</Link>
                   </Button>
                   <Button>
-                    <Link href={`/${page.id}`}>View page</Link>
+                    <Link href={`/${page.url}`}>View page</Link>
                   </Button>
                   <Button>
                     <Link href={`/dashboard/seo/${page.id}`}>Update Seo</Link>

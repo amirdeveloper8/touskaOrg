@@ -81,8 +81,13 @@ const CreateBanner = (props) => {
     fData.append("page_id", props.pageId);
     fData.append("type_id", 12);
     fData.append("title", titleValue);
-    fData.append("subtitle", JSON.stringify(textValue));
-    fData.append("image", selectedFile);
+    {
+      textValue.length > 0 &&
+        fData.append("subtitle", JSON.stringify(textValue));
+    }
+    {
+      selectedFile && fData.append("image", selectedFile);
+    }
     console.log(props.pageId);
     axios({
       method: "POST",
@@ -103,7 +108,7 @@ const CreateBanner = (props) => {
         }
       })
       .catch((err) => {
-        console.log("Error", err);
+        console.log("Error", err.response);
       });
   };
 

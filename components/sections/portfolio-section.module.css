@@ -62,9 +62,17 @@
   text-decoration: none;
   color: white;
   transition: 0.3s ease-in-out;
+  padding: 5% 30%;
 }
 
 .portfolioBox button:hover {
+  background-color: #ffffff;
+  color: #883676;
+  border-color: white;
+  transition: 0.3s ease-in-out;
+}
+
+.portfolioBox button:active {
   background-color: #ffffff;
   color: #883676;
   border-color: white;

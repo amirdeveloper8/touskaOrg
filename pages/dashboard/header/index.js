@@ -73,7 +73,7 @@ const Menu = () => {
           </Col>
 
           <Col className={classes.headerItem} lg={12}>
-            {headerGet === "not found" && (
+            {headerGet === "not found" && menuGet !== "not found" && (
               <div>
                 {!createHeader && (
                   <Button

@@ -18,18 +18,18 @@ const SimpleSection = (props) => {
           <div className={classes.items}>
             <div className={classes.content}>
               <ListAccordion items={item.texts.content} />
+              {btn.name && (
+                <div className="text-center my-3">
+                  <Button>
+                    <Link href={btn.url}>{btn.name}</Link>
+                  </Button>
+                </div>
+              )}
             </div>
             <div className={classes.image}>
               <img src={item.image_url} />
             </div>
           </div>
-          {btn.name && (
-            <div className="text-center my-3">
-              <Button>
-                <Link href={btn.url}>{btn.name}</Link>
-              </Button>
-            </div>
-          )}
         </section>
       ))}
     </Fragment>

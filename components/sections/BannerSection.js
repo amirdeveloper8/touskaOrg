@@ -17,12 +17,16 @@ const BannerSection = (props) => {
         >
           <h1>{item.title}</h1>
           <div className={classes.content}>
-            <div className={classes.imgSec}>
-              <img src={item.image_url} />
-            </div>
-            <div className={classes.details}>
-              <ListAccordion items={item.subtitle} />
-            </div>
+            {item.image_url && (
+              <div className={classes.imgSec}>
+                <img src={item.image_url} />
+              </div>
+            )}
+            {item.subtitle && (
+              <div className={classes.details}>
+                <ListAccordion items={item.subtitle} />
+              </div>
+            )}
           </div>
         </section>
       ))}

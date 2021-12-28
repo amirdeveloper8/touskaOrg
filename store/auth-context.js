@@ -69,6 +69,8 @@ const AuthContext = React.createContext({
   closeBlogSection: () => {},
   openSectionModal: () => {},
   closeSectionModal: () => {},
+  saveTable: false,
+  saveTableHandler: () => {},
 });
 
 export const AuthContextProvider = (props) => {
@@ -115,6 +117,8 @@ export const AuthContextProvider = (props) => {
   const [videoSection, setVideoSection] = useState(false);
   const [mapSection, setMapSection] = useState(false);
   const [blogSection, setBlogSection] = useState(false);
+
+  const [saveTable, setSaveTable] = useState(false);
 
   const simpleSectionTrigger = () => {
     setSimpleSection(true);
@@ -595,6 +599,10 @@ export const AuthContextProvider = (props) => {
     setSectionModal(false);
   };
 
+  const saveTableHandler = () => {
+    setSaveTable(true);
+  };
+
   const contextValue = {
     token: token,
     username: username,
@@ -661,6 +669,8 @@ export const AuthContextProvider = (props) => {
     closeBlogSection,
     openSectionModal,
     closeSectionModal,
+    saveTable,
+    saveTableHandler,
   };
 
   return (
