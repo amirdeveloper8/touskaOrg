@@ -200,7 +200,7 @@ const AddInputForms = (props) => {
     <section className={classes.auth}>
       <h2>Add New Input</h2>
       <Form onSubmit={submitHandler}>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={classes.control}>
           <Form.Group
             as={Col}
             lg={12}

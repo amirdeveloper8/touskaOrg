@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import Notification from "../../ui/notification";
 import axios from "axios";
 import SocialUrlForm from "./SocialUrlForm";
+import Image from "next/image";
 
 const isText = (value) => value.trim().length > 0;
 
@@ -222,7 +223,7 @@ const UpdateTeams = (props) => {
       <h1>Update Module{relId}</h1>
 
       <Form onSubmit={submitHandler}>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridFName"
@@ -255,7 +256,7 @@ const UpdateTeams = (props) => {
           </Form.Group>
         </Row>
 
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridMobile"
@@ -286,7 +287,7 @@ const UpdateTeams = (props) => {
             )}
           </Form.Group>
         </Row>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridMobile"
@@ -317,13 +318,16 @@ const UpdateTeams = (props) => {
             )}
           </Form.Group>
         </Row>
-        <Row className="mb-3" className={classes.control}>
-          {socialUrls}
-        </Row>
+        <Row className={`mb-3 ${classes.control}`}>{socialUrls}</Row>
         <Row className={classes.control}>
           {!resetImageValue && (
             <div className={classes.updateImage}>
-              <img src={data.image_url} />
+              <Image
+                width={200}
+                height={200}
+                alt="photo-member"
+                src={data.image_url}
+              />
 
               <Badge
                 className={classes.edit}

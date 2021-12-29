@@ -182,7 +182,7 @@ const UpdateSubs = (props) => {
 
   const url = !item.page_id ? item.url : item.page.url;
   return (
-    <Row className="mb-3" className={`${classes.subs} ${classes.control}`}>
+    <Row className={`${classes.subs} ${classes.control}`}>
       <div className={classes.delIcon}>
         <MdDelete onClick={() => setShowDelete(true)} />
       </div>

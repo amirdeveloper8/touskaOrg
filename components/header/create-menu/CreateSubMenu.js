@@ -139,7 +139,7 @@ const CreateSubMenu = (props) => {
 
           {urlHasError && (
             <Alert className="mt-1" variant="danger">
-              Please enter a valid Url (includes "http").
+              Please enter a valid Url (includes <b>http</b>).
             </Alert>
           )}
           <Badge className={classes.badge} onClick={changeTypeUrl}>

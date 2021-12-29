@@ -133,7 +133,7 @@ const UpdateItemsForm = (props) => {
   };
 
   return (
-    <Row className="mb-3" className={classes.control}>
+    <Row className={classes.control}>
       {!resetCatVal && (
         <Form.Group
           as={Col}

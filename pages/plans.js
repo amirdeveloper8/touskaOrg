@@ -9,8 +9,8 @@ import axios from "axios";
 import { ConnectToDB } from "../lib/connect-to-db";
 import PlansStep2 from "../components/plans/front/PlansStep2";
 
-const Plans = () => {
-  const [catDetails, setCatDetails] = useState([]);
+const Plans = (props) => {
+  const [catDetails, setCatDetails] = useState(props.valCats.cats);
   const [itemDetails, setItemDetails] = useState({ status: "nothing" });
 
   const [valueBox, setValueBox] = useState("Open this select menu");
@@ -18,11 +18,11 @@ const Plans = () => {
 
   const [step1, setStep1] = useState(true);
 
-  useEffect(async () => {
-    const valCats = await getData("get/semiplan/cat");
+  // useEffect(async () => {
+  //   const valCats = await getData("get/semiplan/cat");
 
-    setCatDetails(valCats.cats);
-  }, []);
+  //   setCatDetails(valCats.cats);
+  // }, []);
 
   const changeHandler = (e) => {
     const value = e.target.value;
@@ -106,6 +106,17 @@ const Plans = () => {
       )}
     </section>
   );
+};
+
+export const getServerSideProps = async (context) => {
+  const response = await fetch(`http://api.touskaweb.com/api/get/semiplan/cat`);
+  const valCats = await response.json();
+
+  return {
+    props: {
+      valCats,
+    },
+  };
 };
 
 export default Plans;

@@ -14,7 +14,7 @@ const BlogSection = (props) => {
       <div className={classes.posts}>
         {posts.map((post, index) => (
           <div key={index} className={classes.post}>
-            <img src={post.image_link} />
+            <img src={post.image_link} alt={post.title} />
             <h3>{post.title}</h3>
             {/* <Markup content={post.excerpt} /> */}
             <p className="text-center"> ... </p>

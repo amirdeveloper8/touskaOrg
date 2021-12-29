@@ -99,7 +99,7 @@ const OrderSec = (props) => {
   return (
     <section className={classes.order}>
       <Form onSubmit={submitHandler}>
-        <Row className="mb-3" className={classes.controlFirstForm}>
+        <Row className={classes.controlFirstForm}>
           <Form.Label> order</Form.Label>
           <Form.Group
             as={Col}

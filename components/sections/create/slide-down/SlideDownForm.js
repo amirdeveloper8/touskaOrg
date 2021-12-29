@@ -88,7 +88,7 @@ const SlideDownsForm = (props) => {
         {checked && (
           <MdOutlineFileDownloadDone className={classes.saveChecked} />
         )}
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             onBlur={() => setChecked(false)}
             as={Col}
@@ -113,7 +113,7 @@ const SlideDownsForm = (props) => {
           </Form.Group>
         </Row>
 
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             onBlur={() => setChecked(false)}
             as={Col}

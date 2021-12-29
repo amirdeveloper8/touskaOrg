@@ -95,7 +95,7 @@ const SlidesForm = (props) => {
       <h2>Slide {props.slideNumber}</h2>
       {checked && <MdOutlineFileDownloadDone className={classes.saveChecked} />}
       <Form onSubmit={submitHandler}>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridFName"
@@ -120,7 +120,7 @@ const SlidesForm = (props) => {
           </Form.Group>
         </Row>
 
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridMobile"

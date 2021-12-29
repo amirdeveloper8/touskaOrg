@@ -134,7 +134,7 @@ const CreateSlideDown = (props) => {
   return (
     <div className={classes.sliders}>
       <Form onSubmit={submitHandler}>
-        <Row className="mb-3" className={classes.controlFirstForm}>
+        <Row className={classes.controlFirstForm}>
           <Form.Group
             as={Col}
             lg={12}

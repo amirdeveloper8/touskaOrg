@@ -9,6 +9,7 @@ import Notification from "../../ui/notification";
 import axios from "axios";
 import ListAccordion from "../getdata/ListAccordion";
 import NewRich from "../../richtexteditor/NewRich";
+import Image from "next/image";
 
 const isText = (value) => value.trim().length > 0;
 
@@ -159,7 +160,7 @@ const UpdateBanner = (props) => {
       <h1>Update Module Simple</h1>
 
       <Form onSubmit={submitHandler}>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridFName"
@@ -192,7 +193,7 @@ const UpdateBanner = (props) => {
           </Form.Group>
         </Row>
 
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridMobile"
@@ -221,7 +222,12 @@ const UpdateBanner = (props) => {
         <Row className={classes.control}>
           {!resetImageValue && (
             <div className={classes.updateImage}>
-              <img src={data.image_url} />
+              <Image
+                alt="banner-img"
+                width={1024}
+                height={800}
+                src={data.image_url}
+              />
 
               <Badge
                 className={classes.edit}

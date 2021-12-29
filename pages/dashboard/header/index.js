@@ -11,27 +11,27 @@ import CreateHeader from "../../../components/header/create-header/CreateHeader"
 import AuthContext from "../../../store/auth-context";
 import UpdateMenu from "../../../components/header/update-menu/UpdateMenu";
 import UpdateHeader from "../../../components/header/create-header/UpdateHeader";
-const Menu = () => {
-  const [menuGet, setMenuGet] = useState();
-  const [headerGet, setHeaderGet] = useState();
+const Menu = (props) => {
+  const [menuGet, setMenuGet] = useState(props.menuData.status);
+  const [headerGet, setHeaderGet] = useState(props.headerData.status);
   const [createMenu, setCreateMenu] = useState(false);
   const [createHeader, setCreateHeader] = useState();
 
-  const [menuData, setMenuData] = useState();
-  const [headerData, setHeaderData] = useState();
+  const [menuData, setMenuData] = useState(props.menuData.menus);
+  const [headerData, setHeaderData] = useState(props.headerData.header);
 
   const authCtx = useContext(AuthContext);
 
   const showPage = authCtx.showPage;
 
-  useEffect(async () => {
-    const menuDetails = await getData("get/menus");
-    setMenuData(menuDetails.menus);
-    setMenuGet(menuDetails.status);
-    const headerDetails = await getData("get/header");
-    setHeaderData(headerDetails.header);
-    setHeaderGet(headerDetails.status);
-  }, [showPage]);
+  // useEffect(async () => {
+  //   const menuDetails = await getData("get/menus");
+  //   setMenuData(menuDetails.menus);
+  //   setMenuGet(menuDetails.status);
+  //   const headerDetails = await getData("get/header");
+  //   setHeaderData(headerDetails.header);
+  //   setHeaderGet(headerDetails.status);
+  // }, [showPage]);
 
   return (
     <section className="dashboard py-4">
@@ -112,21 +112,19 @@ const Menu = () => {
   );
 };
 
-// export async function getStaticProps(context) {
-//   const res = await fetch(
-//     "http://192.168.7.19/touskaweb.com/public/api/get/menus"
-//   );
-//   const data = await res.json();
+export const getServerSideProps = async (context) => {
+  const response = await fetch(`http://api.touskaweb.com/api/get/header`);
+  const headerData = await response.json();
 
-//   if (!data) {
-//     return {
-//       notFound: true,
-//     };
-//   }
+  const res = await fetch(`http://api.touskaweb.com/api/get/menus`);
+  const menuData = await res.json();
 
-//   return {
-//     props: { data }, // will be passed to the page component as props
-//   };
-// }
+  return {
+    props: {
+      menuData,
+      headerData,
+    },
+  };
+};
 
 export default Menu;

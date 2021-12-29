@@ -174,7 +174,7 @@ const AddSampleWorks = (props) => {
     <section className={classes.auth}>
       <h2>Add New Item</h2>
       <Form onSubmit={submitHandler}>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <h3>Box Items</h3>
           <Form.Group
             as={Col}
@@ -210,7 +210,7 @@ const AddSampleWorks = (props) => {
             />
           </Form.Group>
         </Row>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <h3>Project Items</h3>
           <Form.Group
             as={Col}

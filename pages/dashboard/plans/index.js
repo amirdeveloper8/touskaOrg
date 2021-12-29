@@ -10,25 +10,25 @@ import AuthContext from "../../../store/auth-context";
 
 import classes from "../../../styles/dashboard.module.css";
 
-const Plans = () => {
+const Plans = (props) => {
   const [createCats, setCreateCats] = useState(false);
   const [updateCats, setUpdateCats] = useState(false);
   const [createItems, setCreateItems] = useState(false);
   const [updateItems, setUpdateItems] = useState(false);
-  const [catDetails, setCatDetails] = useState([]);
-  const [itemDetails, setItemDetails] = useState([]);
+  const [catDetails, setCatDetails] = useState(props.valCats.cats);
+  const [itemDetails, setItemDetails] = useState(props.valItem);
 
   const authCtx = useContext(AuthContext);
   const showPage = authCtx.showPage;
 
-  useEffect(async () => {
-    const valCats = await getData("get/semiplan/cat");
-    const valItem = await getData("get/semiplan/item");
+  // useEffect(async () => {
+  //   const valCats = await getData("get/semiplan/cat");
+  //   const valItem = await getData("get/semiplan/item");
 
-    setCatDetails(valCats.cats);
-    setItemDetails(valItem);
-    setCreateCats(false);
-  }, [showPage]);
+  //   setCatDetails(valCats.cats);
+  //   setItemDetails(valItem);
+  //   setCreateCats(false);
+  // }, [showPage]);
 
   console.log("cats", catDetails);
   console.log("item", itemDetails);
@@ -114,6 +114,21 @@ const Plans = () => {
       )}
     </section>
   );
+};
+
+export const getServerSideProps = async (context) => {
+  const response = await fetch(`http://api.touskaweb.com/api/get/semiplan/cat`);
+  const valCats = await response.json();
+
+  const res = await fetch(`http://api.touskaweb.com/api/get/semiplan/item`);
+  const valItem = await res.json();
+
+  return {
+    props: {
+      valCats,
+      valItem,
+    },
+  };
 };
 
 export default Plans;

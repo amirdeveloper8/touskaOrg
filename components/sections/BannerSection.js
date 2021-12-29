@@ -14,13 +14,17 @@ const BannerSection = (props) => {
           }}
           key={index}
           className={classes.banner}
-          key={index}
         >
           <h1>{item.title}</h1>
           <div className={classes.content}>
             {item.image_url && (
               <div className={classes.imgSec}>
-                <Image src={item.image_url} width={1024} height={800} />
+                <Image
+                  src={item.image_url}
+                  width={1024}
+                  height={800}
+                  alt={item.title}
+                />
               </div>
             )}
             {item.subtitle && (

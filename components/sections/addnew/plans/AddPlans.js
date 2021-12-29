@@ -176,7 +176,7 @@ const AddPlans = (props) => {
     <section className={classes.auth}>
       <h2>plan {props.slideNumber}</h2>
       <Form onSubmit={submitHandler}>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridFName"
@@ -200,7 +200,7 @@ const AddPlans = (props) => {
           </Form.Group>
         </Row>
 
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridMobile"
@@ -222,7 +222,7 @@ const AddPlans = (props) => {
             )}
           </Form.Group>
         </Row>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           {itemsForms}
           <Col className={classes.plansIcons}>
             <IoMdAddCircle
@@ -249,7 +249,7 @@ const AddPlans = (props) => {
             />
           </Form.Group>
         </Row>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridMobile"
@@ -271,7 +271,7 @@ const AddPlans = (props) => {
             )}
           </Form.Group>
         </Row>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridMobile"

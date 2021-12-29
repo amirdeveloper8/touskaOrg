@@ -13,7 +13,12 @@ const PortfolioSection = (props) => {
         {data.map((item, index) => (
           <div key={index} className={classes.portfolioBox}>
             <h3>{item.title.content}</h3>
-            <Image src={item.image} width={400} height={300} />
+            <Image
+              src={item.image}
+              width={400}
+              height={300}
+              alt={item.title.content}
+            />
             <Button>
               <a href={item.button.url}>{item.button.name}</a>
             </Button>

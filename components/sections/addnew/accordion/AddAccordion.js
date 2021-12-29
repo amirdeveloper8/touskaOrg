@@ -125,7 +125,7 @@ const AddAccordion = (props) => {
       <h1>Add New Accordion</h1>
 
       <Form onSubmit={submitHandler}>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={classes.control}>
           <Form.Group
             as={Col}
             controlId="formGridFName"
@@ -149,7 +149,7 @@ const AddAccordion = (props) => {
           </Form.Group>
         </Row>
 
-        <Row className="mb-3" className={classes.control}>
+        <Row className={classes.control}>
           <Form.Group
             as={Col}
             controlId="formGridMobile"

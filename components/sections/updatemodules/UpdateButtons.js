@@ -153,7 +153,7 @@ const UpdateButtons = (props) => {
         <div className={classes.updateBtns}>
           <h2>Update Buttons</h2>
           {buttonDetails.map((btn) => (
-            <Row key={btn.id} className="mb-3" className={classes.control}>
+            <Row key={btn.id} className={`mb-3 ${classes.control}`}>
               <Form.Group
                 as={Col}
                 lg={12}

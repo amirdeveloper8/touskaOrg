@@ -154,7 +154,7 @@ const ProjectsForm = (props) => {
         {checked && (
           <MdOutlineFileDownloadDone className={classes.saveChecked} />
         )}
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <h3>Box Items</h3>
           <Form.Group
             as={Col}
@@ -191,7 +191,7 @@ const ProjectsForm = (props) => {
             />
           </Form.Group>
         </Row>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <h3>Project Items</h3>
           <Form.Group
             as={Col}

@@ -139,7 +139,7 @@ const AddPortfolio = (props) => {
     <section className={classes.auth}>
       <h2>Add New Box</h2>
       <Form onSubmit={submitHandler}>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridFName"
@@ -163,7 +163,7 @@ const AddPortfolio = (props) => {
           </Form.Group>
         </Row>
 
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridMobile"
@@ -186,7 +186,7 @@ const AddPortfolio = (props) => {
           </Form.Group>
         </Row>
 
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridMobile"

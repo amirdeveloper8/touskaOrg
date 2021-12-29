@@ -14,7 +14,7 @@ const SimpleSection = (props) => {
   return (
     <Fragment>
       {data.section_content.map((item, index) => (
-        <section key={index} className={classes.simple} key={item.texts.id}>
+        <section className={classes.simple} key={item.texts.id}>
           <h2>{item.title}</h2>
           <div className={classes.items}>
             <div className={classes.content}>
@@ -32,6 +32,7 @@ const SimpleSection = (props) => {
             <div className={classes.image}>
               <Image
                 src={item.image_url}
+                alt={item.title}
                 width={1024}
                 height={1024}
                 layout="responsive"

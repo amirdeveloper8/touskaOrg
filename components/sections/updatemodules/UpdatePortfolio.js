@@ -7,6 +7,7 @@ import AuthContext from "../../../store/auth-context";
 import { useRouter } from "next/router";
 import Notification from "../../ui/notification";
 import axios from "axios";
+import Image from "next/image";
 
 const isText = (value) => value.trim().length > 0;
 
@@ -176,7 +177,7 @@ const UpdatePortfolio = (props) => {
       <h1>Update Module {typeName}</h1>
 
       <Form onSubmit={submitHandler}>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridFName"
@@ -209,7 +210,7 @@ const UpdatePortfolio = (props) => {
           </Form.Group>
         </Row>
 
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridMobile"
@@ -240,7 +241,7 @@ const UpdatePortfolio = (props) => {
             )}
           </Form.Group>
         </Row>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridMobile"
@@ -274,7 +275,12 @@ const UpdatePortfolio = (props) => {
         <Row className={classes.control}>
           {!resetImageValue && (
             <div className={classes.updateImage}>
-              <img src={data.image} />
+              <Image
+                width={400}
+                height={300}
+                src={data.image}
+                alt="image-portfolio"
+              />
 
               <Badge
                 className={classes.edit}

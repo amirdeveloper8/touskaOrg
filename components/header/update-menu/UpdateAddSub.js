@@ -85,7 +85,7 @@ const UpdateAddSub = (props) => {
 
   const url = !item.page_id ? item.url : item.page.url;
   return (
-    <Row className="mb-3" className={`${classes.subs} ${classes.control}`}>
+    <Row className={`${classes.subs} ${classes.control}`}>
       {checked && (
         <div className={classes.check}>
           <AiFillCheckSquare />

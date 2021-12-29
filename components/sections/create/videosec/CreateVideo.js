@@ -123,7 +123,7 @@ const CreateVideo = (props) => {
     <section className={classes.auth}>
       <h1>Add Video Section</h1>
       <Form onSubmit={submitHandler}>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             lg={12}

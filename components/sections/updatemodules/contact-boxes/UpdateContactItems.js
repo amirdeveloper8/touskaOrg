@@ -170,7 +170,7 @@ const UpdateContactItems = (props) => {
   }
 
   return (
-    <Row className="mb-3" className={classes.ContactSocial}>
+    <Row className={classes.ContactSocial}>
       <MdOutlineDelete
         className={classes.deleteSocial}
         onClick={deleteHandler}

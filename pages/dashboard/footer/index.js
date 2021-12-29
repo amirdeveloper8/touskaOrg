@@ -12,22 +12,17 @@ import Notification from "../../../components/ui/notification";
 import { ConnectToDB } from "../../../lib/connect-to-db";
 import axios from "axios";
 
-const Footer = () => {
+const Footer = (props) => {
   const [dataError, setdataError] = useState("something went wrong");
   const [notification, setNotification] = useState();
 
-  const [footerDetails, setFooterDetails] = useState();
-  const [footerSituation, setFooterSituation] = useState();
+  const [footerDetails, setFooterDetails] = useState(props.data);
+  const [footerSituation, setFooterSituation] = useState(props.data.footer);
 
   const [showComp, setShowComp] = useState(false);
   const authCtx = useContext(AuthContext);
 
   const showPage = authCtx.showPage;
-  useEffect(async () => {
-    const details = await getData("get/footer");
-    setFooterDetails(details);
-    setFooterSituation(details.footer);
-  }, [showPage]);
 
   const login_token = authCtx.token;
 
@@ -144,6 +139,17 @@ const Footer = () => {
       )}
     </section>
   );
+};
+
+export const getServerSideProps = async (context) => {
+  const res = await fetch(`http://api.touskaweb.com/api/get/footer`);
+  const data = await res.json();
+
+  return {
+    props: {
+      data,
+    },
+  };
 };
 
 export default Footer;

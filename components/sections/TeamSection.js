@@ -11,13 +11,14 @@ const TeamSection = (props) => {
   urls = boxes.socials;
 
   const items = boxes.map((box, index) => (
-    <section key={index} className={classes.box} key={box.id}>
+    <section className={classes.box} key={box.id}>
       <div className={classes.imgPerson}>
         <Image
           className={classes.imgteam}
           src={box.image_url}
           width={200}
           height={200}
+          alt={box.name}
         />
       </div>
       <div className={classes.namepost}>

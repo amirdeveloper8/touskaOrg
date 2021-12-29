@@ -1,4 +1,4 @@
-import { Button, CloseButton, Form, Nav } from "react-bootstrap";
+import { Button, CloseButton, Form, Nav, Alert } from "react-bootstrap";
 
 import classes from "./table.module.css";
 import { BiEdit } from "react-icons/bi";

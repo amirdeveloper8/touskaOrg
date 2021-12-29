@@ -219,7 +219,7 @@ const CreateContactForm = (props) => {
   return (
     <div className={classes.sliders}>
       <Form onSubmit={submitHandler}>
-        <Row className="mb-3" className={classes.controlFirstForm}>
+        <Row className={`mb-3 ${classes.controlFirstForm}`}>
           <Form.Group
             as={Col}
             lg={12}

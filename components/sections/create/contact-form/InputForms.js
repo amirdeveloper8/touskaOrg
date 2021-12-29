@@ -164,7 +164,7 @@ const InputForms = (props) => {
       {checked && <MdOutlineFileDownloadDone className={classes.saveChecked} />}
       <h2>Input {props.slideNumber}</h2>
       <Form onSubmit={submitHandler}>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             onBlur={() => setChecked(false)}

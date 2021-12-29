@@ -114,7 +114,6 @@ const UpdateSocials = (props) => {
         lg={12}
         controlId="formGridFName"
         className={`mb-5 ${classes.createRow}`}
-        onBlur={submitHandler}
       >
         {!resetSoicalType && (
           <Form.Control
@@ -123,7 +122,7 @@ const UpdateSocials = (props) => {
             required
             value={selectedValue}
             onChange={urlChangeHandler}
-            onBlur={urlBlurHandler}
+            onBlur={submitHandler}
           />
         )}
         {!resetSoicalType && (

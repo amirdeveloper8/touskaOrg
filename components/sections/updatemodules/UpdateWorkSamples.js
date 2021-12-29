@@ -7,6 +7,7 @@ import AuthContext from "../../../store/auth-context";
 import { useRouter } from "next/router";
 import Notification from "../../ui/notification";
 import axios from "axios";
+import Image from "next/image";
 
 const isText = (value) => value.trim().length > 0;
 
@@ -239,7 +240,7 @@ const UpdateWorkSamples = (props) => {
 
       <Form onSubmit={submitHandler}>
         <h3>Box Items:</h3>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridFName"
@@ -273,7 +274,12 @@ const UpdateWorkSamples = (props) => {
 
           {!resetImageValue && (
             <div className={classes.updateImage}>
-              <img src={data.image_box_url} />
+              <Image
+                alt="sample2-img"
+                width={450}
+                height={400}
+                src={data.image_box_url}
+              />
 
               <Badge
                 className={classes.edit}
@@ -298,7 +304,7 @@ const UpdateWorkSamples = (props) => {
           )}
         </Row>
 
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <h3>Project Items :</h3>
           <Form.Group
             as={Col}
@@ -396,7 +402,7 @@ const UpdateWorkSamples = (props) => {
             )}
           </Form.Group>
         </Row>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridMobile"
@@ -428,7 +434,12 @@ const UpdateWorkSamples = (props) => {
           </Form.Group>
           {!resetImageProjectValue && (
             <div className={classes.updateImage}>
-              <img src={data.image_project_url} />
+              <Image
+                alt="sample1-img"
+                width={450}
+                height={400}
+                src={data.image_project_url}
+              />
 
               <Badge
                 className={classes.edit}

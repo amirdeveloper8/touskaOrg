@@ -50,9 +50,8 @@ const CreateSocials = (props) => {
       onBlur={() => setChecked(false)}
       as={Col}
       lg={12}
-      controlId="formGridFName"
+      controlId={`formGridFName${props.number}`}
       className={classes.createRow}
-      onBlur={submitHandler}
     >
       <Form.Select
         value={valueBox}
@@ -76,7 +75,7 @@ const CreateSocials = (props) => {
         required
         value={urlValue}
         onChange={urlChangeHandler}
-        onBlur={urlBlurHandler}
+        onBlur={submitHandler}
       />
 
       {urlHasError && (

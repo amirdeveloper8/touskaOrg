@@ -100,7 +100,7 @@ const ContactFormSection = (props) => {
       <h2 className={classes.title}>{title}</h2>
       <div className={classes.details}>
         <div className={classes.imageC}>
-          <Image src={imgSrc} width={600} height={770} />
+          <Image alt={title} src={imgSrc} width={600} height={770} />
         </div>
         {!successSent && (
           <Form onSubmit={submitHandler}>

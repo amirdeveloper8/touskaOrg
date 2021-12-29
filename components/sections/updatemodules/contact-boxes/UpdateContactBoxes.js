@@ -283,7 +283,7 @@ const UpdateContactBoxes = (props) => {
       <h1>Update Module {typeName}</h1>
 
       <Form>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           {!resetTypeBox && (
             <div className={classes.typeBox}>
               {data.type_box === "tel" && <RiPhoneFill />}
@@ -321,7 +321,7 @@ const UpdateContactBoxes = (props) => {
             </Form.Group>
           )}
         </Row>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridFName"

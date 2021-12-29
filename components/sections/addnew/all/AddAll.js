@@ -155,7 +155,7 @@ const AddAll = (props) => {
     <section className={classes.auth}>
       <h2>Add New Slide</h2>
       <Form onSubmit={submitHandler}>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={classes.control}>
           <Form.Group
             as={Col}
             controlId="formGridFName"
@@ -179,7 +179,7 @@ const AddAll = (props) => {
           </Form.Group>
         </Row>
 
-        <Row className="mb-3" className={classes.control}>
+        <Row className={classes.control}>
           <Form.Group
             as={Col}
             controlId="formGridMobile"
@@ -203,7 +203,7 @@ const AddAll = (props) => {
           </Form.Group>
         </Row>
         {props.typeId === 3 && (
-          <Row className="mb-3" className={classes.control}>
+          <Row className={classes.control}>
             <Form.Group
               as={Col}
               controlId="formGridMobile"

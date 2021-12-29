@@ -9,10 +9,11 @@ const SliderSection = (props) => {
     <Carousel className={classes.slide}>
       {data.map((item, index) => (
         <Carousel.Item key={index}>
-          <img
+          <Image
             src={`/images/BG${index + 1}.jpg`}
             alt={`backgroundslide${index + 1}`}
             className={classes.sliderImg}
+            layout="fill"
           />
           <Carousel.Caption className={classes.sliderSectionItems}>
             {index === 0 && (

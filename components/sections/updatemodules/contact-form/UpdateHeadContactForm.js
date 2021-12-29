@@ -10,6 +10,7 @@ import { RiCloseCircleFill } from "react-icons/ri";
 import axios from "axios";
 import AuthContext from "../../../../store/auth-context";
 import { ConnectToDB } from "../../../../lib/connect-to-db";
+import Image from "next/image";
 
 const isText = (value) => value.trim().length > 0;
 
@@ -117,7 +118,7 @@ const UpdateHeadContactForm = (props) => {
         <div>
           <h3>Title: {title}</h3>
           <p>subtitle: {subtitle}</p>
-          <img src={photo_url} />
+          <Image width={600} height={770} alt={title} src={photo_url} />
         </div>
       )}
       {edit && (
@@ -171,7 +172,15 @@ const UpdateHeadContactForm = (props) => {
             )}
           </Form.Group>
           <Form.Group className={`${classes.fromGp} mt-3 w-100`}>
-            {!editImage && <img className="w-100" src={photo_url} />}
+            {!editImage && (
+              <Image
+                width={600}
+                height={770}
+                className="w-100"
+                alt={title}
+                src={photo_url}
+              />
+            )}
             {editImage && <Form.Label className="text-left">Image:</Form.Label>}
             {editImage && (
               <Form.Control

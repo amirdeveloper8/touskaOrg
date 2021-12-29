@@ -22,11 +22,11 @@ const ViewPage = (props) => {
   const [seo, setSeo] = useState(props.data.seo);
   const status = props.status;
 
-  useEffect(() => {
-    if (pageId === "index") {
-      Router.push("/");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (pageId === "index") {
+  //     Router.push("/");
+  //   }
+  // }, []);
 
   const getDataHandler = async () => {
     const dataget = await getData(`getPage/${pageId}`);
@@ -70,6 +70,15 @@ export const getServerSideProps = async (context) => {
   if (status === "page not found") {
     return {
       notFound: true,
+    };
+  }
+
+  if (pageId === "index") {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: true,
+      },
     };
   }
 

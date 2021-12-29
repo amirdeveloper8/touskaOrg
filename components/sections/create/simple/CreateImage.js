@@ -115,7 +115,7 @@ const CreateImage = (props) => {
     <section className={classes.auth}>
       <h1>Create Simple Section</h1>
       <Form onSubmit={submitHandler}>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridFName"

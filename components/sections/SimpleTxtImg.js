@@ -37,7 +37,7 @@ const SimpleTxtImg = (props) => {
   return (
     <Fragment>
       {data.map((item, index) => (
-        <section key={index} className={classes.simple} key={index}>
+        <section key={index} className={classes.simple}>
           <div className={classes.content}>
             {item.image_url && <h2>{item.title}</h2>}
             {!item.image_url && (
@@ -84,7 +84,7 @@ const SimpleTxtImg = (props) => {
       {fullscreen && (
         <Modal className={modalClass}>
           {data.map((item, index) => (
-            <div className={classes.modalImage}>
+            <div key={index} className={classes.modalImage}>
               <Image
                 src={item.image_url}
                 alt={item.title}

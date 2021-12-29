@@ -34,7 +34,12 @@ const WorkSamplePrjs = (props) => {
           </div>
         </div>
         <div className={classes.prjImg}>
-          <Image src={data.image_project_url} width={450} height={400} />
+          <Image
+            alt={data.name_project}
+            src={data.image_project_url}
+            width={450}
+            height={400}
+          />
         </div>
       </div>
     </Modal>

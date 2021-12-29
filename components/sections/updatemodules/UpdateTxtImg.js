@@ -9,6 +9,7 @@ import Notification from "../../ui/notification";
 import axios from "axios";
 import ListAccordion from "../getdata/ListAccordion";
 import NewRich from "../../richtexteditor/NewRich";
+import Image from "next/image";
 
 const isText = (value) => value.trim().length > 0;
 
@@ -167,7 +168,7 @@ const UpdateTxtImg = (props) => {
       {!data.image_url && <h1>Update Simple Text</h1>}
 
       <Form onSubmit={submitHandler}>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={classes.control}>
           <Form.Group
             as={Col}
             controlId="formGridFName"
@@ -201,10 +202,7 @@ const UpdateTxtImg = (props) => {
         </Row>
 
         {props.richTxt && (
-          <Row
-            className="mb-3"
-            className={`${classes.richInput} ${classes.control}`}
-          >
+          <Row className={`${classes.richInput} ${classes.control}`}>
             <Form.Group
               as={Col}
               controlId="formGridMobile"
@@ -235,7 +233,12 @@ const UpdateTxtImg = (props) => {
           <Row className={classes.control}>
             {!resetImageValue && (
               <div className={classes.updateImage}>
-                <img src={data.image_url} />
+                <Image
+                  width={1920}
+                  height={1135}
+                  alt="simple-photo"
+                  src={data.image_url}
+                />
 
                 <Badge
                   className={classes.edit}

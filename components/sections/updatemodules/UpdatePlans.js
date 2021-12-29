@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import Notification from "../../ui/notification";
 import axios from "axios";
 import UpdateListsPlans from "./UpdateListsPlan";
+import Image from "next/image";
 
 const isText = (value) => value.trim().length > 0;
 
@@ -237,7 +238,7 @@ const UpdatePlans = (props) => {
       <h1>Update Module Plans</h1>
 
       <Form onSubmit={submitHandler}>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridFName"
@@ -270,7 +271,7 @@ const UpdatePlans = (props) => {
           </Form.Group>
         </Row>
 
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridMobile"
@@ -303,11 +304,9 @@ const UpdatePlans = (props) => {
           </Form.Group>
         </Row>
 
-        <Row className="mb-3" className={classes.control}>
-          {listItems}
-        </Row>
+        <Row className={`mb-3 ${classes.control}`}>{listItems}</Row>
 
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridMobile"
@@ -339,7 +338,7 @@ const UpdatePlans = (props) => {
           </Form.Group>
         </Row>
 
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridMobile"
@@ -374,7 +373,12 @@ const UpdatePlans = (props) => {
         <Row className={classes.control}>
           {!resetImageValue && (
             <div className={classes.updateImage}>
-              <img src={data.image_url} />
+              <Image
+                width={600}
+                height={747}
+                src={data.image_url}
+                alt="plan-update"
+              />
 
               <Badge
                 className={classes.edit}

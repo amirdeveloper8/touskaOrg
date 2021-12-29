@@ -216,7 +216,7 @@ const AddContactUsBoxes = (props) => {
         {checked && (
           <MdOutlineFileDownloadDone className={classes.saveChecked} />
         )}
-        <Row className="mb-3" className={classes.control}>
+        <Row className={classes.control}>
           <Form.Group
             onBlur={() => setChecked(false)}
             as={Col}
@@ -264,7 +264,7 @@ const AddContactUsBoxes = (props) => {
           </Form.Group>
         </Row>
 
-        <Row className="mb-3" className={classes.control}>
+        <Row className={classes.control}>
           <h3 className="bg-light my-0 mx-auto w-75">Items</h3>
           {socials}
           <div className={classes.socialContactIcons}>

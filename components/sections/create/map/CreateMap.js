@@ -112,7 +112,7 @@ const CreateMap = (props) => {
     <section className={classes.auth}>
       <h1>Add Video Section</h1>
       <Form onSubmit={submitHandler}>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={classes.control}>
           <Form.Group
             as={Col}
             lg={12}

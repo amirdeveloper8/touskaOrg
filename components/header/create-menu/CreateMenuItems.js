@@ -133,7 +133,7 @@ const CreateMenuItems = (props) => {
     console.log("ssss", subs);
   };
   return (
-    <Row className="mb-3" className={classes.control}>
+    <Row className={classes.control}>
       {checked && (
         <div className={classes.check}>
           <AiFillCheckSquare />

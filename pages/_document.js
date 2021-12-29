@@ -3,15 +3,13 @@ import Document, { Html, Head, Main, NextScript } from "next/document";
 class MyDocument extends Document {
   render() {
     return (
-      <Html lang="fa">
+      <Html lang="fa-IR">
         <Head />
         <body>
-          <Main />
-          <NextScript />
           <div id="notifications"></div>
           <div id="modal"></div>
-
-          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCachaOSU1TcoO7gLf0BWORvybeSrueacE&libraries=places"></script>
+          <Main />
+          <NextScript />
         </body>
       </Html>
     );

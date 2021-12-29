@@ -12,21 +12,14 @@ import { ConnectToDB } from "../../../lib/connect-to-db";
 import AuthContext from "../../../store/auth-context";
 import axios from "axios";
 
-const AllPage = () => {
-  const [pages, setPages] = useState([]);
+const AllPage = (props) => {
+  const [pages, setPages] = useState(props.data.pages);
   const [pageId, setPageId] = useState();
   const [seo, setSeo] = useState();
 
   const authCtx = useContext(AuthContext);
   const login_token = authCtx.token;
   const showPage = authCtx.showPage;
-
-  useEffect(async () => {
-    const data = await getData("getAllPage");
-
-    console.log(data);
-    setPages(data.pages);
-  }, [showPage]);
 
   const deleteHandler = async (event) => {
     event.preventDefault();
@@ -124,6 +117,26 @@ const AllPage = () => {
       )}
     </div>
   );
+};
+
+export const getServerSideProps = async (context) => {
+  const res = await fetch(`http://api.touskaweb.com/api/getAllPage`);
+  const data = await res.json();
+  const status = data.status;
+  console.log(res);
+
+  if (status === "page not found") {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      data,
+      status,
+    },
+  };
 };
 
 export default AllPage;

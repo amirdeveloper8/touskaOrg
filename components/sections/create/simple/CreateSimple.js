@@ -134,7 +134,7 @@ const CreateSimple = (props) => {
     <section className={classes.auth}>
       <h1>Create Simple Section</h1>
       <Form onSubmit={submitHandler}>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             lg={12}
@@ -159,10 +159,7 @@ const CreateSimple = (props) => {
           </Form.Group>
         </Row>
 
-        <Row
-          className="mb-3"
-          className={`${classes.richInput} ${classes.control}`}
-        >
+        <Row className={`${classes.richInput} ${classes.control}`}>
           <Form.Group
             as={Col}
             controlId="formGridMobile"
@@ -184,7 +181,7 @@ const CreateSimple = (props) => {
             />
           </Form.Group>
         </Row>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             lg={12}

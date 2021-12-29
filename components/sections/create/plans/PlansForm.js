@@ -155,7 +155,7 @@ const PlansForm = (props) => {
         {checked && (
           <MdOutlineFileDownloadDone className={classes.saveChecked} />
         )}
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             onBlur={() => setChecked(false)}
@@ -180,7 +180,7 @@ const PlansForm = (props) => {
           </Form.Group>
         </Row>
 
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             onBlur={() => setChecked(false)}
@@ -203,7 +203,7 @@ const PlansForm = (props) => {
             )}
           </Form.Group>
         </Row>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           {itemsForms}
           <Col className={classes.plansIcons}>
             <IoMdAddCircle
@@ -230,7 +230,7 @@ const PlansForm = (props) => {
             />
           </Form.Group>
         </Row>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             onBlur={() => setChecked(false)}
@@ -253,7 +253,7 @@ const PlansForm = (props) => {
             )}
           </Form.Group>
         </Row>
-        <Row className="mb-3" className={classes.control}>
+        <Row className={`mb-3 ${classes.control}`}>
           <Form.Group
             as={Col}
             onBlur={() => setChecked(false)}

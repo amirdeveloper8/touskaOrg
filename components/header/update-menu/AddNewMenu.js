@@ -176,7 +176,7 @@ const AddNewMenu = (props) => {
   }
 
   return (
-    <Row className="mb-3" className={classes.control}>
+    <Row className={classes.control}>
       <Form.Group
         as={Col}
         lg={12}

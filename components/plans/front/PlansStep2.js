@@ -8,7 +8,6 @@ import Button from "../../ui/Button";
 import OfferPlans from "./OfferPlans";
 import SpecialPlans from "./SpecialPlans";
 
-import publicIp from "public-ip";
 import PrintValues from "./PrintValues";
 
 const PlansStep2 = (props) => {
