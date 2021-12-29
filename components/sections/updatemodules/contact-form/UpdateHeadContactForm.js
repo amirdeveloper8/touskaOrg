@@ -93,6 +93,7 @@ const UpdateHeadContactForm = (props) => {
           console.log(res.data);
           setTimeout(() => {
             authCtx.closePageHandler();
+            props.getData();
           }, 800);
 
           setTimeout(() => {

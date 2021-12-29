@@ -2,6 +2,7 @@ import { Carousel, Col, Row } from "react-bootstrap";
 import ListAccordion from "./getdata/ListAccordion";
 import classes from "./slider-section.module.css";
 
+import Image from "next/image";
 const SliderSection = (props) => {
   const data = props.details.section_content;
   return (
@@ -17,7 +18,12 @@ const SliderSection = (props) => {
             {index === 0 && (
               <div className={classes.firstSlide}>
                 <h1>{item.title.content}</h1>
-                <img src={item.image_url} alt={item.title.content} />
+                <Image
+                  src={item.image_url}
+                  alt={item.title.content}
+                  width={863}
+                  height={675}
+                />
                 <div className={classes.firsText}>
                   <ListAccordion items={item.texts.content} />
                 </div>
@@ -39,7 +45,13 @@ const SliderSection = (props) => {
                     </div>
                   </Col>
                   <Col lg={7} md={12}>
-                    <img src={item.image_url} alt={item.title.content} />
+                    <Image
+                      src={item.image_url}
+                      alt={item.title.content}
+                      width={1052}
+                      height={463}
+                      layout="responsive"
+                    />
                   </Col>
                 </Row>
               </div>

@@ -7,7 +7,7 @@ import classes from "./accordion.module.css";
 const AccordionSection = (props) => {
   const title = props.details.title;
   const content = props.details.section_content;
-  console.log("accccord", content);
+
   return (
     <section className={classes.accordionSec}>
       <h2>{title}</h2>

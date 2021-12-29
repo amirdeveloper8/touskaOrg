@@ -32,17 +32,6 @@ const UpdatePortfolio = (props) => {
 
   const login_token = authCtx.token;
 
-  useEffect(() => {
-    if (notification === "success updated" || notification === "error") {
-      const timer = setTimeout(() => {
-        setNotification(null);
-        setdataError(null);
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [notification]);
-
   const {
     value: titleValue,
     isValid: titleIsValid,
@@ -142,7 +131,8 @@ const UpdatePortfolio = (props) => {
           setNotification(res.data.status);
           setTimeout(() => {
             authCtx.closePageHandler();
-          }, 2800);
+            props.getData();
+          }, 2000);
 
           setTimeout(() => {
             authCtx.showPageHandler();

@@ -16,22 +16,9 @@ const CreateBanner = (props) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [textValue, setTextValue] = useState([]);
 
-  console.log(props.pageId);
-
   const authCtx = useContext(AuthContext);
 
   const login_token = authCtx.token;
-
-  useEffect(() => {
-    if (notification === "success created" || notification === "error") {
-      const timer = setTimeout(() => {
-        setNotification(null);
-        setdataError(null);
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [notification]);
 
   const {
     value: titleValue,
@@ -42,18 +29,8 @@ const CreateBanner = (props) => {
     reset: resetTitle,
   } = useInput(isText);
 
-  // const {
-  //   value: textValue,
-  //   isValid: textIsValid,
-  //   hasError: textHasError,
-  //   valueChangeHandler: textChangeHandler,
-  //   inputBlurHandler: textBlurHandler,
-  //   reset: resetText,
-  // } = useInput(isText);
-
   const getTextValue = (value) => {
     setTextValue([value.split("\n")]);
-    console.log(textValue);
   };
 
   const handleChange = (file) => {
@@ -88,7 +65,6 @@ const CreateBanner = (props) => {
     {
       selectedFile && fData.append("image", selectedFile);
     }
-    console.log(props.pageId);
     axios({
       method: "POST",
       url: connectDB,
@@ -96,11 +72,14 @@ const CreateBanner = (props) => {
       data: fData,
     })
       .then((res) => {
-        console.log("res", res.data);
         if (res.data.status === "success created") {
-          console.log(res.data);
           setNotification(res.data.status);
 
+          setNotification(res.data.status);
+          setTimeout(() => {
+            authCtx.closePageHandler();
+            props.getData();
+          }, 2000);
           setTimeout(() => {
             authCtx.showPageHandler();
             authCtx.closeBannerSection();

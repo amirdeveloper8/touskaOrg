@@ -4,6 +4,7 @@ import Link from "next/link";
 
 import { CloseButton } from "react-bootstrap";
 import Button from "../ui/Button";
+import Image from "next/image";
 
 const WorkSamplePrjs = (props) => {
   const data = props.data;
@@ -33,7 +34,7 @@ const WorkSamplePrjs = (props) => {
           </div>
         </div>
         <div className={classes.prjImg}>
-          <img src={data.image_project_url} />
+          <Image src={data.image_project_url} width={450} height={400} />
         </div>
       </div>
     </Modal>

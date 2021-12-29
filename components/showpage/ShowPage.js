@@ -10,7 +10,6 @@ import TableSection from "../sections/TableSection";
 import PortfolioSection from "../sections/PortfolioSection";
 import WorkSamplesSection from "../sections/WorkSamplesSection";
 import ContactFormSection from "../sections/ContactFormSection";
-import MapSec from "../google-map/MapSec";
 import BannerSection from "../sections/BannerSection";
 import SimpleTxtImg from "../sections/SimpleTxtImg";
 import VideoSection from "../sections/VideoSection";
@@ -19,7 +18,6 @@ import MapSection from "../sections/MapSection";
 import BlogSection from "../sections/BlogSection";
 
 const ShowPage = (props) => {
-  console.log(props.secData);
   const data = props.secData;
 
   if (!data) {
@@ -85,13 +83,7 @@ const ShowPage = (props) => {
                 sec={sec}
               />
             )}
-            {sec.type_id === 15 && (
-              <VideoSection
-                key={sec.section_content.id}
-                details={sec.section_content[0]}
-                sec={sec}
-              />
-            )}
+
             {sec.type_id === 15 && (
               <VideoSection
                 key={sec.section_content.id}

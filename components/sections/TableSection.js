@@ -16,7 +16,7 @@ const TableSection = (props) => {
   const ths = JSON.parse(data.th);
   const tfs = JSON.parse(data.tf);
   const cms = JSON.parse(data.comments);
-  console.log(cms);
+
   const widthStyle = 100 / ths.length;
   const title = props.details.title;
   return (

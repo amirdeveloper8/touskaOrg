@@ -50,17 +50,6 @@ const UpdateSimple = (props) => {
 
   console.log(url);
 
-  useEffect(() => {
-    if (notification === "success updated" || notification === "error") {
-      const timer = setTimeout(() => {
-        setNotification(null);
-        setdataError(null);
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [notification]);
-
   const {
     value: titleValue,
     isValid: titleIsValid,
@@ -145,6 +134,7 @@ const UpdateSimple = (props) => {
           setNotification(res.data.status);
           setTimeout(() => {
             authCtx.closePageHandler();
+            props.getData();
           }, 2800);
 
           setTimeout(() => {

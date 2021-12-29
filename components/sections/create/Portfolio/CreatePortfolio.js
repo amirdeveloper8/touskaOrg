@@ -45,17 +45,6 @@ const CreatePortfolio = (props) => {
   const [images, setImages] = useState([]);
   let sliders = [];
 
-  useEffect(() => {
-    if (notification === "success created" || notification === "error") {
-      const timer = setTimeout(() => {
-        setNotification(null);
-        setdataError(null);
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [notification]);
-
   const authCtx = useContext(AuthContext);
 
   const login_token = authCtx.token;
@@ -78,8 +67,6 @@ const CreatePortfolio = (props) => {
 
   const slideNumberHandleChange = (e) => {
     setSlideCount(e.target.value);
-
-    console.log(slideCount);
   };
   for (var i = 0; i < slideCount; i++) {
     sliders[i] = (
@@ -103,12 +90,6 @@ const CreatePortfolio = (props) => {
     e.preventDefault();
     setNotification("pending");
 
-    console.log("images", images);
-    console.log("titles", titles);
-    console.log("button name", buttonNames);
-    console.log("button url", buttonUrls);
-    console.log("count", +slideCount);
-
     const fData = new FormData();
 
     for (var i = 0; i < slideCount; i++) {
@@ -120,6 +101,7 @@ const CreatePortfolio = (props) => {
       fData.append("count", slideCount);
       fData.append(`title_item_${i + 1}`, titles[i]);
       fData.append(`button_name_${i + 1}`, buttonNames[i]);
+      console.log(`button_name_${i + 1}`, buttonNames[i]);
       fData.append(`button_url_${i + 1}`, buttonUrls[i]);
       fData.append(`image_item_${i + 1}`, images[i]);
     }
@@ -137,10 +119,13 @@ const CreatePortfolio = (props) => {
       data: fData,
     })
       .then((res) => {
-        console.log("res", res);
         if (res.data.status === "success created") {
-          console.log(res.data);
           setNotification(res.data.status);
+
+          setTimeout(() => {
+            authCtx.closePageHandler();
+            props.getData();
+          }, 2000);
           setTimeout(() => {
             authCtx.showPageHandler();
             authCtx.closePortfolioSection();
@@ -150,8 +135,6 @@ const CreatePortfolio = (props) => {
       .catch((err) => {
         console.log("Error", err.response.data);
       });
-
-    console.log(fData);
   };
 
   let formIsValid = false;

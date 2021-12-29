@@ -4,7 +4,7 @@ import classes from "./slidedown-section.module.css";
 const SlideDownSection = (props) => {
   const data = props.details.section_content;
   const title = props.details.title;
-  console.log(data);
+
   return (
     <section className={classes.slideDownSec}>
       <h2 className="text-center py-3">{title}</h2>

@@ -12,25 +12,10 @@ const isText = (value) => value.trim().length > 0;
 const CreateMap = (props) => {
   const [dataError, setdataError] = useState();
   const [notification, setNotification] = useState();
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [textValue, setTextValue] = useState([]);
-
-  console.log(props.pageId);
 
   const authCtx = useContext(AuthContext);
 
   const login_token = authCtx.token;
-
-  useEffect(() => {
-    if (notification === "success created" || notification === "error") {
-      const timer = setTimeout(() => {
-        setNotification(null);
-        setdataError(null);
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [notification]);
 
   const {
     value: titleValue,
@@ -72,7 +57,6 @@ const CreateMap = (props) => {
     fData.append("title", titleValue);
     fData.append("subtitle", "");
     fData.append("src", srcValue);
-    console.log(props.pageId);
     axios({
       method: "POST",
       url: connectDB,
@@ -80,11 +64,13 @@ const CreateMap = (props) => {
       data: fData,
     })
       .then((res) => {
-        console.log("res", res.data);
         if (res.data.status === "success created") {
-          console.log(res.data);
           setNotification(res.data.status);
 
+          setTimeout(() => {
+            authCtx.closePageHandler();
+            props.getData();
+          }, 2000);
           setTimeout(() => {
             authCtx.showPageHandler();
             authCtx.closeBannerSection();

@@ -70,8 +70,6 @@ const CreateContactUsBoxes = (props) => {
     const socialDetails = await getData("get/contactform/typeSocial");
     setBoxes(boxDetails.typeBox);
     setSocials(socialDetails.typeSocial);
-    console.log(boxes);
-    console.log(socials);
   };
   for (var i = 0; i < slideCount; i++) {
     sliders[i] = (
@@ -94,17 +92,6 @@ const CreateContactUsBoxes = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
     setNotification("pending");
-
-    console.log("page_id", props.pageId);
-    console.log("type_id", 14);
-    console.log("title", titleValue);
-    console.log("count", slideCount);
-    for (var i = 0; i < slideCount; i++) {
-      console.log(`type_box_id_${i + 1}`, +boxId[i]);
-      console.log(`body_box_${i + 1}`, JSON.stringify(socialValues[i]));
-      console.log(`title_box_${i + 1}`, titles[i]);
-    }
-
     const fData = new FormData();
 
     fData.append("page_id", props.pageId);
@@ -130,10 +117,12 @@ const CreateContactUsBoxes = (props) => {
       data: fData,
     })
       .then((res) => {
-        console.log("res", res);
         if (res.data.status === "success created") {
-          console.log(res.data);
           setNotification(res.data.status);
+          setTimeout(() => {
+            authCtx.closePageHandler();
+            props.getData();
+          }, 2000);
           setTimeout(() => {
             authCtx.showPageHandler();
             authCtx.closeContactUsBoxesSectionSection();
@@ -143,8 +132,6 @@ const CreateContactUsBoxes = (props) => {
       .catch((err) => {
         console.log("Error", err.response.data);
       });
-
-    console.log(fData);
   };
 
   let formIsValid = false;

@@ -13,25 +13,10 @@ const isText = (value) => value.trim().length > 0;
 const CreateVideo = (props) => {
   const [dataError, setdataError] = useState();
   const [notification, setNotification] = useState();
-  const [selectedFile, setSelectedFile] = useState(null);
-  const [textValue, setTextValue] = useState([]);
-
-  console.log(props.pageId);
 
   const authCtx = useContext(AuthContext);
 
   const login_token = authCtx.token;
-
-  useEffect(() => {
-    if (notification === "success updated" || notification === "error") {
-      const timer = setTimeout(() => {
-        setNotification(null);
-        setdataError(null);
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [notification]);
 
   const {
     value: titleValue,
@@ -82,7 +67,7 @@ const CreateVideo = (props) => {
     fData.append("title", titleValue);
     fData.append("subtitle", subValue);
     fData.append("src", srcValue);
-    console.log(props.pageId);
+
     axios({
       method: "POST",
       url: connectDB,
@@ -90,11 +75,13 @@ const CreateVideo = (props) => {
       data: fData,
     })
       .then((res) => {
-        console.log("res", res.data);
-        if (res.data.status === "success updated") {
-          console.log(res.data);
+        if (res.data.status === "success created") {
           setNotification(res.data.status);
 
+          setTimeout(() => {
+            authCtx.closePageHandler();
+            props.getData();
+          }, 2000);
           setTimeout(() => {
             authCtx.showPageHandler();
             authCtx.closeBannerSection();
@@ -102,7 +89,7 @@ const CreateVideo = (props) => {
         }
       })
       .catch((err) => {
-        console.log("Error", err);
+        console.log("Error", err.response);
       });
   };
 
@@ -116,7 +103,7 @@ const CreateVideo = (props) => {
     };
   }
 
-  if (notification === "success updated") {
+  if (notification === "success created") {
     notifDetails = {
       status: "success",
       title: "Success!",

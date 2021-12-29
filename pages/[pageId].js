@@ -3,35 +3,30 @@ import { Fragment, useContext, useEffect, useState } from "react";
 import AuthContext from "../store/auth-context";
 
 import { getData } from "../lib/get-data";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import SimpleSection from "../components/sections/SimpleSection";
 import classes from "../styles/dashboard.module.css";
 import ShowPage from "../components/showpage/ShowPage";
 import Head from "next/head";
+import { NotFound } from "http-errors";
+
+import Router from "next/router";
 
 const ViewPage = (props) => {
   const authCtx = useContext(AuthContext);
 
   const showPage = authCtx.showPage;
-
-  const [pageData, setPageData] = useState();
-  const [seo, setSeo] = useState();
-
   const pageId = props.pageId;
 
-  const router = useRouter();
+  const [pageData, setPageData] = useState(props.data);
+  const [seo, setSeo] = useState(props.data.seo);
+  const status = props.status;
 
-  const openModal = () => {
-    authCtx.openSectionModal();
-  };
-
-  useEffect(async () => {
-    const dataget = await getData(`getPage/${pageId}`);
-    setPageData(dataget);
-    setSeo(dataget.seo);
+  useEffect(() => {
+    if (pageId === "index") {
+      Router.push("/");
+    }
   }, []);
-
-  console.log("pageData", pageData);
 
   const getDataHandler = async () => {
     const dataget = await getData(`getPage/${pageId}`);
@@ -39,25 +34,24 @@ const ViewPage = (props) => {
     setPageData(dataget.page.sections);
   };
 
-  console.log(seo);
-
   // const secData = pageData.page.sections;
+
+  const keywords = JSON.parse(seo.keywords);
+  const keysString = keywords.toString();
 
   return (
     <Fragment>
-      {/* {seo && (
-        <Head>
-          <meta name="description" content={seo.meta_description} />
-        </Head>
-      )} */}
       <Head>
+        <title>{seo.title}</title>
+        <meta name="description" content={seo.meta_description} />
+        <meta name="keywords" content={keysString} />
         <meta
-          name="description"
-          content={seo ? seo.meta_description : `someeeeeeething`}
+          name="robots"
+          content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
         />
+        <meta name="author" content="توسعه محتوا وب توسکا" />
       </Head>
       <ShowPage secData={pageData} />
-      {/* <SimpleSection /> */}
     </Fragment>
   );
 };
@@ -69,9 +63,21 @@ export const getServerSideProps = async (context) => {
 
   const pageId = params.pageId;
 
+  const res = await fetch(`http://api.touskaweb.com/api/getPage/${pageId}`);
+  const data = await res.json();
+  const status = data.status;
+
+  if (status === "page not found") {
+    return {
+      notFound: true,
+    };
+  }
+
   return {
     props: {
       pageId,
+      data,
+      status,
     },
   };
 };

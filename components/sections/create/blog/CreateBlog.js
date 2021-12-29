@@ -13,9 +13,6 @@ const isText = (value) => value.trim().length > 0;
 const CreateBlog = (props) => {
   const [dataError, setdataError] = useState();
   const [notification, setNotification] = useState();
-  const [selectedFile, setSelectedFile] = useState(null);
-
-  console.log(props.pageId);
 
   const authCtx = useContext(AuthContext);
 
@@ -81,7 +78,7 @@ const CreateBlog = (props) => {
 
     fData.append("button_name", btnNameValue);
     fData.append("button_url", btnUrlValue);
-    console.log(props.pageId);
+
     axios({
       method: "POST",
       url: connectDB,
@@ -89,16 +86,16 @@ const CreateBlog = (props) => {
       data: fData,
     })
       .then((res) => {
-        console.log("res", res.data);
         if (res.data.status === "success created") {
-          console.log(res.data);
           setNotification(res.data.status);
+
           setTimeout(() => {
             authCtx.closePageHandler();
-          }, 1000);
+            props.getData();
+          }, 2000);
           setTimeout(() => {
             authCtx.showPageHandler();
-          }, 2000);
+          }, 3000);
         }
       })
       .catch((err) => {

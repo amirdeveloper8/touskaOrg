@@ -4,12 +4,13 @@ import ListAccordion from "./getdata/ListAccordion";
 import Button from "../ui/Button";
 import Link from "next/link";
 
+import Image from "next/image";
+
 import classes from "./simple.module.css";
 
 const SimpleSection = (props) => {
   const data = props.details;
   const btn = data.button[0];
-  // console.log("datasimple", data);
   return (
     <Fragment>
       {data.section_content.map((item, index) => (
@@ -29,7 +30,12 @@ const SimpleSection = (props) => {
               )}
             </div>
             <div className={classes.image}>
-              <img src={item.image_url} />
+              <Image
+                src={item.image_url}
+                width={1024}
+                height={1024}
+                layout="responsive"
+              />
             </div>
           </div>
         </section>

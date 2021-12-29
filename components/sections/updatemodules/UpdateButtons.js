@@ -13,8 +13,12 @@ const UpdateButtons = (props) => {
   const buttonId = props.data.button[0].id;
   const secId = props.data.id;
   const typeId = props.data.type.id;
-  const [resetBtnNameValue, setResetBtnNameValue] = useState(false);
-  const [resetBtnUrlValue, setResetBtnUrlValue] = useState(false);
+  const [resetBtnNameValue, setResetBtnNameValue] = useState(
+    !buttonDetails[0].name
+  );
+  const [resetBtnUrlValue, setResetBtnUrlValue] = useState(
+    !buttonDetails[0].url
+  );
 
   const [dataError, setdataError] = useState();
   const [notification, setNotification] = useState();
@@ -149,7 +153,7 @@ const UpdateButtons = (props) => {
         <div className={classes.updateBtns}>
           <h2>Update Buttons</h2>
           {buttonDetails.map((btn) => (
-            <Row className="mb-3" className={classes.control}>
+            <Row key={btn.id} className="mb-3" className={classes.control}>
               <Form.Group
                 as={Col}
                 lg={12}

@@ -103,6 +103,7 @@ const DeleteAll = (props) => {
           setNotification(res.data.status);
           setTimeout(() => {
             authCtx.closePageHandler();
+            props.getData();
           }, 1800);
           setTimeout(() => {
             authCtx.showPageHandler();

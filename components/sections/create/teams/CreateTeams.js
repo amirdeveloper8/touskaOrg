@@ -33,17 +33,6 @@ const CreateTeams = (props) => {
 
   const [selectedFile, setSelectedFile] = useState(null);
 
-  useEffect(() => {
-    if (notification === "success created" || notification === "error") {
-      const timer = setTimeout(() => {
-        setNotification(null);
-        setdataError(null);
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [notification]);
-
   const handleChange = (file) => {
     setSelectedFile(file[0]);
   };
@@ -78,8 +67,6 @@ const CreateTeams = (props) => {
 
   const slideNumberHandleChange = (e) => {
     setSlideCount(e.target.value);
-
-    console.log(slideCount);
   };
   for (var i = 0; i < slideCount; i++) {
     sliders[i] = (
@@ -113,19 +100,6 @@ const CreateTeams = (props) => {
     e.preventDefault();
     setNotification("pending");
 
-    for (var i = 0; i < slideCount; i++) {
-      console.log("page_id", props.pageId);
-      console.log("image", selectedFile);
-      console.log("type_id", 6);
-      console.log("title", titleValue);
-      console.log("count", slideCount);
-      console.log(`name_team_${i + 1}`, names[i]);
-      console.log(`post_team_${i + 1}`, posts[i]);
-      console.log(`social_url_team_${i + 1}`, socials[i]);
-      console.log(`charecter_team_${i + 1}`, characters[i]);
-      console.log(`image_team_${i + 1}`, images[i]);
-    }
-
     const fData = new FormData();
 
     fData.append("page_id", props.pageId);
@@ -154,10 +128,12 @@ const CreateTeams = (props) => {
       data: fData,
     })
       .then((res) => {
-        console.log("res", res);
         if (res.data.status === "success created") {
-          console.log(res.data);
           setNotification(res.data.status);
+          setTimeout(() => {
+            authCtx.closePageHandler();
+            props.getData();
+          }, 2000);
           setTimeout(() => {
             authCtx.showPageHandler();
             authCtx.closeTeamsSection();
@@ -168,8 +144,6 @@ const CreateTeams = (props) => {
         console.log("Error", err.response.data);
         setNotification("error");
       });
-
-    console.log(fData.getAll);
   };
 
   let formIsValid = false;

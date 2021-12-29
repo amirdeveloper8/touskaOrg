@@ -28,17 +28,6 @@ const CreateSlider = (props) => {
   const [images, setImages] = useState([]);
   let sliders = [];
 
-  useEffect(() => {
-    if (notification === "success created" || notification === "error") {
-      const timer = setTimeout(() => {
-        setNotification(null);
-        setdataError(null);
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [notification]);
-
   const authCtx = useContext(AuthContext);
 
   const login_token = authCtx.token;
@@ -57,8 +46,6 @@ const CreateSlider = (props) => {
 
   const slideNumberHandleChange = (e) => {
     setSlideCount(e.target.value);
-
-    console.log(slideCount);
   };
   for (var i = 0; i < slideCount; i++) {
     sliders[i] = (
@@ -79,11 +66,6 @@ const CreateSlider = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
     setNotification("pending");
-
-    console.log("images", images);
-    console.log("titles", titles);
-    console.log("texts", texts);
-    console.log("count", +slideCount);
 
     const fData = new FormData();
 
@@ -110,10 +92,12 @@ const CreateSlider = (props) => {
       data: fData,
     })
       .then((res) => {
-        console.log("res", res);
         if (res.data.status === "success created") {
-          console.log(res.data);
           setNotification(res.data.status);
+          setTimeout(() => {
+            authCtx.closePageHandler();
+            props.getData();
+          }, 2000);
           setTimeout(() => {
             authCtx.showPageHandler();
             authCtx.closeSliderSection();
@@ -121,10 +105,8 @@ const CreateSlider = (props) => {
         }
       })
       .catch((err) => {
-        console.log("Error", err);
+        console.log("Error", err.response);
       });
-
-    console.log(fData);
   };
 
   let formIsValid = false;

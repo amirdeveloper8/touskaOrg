@@ -16,22 +16,9 @@ const CreateImage = (props) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [textValue, setTextValue] = useState([]);
 
-  console.log(props.pageId);
-
   const authCtx = useContext(AuthContext);
 
   const login_token = authCtx.token;
-
-  useEffect(() => {
-    if (notification === "success created" || notification === "error") {
-      const timer = setTimeout(() => {
-        setNotification(null);
-        setdataError(null);
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [notification]);
 
   const {
     value: titleValue,
@@ -42,18 +29,8 @@ const CreateImage = (props) => {
     reset: resetTitle,
   } = useInput(isText);
 
-  // const {
-  //   value: textValue,
-  //   isValid: textIsValid,
-  //   hasError: textHasError,
-  //   valueChangeHandler: textChangeHandler,
-  //   inputBlurHandler: textBlurHandler,
-  //   reset: resetText,
-  // } = useInput(isText);
-
   const getTextValue = (value) => {
     setTextValue([value.split("\n")]);
-    console.log(textValue);
   };
 
   const handleChange = (file) => {
@@ -82,7 +59,7 @@ const CreateImage = (props) => {
     fData.append("type_id", 13);
     fData.append("title", titleValue);
     fData.append("image", selectedFile);
-    console.log(props.pageId);
+
     axios({
       method: "POST",
       url: connectDB,
@@ -90,10 +67,13 @@ const CreateImage = (props) => {
       data: fData,
     })
       .then((res) => {
-        console.log("res", res.data);
         if (res.data.status === "success created") {
-          console.log(res.data);
           setNotification(res.data.status);
+
+          setTimeout(() => {
+            authCtx.closePageHandler();
+            props.getData();
+          }, 2000);
           setTimeout(() => {
             authCtx.showPageHandler();
             authCtx.closeSimpleImageSection();
@@ -101,7 +81,7 @@ const CreateImage = (props) => {
         }
       })
       .catch((err) => {
-        console.log("Error", err);
+        console.log("Error", err.response.data);
       });
   };
 

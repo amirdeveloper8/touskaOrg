@@ -10,7 +10,7 @@ import Footer from "./Footer";
 const Layout = (props) => {
   const router = useRouter();
   const pathName = router.asPath.includes("dashboard");
-  console.log("url", pathName);
+
   const authCtx = useContext(AuthContext);
   const isLoggedIn = authCtx.isLoggedIn;
 

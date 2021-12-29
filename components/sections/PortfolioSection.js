@@ -1,6 +1,7 @@
 import { Button } from "react-bootstrap";
 import Link from "next/link";
 import classes from "./portfolio-section.module.css";
+import Image from "next/image";
 
 const PortfolioSection = (props) => {
   const data = props.details.section_content;
@@ -12,7 +13,7 @@ const PortfolioSection = (props) => {
         {data.map((item, index) => (
           <div key={index} className={classes.portfolioBox}>
             <h3>{item.title.content}</h3>
-            <img src={item.image} />
+            <Image src={item.image} width={400} height={300} />
             <Button>
               <a href={item.button.url}>{item.button.name}</a>
             </Button>

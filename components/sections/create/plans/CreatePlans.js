@@ -42,17 +42,6 @@ const CreatePalns = (props) => {
   const [images, setImages] = useState([]);
   let sliders = [];
 
-  useEffect(() => {
-    if (notification === "success created" || notification === "error") {
-      const timer = setTimeout(() => {
-        setNotification(null);
-        setdataError(null);
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [notification]);
-
   const authCtx = useContext(AuthContext);
 
   const login_token = authCtx.token;
@@ -87,8 +76,6 @@ const CreatePalns = (props) => {
 
   const slideNumberHandleChange = (e) => {
     setSlideCount(e.target.value);
-
-    console.log(slideCount);
   };
   for (var i = 0; i < slideCount; i++) {
     sliders[i] = (
@@ -115,12 +102,6 @@ const CreatePalns = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
     setNotification("pending");
-
-    console.log("images", images);
-    console.log("titles", titles);
-    console.log("subtitles", subtitles);
-    console.log("image", selectedFile);
-    console.log("items", items);
 
     const fData = new FormData();
 
@@ -157,10 +138,12 @@ const CreatePalns = (props) => {
       data: fData,
     })
       .then((res) => {
-        console.log("res", res);
         if (res.data.status === "success created") {
-          console.log(res.data);
           setNotification(res.data.status);
+          setTimeout(() => {
+            authCtx.closePageHandler();
+            props.getData();
+          }, 2000);
           setTimeout(() => {
             authCtx.showPageHandler();
             authCtx.closePlansSection();
@@ -170,8 +153,6 @@ const CreatePalns = (props) => {
       .catch((err) => {
         console.log("Error", err.response.data);
       });
-
-    console.log(fData);
   };
 
   let formIsValid = false;

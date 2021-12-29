@@ -30,12 +30,12 @@
   transition: all 0.3s ease-in;
 }
 
-.imgteam {
+.imgPerson img {
   border-radius: 250px;
-  border: 4px solid var(--purple);
+  border: 4px solid var(--purple) !important;
   width: 200px;
   height: 200px;
-  background-color: var(--purple);
+  background-color: var(--purple) !important;
 }
 
 .namepost {

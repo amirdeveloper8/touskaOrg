@@ -92,13 +92,13 @@
 
 .menuCol img {
   width: 100%;
-  max-width: 120px;
+  max-width: 120px !important;
 
   transition: 0.3s linear;
 }
 
 .menuCol img:hover {
-  box-shadow: 3px 3px 2px var(--green);
+  box-shadow: 3px 3px 2px var(--green) !important;
 }
 
 .menuItems {

@@ -16,22 +16,9 @@ const CreateSimple = (props) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [textValue, setTextValue] = useState([]);
 
-  console.log(props.pageId);
-
   const authCtx = useContext(AuthContext);
 
   const login_token = authCtx.token;
-
-  useEffect(() => {
-    if (notification === "success created" || notification === "error") {
-      const timer = setTimeout(() => {
-        setNotification(null);
-        setdataError(null);
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [notification]);
 
   const {
     value: titleValue,
@@ -62,7 +49,6 @@ const CreateSimple = (props) => {
 
   const getTextValue = (value) => {
     setTextValue([value.split("\n")]);
-    console.log(textValue);
   };
 
   const handleChange = (file) => {
@@ -94,7 +80,6 @@ const CreateSimple = (props) => {
     fData.append("image", selectedFile);
     fData.append("button_name", btnNameValue);
     fData.append("button_url", btnUrlValue);
-    console.log(props.pageId);
     axios({
       method: "POST",
       url: connectDB,
@@ -102,10 +87,12 @@ const CreateSimple = (props) => {
       data: fData,
     })
       .then((res) => {
-        console.log("res", res.data);
         if (res.data.status === "success created") {
-          console.log(res.data);
           setNotification(res.data.status);
+          setTimeout(() => {
+            authCtx.closePageHandler();
+            props.getData();
+          }, 2000);
           setTimeout(() => {
             authCtx.showPageHandler();
             authCtx.closeSimpleSection();

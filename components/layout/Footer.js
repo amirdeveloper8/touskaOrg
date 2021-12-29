@@ -15,13 +15,12 @@ const Footer = (props) => {
     const dataget = await getData("get/footer");
     setDetails(dataget.footer);
   }, []);
-  console.log("footer", details);
   return (
     <section className={classes.footer}>
       {details && (
         <div className={classes.footerRow}>
           <div className={classes.footerColImage}>
-            <img src={details.logo_url} className="w-100" />
+            <img src={details.logo_url} />
             <p className={classes.description}>{details.description}</p>
           </div>
           <div className={classes.footerCol} lg={2} md={6}>
@@ -50,10 +49,16 @@ const Footer = (props) => {
               {details.socials.map((item, index) => (
                 <li key={index}>
                   {item.type_id === 6 && (
-                    <a href={item.url}>تلفن: {item.name}</a>
+                    <a dir="ltr" href={item.url}>
+                      <p dir="rtl"> تلفن : </p>
+                      {item.name}
+                    </a>
                   )}
                   {item.type_id === 13 && (
-                    <a href={item.url}>ایمیل: {item.name}</a>
+                    <a href={item.url}>
+                      <p dir="rtl"> ایمیل : </p>
+                      {item.name}
+                    </a>
                   )}
                   {item.type_id === 5 && <a href={item.url}>{item.name}</a>}
                 </li>
@@ -65,8 +70,9 @@ const Footer = (props) => {
                   className={
                     item.type_id !== 9 &&
                     item.type_id !== 7 &&
-                    item.type_id !== 10 &&
-                    `d-none`
+                    item.type_id !== 10
+                      ? `d-none`
+                      : `d-block`
                   }
                   key={index}
                 >

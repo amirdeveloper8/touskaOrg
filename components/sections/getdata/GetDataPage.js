@@ -76,6 +76,8 @@ const GetDataPage = (props) => {
   const authCtx = useContext(AuthContext);
   const closeBtnRef = useRef();
 
+  const getData = () => props.getData();
+
   if (!props.data) {
     return (
       <Alert variant="danger" className="m-2">
@@ -126,18 +128,28 @@ const GetDataPage = (props) => {
                 : `${classes.section}`
             }
           >
-            <DeleteAll id={sec.id} type={sec.type.name} />
+            <DeleteAll id={sec.id} type={sec.type.name} getData={getData} />
             <div className={classes.typeSec}>
               <h2>type:{sec.type.name}</h2>
             </div>
             <OrderSec data={sec} pageId={pageId} />
 
             {sec.type_id !== 11 && sec.type_id !== 5 && (
-              <UpdateTable data={sec.title} tableId={sec.id} />
+              <UpdateTable
+                data={sec.title}
+                tableId={sec.id}
+                getData={getData}
+              />
             )}
-            {sec.type_id === 5 && <UpdateTitleSub data={sec} />}
-            {sec.type_id === 11 && <UpdateHeadContactForm data={sec} />}
-            {sec.type_id === 11 && <UpdateEmailContactForm data={sec} />}
+            {sec.type_id === 5 && (
+              <UpdateTitleSub data={sec} getData={getData} />
+            )}
+            {sec.type_id === 11 && (
+              <UpdateHeadContactForm data={sec} getData={getData} />
+            )}
+            {sec.type_id === 11 && (
+              <UpdateEmailContactForm data={sec} getData={getData} />
+            )}
             {sec.type_id === 17 && sec.subtitle && (
               <div>
                 <h5 className="text-center">
@@ -259,30 +271,45 @@ const GetDataPage = (props) => {
                         richTxt={item.texts.content}
                         updateData={item}
                         sec={sec}
+                        getData={getData}
                       />
                     )}
                     {sec.type_id === 5 && updateOne && (
-                      <UpdatePlans updateData={item} sec={sec} />
+                      <UpdatePlans
+                        updateData={item}
+                        sec={sec}
+                        getData={getData}
+                      />
                     )}
                     {sec.type_id === 7 && updateOne && (
                       <UpdateAccordion
                         richTxt={item.texts.content}
                         updateData={item}
                         sec={sec}
+                        getData={getData}
                       />
                     )}
                     {sec.type_id === 9 && updateOne && (
-                      <UpdatePortfolio updateData={item} sec={sec} />
+                      <UpdatePortfolio
+                        updateData={item}
+                        sec={sec}
+                        getData={getData}
+                      />
                     )}
                     {sec.type_id === 12 && updateOne && (
                       <UpdateBanner
                         richTxt={item.subtitle}
                         updateData={item}
                         sec={sec}
+                        getData={getData}
                       />
                     )}
                     {(sec.type_id === 15 || sec.type_id === 16) && (
-                      <UpdateVideo updateData={item} sec={sec} />
+                      <UpdateVideo
+                        updateData={item}
+                        sec={sec}
+                        getData={getData}
+                      />
                     )}
                     {sec.type_id !== 1 &&
                       sec.type_id !== 2 &&
@@ -292,7 +319,13 @@ const GetDataPage = (props) => {
                       sec.type_id !== 12 &&
                       sec.type_id !== 15 &&
                       sec.type_id !== 16 &&
-                      updateOne && <UpdateAll updateData={item} sec={sec} />}
+                      updateOne && (
+                        <UpdateAll
+                          updateData={item}
+                          sec={sec}
+                          getData={getData}
+                        />
+                      )}
 
                     <CloseButton
                       className={classes.closeBtn}
@@ -418,6 +451,7 @@ const GetDataPage = (props) => {
                     type={sec.type.name}
                     id={sec.type.id}
                     secId={sec.id}
+                    getData={getData}
                   />
                   <div className={`details ${classes.worksampleItems}`}>
                     <div className={classes.boxWorksamples}>
@@ -464,6 +498,7 @@ const GetDataPage = (props) => {
                     type={sec.type.name}
                     id={sec.type.id}
                     secId={sec.id}
+                    getData={getData}
                   />
                   <div className={`details ${classes.contactformItems}`}>
                     <h3>type: {item.type_namee}</h3>
@@ -540,6 +575,7 @@ const GetDataPage = (props) => {
                     type={sec.type.name}
                     id={sec.type.id}
                     secId={sec.id}
+                    getData={getData}
                   />
                   <div
                     className={classes.fakeBtn}

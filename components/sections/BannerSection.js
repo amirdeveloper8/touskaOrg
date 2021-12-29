@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import ListAccordion from "./getdata/ListAccordion";
 import classes from "./banner.module.css";
+import Image from "next/image";
 
 const BannerSection = (props) => {
   const data = props.details;
@@ -19,7 +20,7 @@ const BannerSection = (props) => {
           <div className={classes.content}>
             {item.image_url && (
               <div className={classes.imgSec}>
-                <img src={item.image_url} />
+                <Image src={item.image_url} width={1024} height={800} />
               </div>
             )}
             {item.subtitle && (

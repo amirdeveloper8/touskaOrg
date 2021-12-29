@@ -94,26 +94,40 @@ const CreatePage = (props) => {
       <div>
         <Button onClick={getDataHandler}>See the latest Sections</Button>
       </div>
-      {showPage && <GetDataPage data={pageData} />}
+      {showPage && <GetDataPage data={pageData} getData={getDataHandler} />}
       {modalSec && <SectionModule />}
-      {simpleSec && <CreateSimple pageId={pageId} />}
-      {sliderSec && <CreateSlider pageId={pageId} />}
-      {serviceBoxesSec && <CreateServiceBoxes pageId={pageId} />}
-      {slideDownSec && <CreateSlideDown pageId={pageId} />}
-      {plansSec && <CreatePalns pageId={pageId} />}
-      {teamsSec && <CreateTeams pageId={pageId} />}
-      {accordionSec && <CreateAccordion pageId={pageId} />}
-      {tableSec && <CreateTable pageId={pageId} />}
-      {portfolioSec && <CreatePortfolio pageId={pageId} />}
-      {sampleWorksSec && <SampleWorks pageId={pageId} />}
-      {contactFormsSec && <CreateContactForm pageId={pageId} />}
-      {bannerSec && <CreateBanner pageId={pageId} />}
-      {TextSec && <CreateText pageId={pageId} />}
-      {ImageSec && <CreateImage pageId={pageId} />}
-      {contactBoxSec && <CreateContactUsBoxes pageId={pageId} />}
-      {videoSec && <CreateVideo pageId={pageId} />}
-      {mapSec && <CreateMap pageId={pageId} />}
-      {blogSec && <CreateBlog pageId={pageId} />}
+      {simpleSec && <CreateSimple pageId={pageId} getData={getDataHandler} />}
+      {sliderSec && <CreateSlider pageId={pageId} getData={getDataHandler} />}
+      {serviceBoxesSec && (
+        <CreateServiceBoxes pageId={pageId} getData={getDataHandler} />
+      )}
+      {slideDownSec && (
+        <CreateSlideDown pageId={pageId} getData={getDataHandler} />
+      )}
+      {plansSec && <CreatePalns pageId={pageId} getData={getDataHandler} />}
+      {teamsSec && <CreateTeams pageId={pageId} getData={getDataHandler} />}
+      {accordionSec && (
+        <CreateAccordion pageId={pageId} getData={getDataHandler} />
+      )}
+      {tableSec && <CreateTable pageId={pageId} getData={getDataHandler} />}
+      {portfolioSec && (
+        <CreatePortfolio pageId={pageId} getData={getDataHandler} />
+      )}
+      {sampleWorksSec && (
+        <SampleWorks pageId={pageId} getData={getDataHandler} />
+      )}
+      {contactFormsSec && (
+        <CreateContactForm pageId={pageId} getData={getDataHandler} />
+      )}
+      {bannerSec && <CreateBanner pageId={pageId} getData={getDataHandler} />}
+      {TextSec && <CreateText pageId={pageId} getData={getDataHandler} />}
+      {ImageSec && <CreateImage pageId={pageId} getData={getDataHandler} />}
+      {contactBoxSec && (
+        <CreateContactUsBoxes pageId={pageId} getData={getDataHandler} />
+      )}
+      {videoSec && <CreateVideo pageId={pageId} getData={getDataHandler} />}
+      {mapSec && <CreateMap pageId={pageId} getData={getDataHandler} />}
+      {blogSec && <CreateBlog pageId={pageId} getData={getDataHandler} />}
     </section>
   );
 };
@@ -127,9 +141,9 @@ export const getServerSideProps = async (context) => {
 
   const res = await fetch(`http://api.touskaweb.com/api/getPage/${pageId}`);
   const data = await res.json();
-  console.log(res);
+  const status = data.status;
 
-  if (!res) {
+  if (status === "page not found") {
     return {
       notFound: true,
     };

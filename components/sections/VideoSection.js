@@ -9,12 +9,7 @@ const VideoSection = (props) => {
       <h2>{value.title}</h2>
       {value.subtitle && <p className={classes.subtitle}>{value.subtitle}</p>}
       <div className="h_iframe-aparat_embed_frame">
-        <iframe
-          src={data.src}
-          allowFullScreen="true"
-          webkitallowfullscreen="true"
-          mozallowfullscreen="true"
-        ></iframe>
+        <iframe src={data.src} allowFullScreen={true}></iframe>
       </div>
     </section>
   );

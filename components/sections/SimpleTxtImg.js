@@ -10,6 +10,7 @@ import Button from "../ui/Button";
 import Link from "next/link";
 
 import Modal from "../ui/Modal";
+import Image from "next/image";
 
 const SimpleTxtImg = (props) => {
   const data = props.details;
@@ -33,7 +34,6 @@ const SimpleTxtImg = (props) => {
       setFullscreen(false);
     }, 400);
   };
-  console.log("txtttt", btn);
   return (
     <Fragment>
       {data.map((item, index) => (
@@ -54,7 +54,12 @@ const SimpleTxtImg = (props) => {
             >
               {item.image_url && (
                 <div className={classes.imageSimple}>
-                  <img src={item.image_url} alt={item.title} />
+                  <Image
+                    src={item.image_url}
+                    alt={item.title}
+                    width={1920}
+                    height={1135}
+                  />
                   <AiOutlineFullscreen onClick={fullHandler} />
                 </div>
               )}
@@ -80,7 +85,12 @@ const SimpleTxtImg = (props) => {
         <Modal className={modalClass}>
           {data.map((item, index) => (
             <div className={classes.modalImage}>
-              <img src={item.image_url} alt={item.title} />
+              <Image
+                src={item.image_url}
+                alt={item.title}
+                width={1920}
+                height={1135}
+              />
               <AiOutlineFullscreenExit onClick={exitHandler} />
             </div>
           ))}

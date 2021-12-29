@@ -59,17 +59,6 @@ const CreateContactForm = (props) => {
 
   let sliders = [];
 
-  useEffect(() => {
-    if (notification === "success created" || notification === "error") {
-      const timer = setTimeout(() => {
-        setNotification(null);
-        setdataError(null);
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [notification]);
-
   useEffect(() => {}, []);
 
   const authCtx = useContext(AuthContext);
@@ -111,8 +100,6 @@ const CreateContactForm = (props) => {
 
   const slideNumberHandleChange = (e) => {
     setSlideCount(e.target.value);
-
-    console.log(slideCount);
     getInputsHandler();
   };
 
@@ -144,22 +131,6 @@ const CreateContactForm = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
     setNotification("pending");
-
-    console.log("page_id", props.pageId);
-    console.log("type_id", 2);
-    console.log("title", titleValue);
-    console.log("subtitle", subtitleValue);
-    console.log("image", selectedFile);
-    console.log("count", slideCount);
-
-    for (var i = 0; i < slideCount; i++) {
-      console.log(`input_name_${i + 1}`, titles[i]);
-      console.log(`input_type_id_${i + 1}`, ids[i]);
-      console.log(`input_placeholders_${i + 1}`, placeholders[i]);
-      console.log(`input_labels_${i + 1}`, labels[i]);
-      console.log(`input_potions_${i + 1}`, JSON.stringify(optionvals[i]));
-      console.log(`input_valid_${i + 1}`, valid[i]);
-    }
 
     const fData = new FormData();
 
@@ -193,10 +164,12 @@ const CreateContactForm = (props) => {
       data: fData,
     })
       .then((res) => {
-        console.log("res", res);
         if (res.data.status === "success created") {
-          console.log(res.data);
           setNotification(res.data.status);
+          setTimeout(() => {
+            authCtx.closePageHandler();
+            props.getData();
+          }, 2000);
           setTimeout(() => {
             authCtx.showPageHandler();
             authCtx.closeContactFormsSection();
@@ -206,13 +179,15 @@ const CreateContactForm = (props) => {
       .catch((err) => {
         console.log("Error", err.response.data);
       });
-
-    console.log(fData);
   };
 
   let formIsValid = false;
 
-  if (titleIsValid && (titles.length && ids.length) === +slideCount) {
+  if (
+    titleIsValid &&
+    (titles.length && ids.length) === +slideCount &&
+    selectedFile
+  ) {
     formIsValid = true;
   }
 

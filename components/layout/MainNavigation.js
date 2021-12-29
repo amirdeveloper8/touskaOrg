@@ -48,9 +48,6 @@ const MainNavigation = (props) => {
     list2[i] = menuList[i];
   }
 
-  console.log("list1", list1);
-  console.log("list2", list2);
-
   return (
     <Fragment>
       {menuList.length > 0 && (
@@ -58,7 +55,7 @@ const MainNavigation = (props) => {
           <div className={`${classes.firstMenu} ${classes.menuItems}`} lg={4}>
             {list1.map((item, index) =>
               item.sub.length === 0 ? (
-                <div key={index} className={classes.menuItem}>
+                <div key={item.url} className={classes.menuItem}>
                   <a href={`/${item.url}`}>{item.name}</a>
                 </div>
               ) : (
@@ -70,8 +67,8 @@ const MainNavigation = (props) => {
                     {item.name}
                   </a>
                   <ul>
-                    {item.sub.map((child, index) => (
-                      <li key={index}>
+                    {item.sub.map((child, idx) => (
+                      <li key={idx}>
                         <a href={`/${child.url}`}>{child.name}</a>
                       </li>
                     ))}
@@ -89,17 +86,20 @@ const MainNavigation = (props) => {
           <div className={`${classes.secondMenu} ${classes.menuItems}`} lg={4}>
             {list2.map((item, index) =>
               item.sub.length === 0 ? (
-                <div key={index} className={classes.menuItem}>
+                <div key={item.url} className={classes.menuItem}>
                   <a href={item.url}>{item.name}</a>
                 </div>
               ) : (
-                <div className={`${classes.menuDropdown} ${classes.menuItem}`}>
+                <div
+                  key={index}
+                  className={`${classes.menuDropdown} ${classes.menuItem}`}
+                >
                   <a className={classes.dropItem} href={item.url}>
                     {item.name}
                   </a>
                   <ul>
-                    {item.sub.map((child, index) => (
-                      <li key={index}>
+                    {item.sub.map((child, idx) => (
+                      <li key={idx}>
                         <a href={child.url}>{child.name}</a>
                       </li>
                     ))}
@@ -140,17 +140,18 @@ const MainNavigation = (props) => {
                 <Nav className="justify-content-end flex-grow-1 pe-3">
                   {menuList.map((item, index) =>
                     item.sub.length === 0 ? (
-                      <Nav.Link key={index} href={item.url}>
+                      <Nav.Link key={item.url} href={item.url}>
                         {item.name}
                       </Nav.Link>
                     ) : (
                       <NavDropdown
+                        key={index}
                         title={item.name}
                         id={`offcanvasNavbarDropdown${index}`}
                         className={classes.dropMobile}
                       >
-                        {item.sub.map((child, index) => (
-                          <NavDropdown.Item key={index} href={child.url}>
+                        {item.sub.map((child, idx) => (
+                          <NavDropdown.Item key={child.url} href={child.url}>
                             {child.name}
                           </NavDropdown.Item>
                         ))}

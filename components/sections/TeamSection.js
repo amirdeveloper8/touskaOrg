@@ -3,17 +3,17 @@ import AliceCarousel, { Classnames } from "react-alice-carousel";
 import { SiTwitter, SiInstagram } from "react-icons/si";
 import "react-alice-carousel/lib/alice-carousel.css";
 import classes from "./teamsection.module.css";
+import Image from "next/image";
 
 const TeamSection = (props) => {
-  console.log("carousel", props.details);
   const boxes = props.details.section_content;
   let urls = [];
   urls = boxes.socials;
-  console.log("urls", urls);
+
   const items = boxes.map((box, index) => (
     <section key={index} className={classes.box} key={box.id}>
       <div className={classes.imgPerson}>
-        <img
+        <Image
           className={classes.imgteam}
           src={box.image_url}
           width={200}

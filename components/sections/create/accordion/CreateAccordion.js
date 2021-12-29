@@ -28,17 +28,6 @@ const CreateAccordion = (props) => {
   const [texts, setTexts] = useState([]);
   let sliders = [];
 
-  useEffect(() => {
-    if (notification === "success created" || notification === "error") {
-      const timer = setTimeout(() => {
-        setNotification(null);
-        setdataError(null);
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [notification]);
-
   const authCtx = useContext(AuthContext);
 
   const login_token = authCtx.token;
@@ -53,8 +42,6 @@ const CreateAccordion = (props) => {
 
   const slideNumberHandleChange = (e) => {
     setSlideCount(e.target.value);
-
-    console.log(slideCount);
   };
 
   const handleChange = (file) => {
@@ -78,10 +65,6 @@ const CreateAccordion = (props) => {
   const submitHandler = (e) => {
     e.preventDefault();
     setNotification("pending");
-
-    console.log("titles", titles);
-    console.log("texts", texts);
-    console.log("count", +slideCount);
 
     const fData = new FormData();
 
@@ -108,10 +91,13 @@ const CreateAccordion = (props) => {
       data: fData,
     })
       .then((res) => {
-        console.log("res", res);
         if (res.data.status === "success created") {
-          console.log(res.data);
           setNotification(res.data.status);
+          setTimeout(() => {
+            authCtx.closePageHandler();
+            props.getData();
+          }, 2000);
+
           setTimeout(() => {
             authCtx.showPageHandler();
             authCtx.closeAccordionSection();
@@ -121,8 +107,6 @@ const CreateAccordion = (props) => {
       .catch((err) => {
         console.log("Error", err);
       });
-
-    console.log(fData);
   };
 
   let formIsValid = false;

@@ -72,17 +72,6 @@ const CreateTable = (props) => {
   const [Rows, setRows] = useState([]);
   let sliders = [];
 
-  useEffect(() => {
-    if (notification === "success created" || notification === "error") {
-      const timer = setTimeout(() => {
-        setNotification(null);
-        setdataError(null);
-      }, 3000);
-
-      return () => clearTimeout(timer);
-    }
-  }, [notification]);
-
   const increaseCms = () => {
     setCommentsCount(commentsCount + 1);
   };
@@ -158,22 +147,6 @@ const CreateTable = (props) => {
     e.preventDefault();
     setNotification("pending");
 
-    console.log("titles", titles);
-    console.log("table title", tableTitleValue);
-    console.log("footer title", tableFooterValue);
-    console.log("comments", cmValues);
-    console.log("Ths", thValues);
-    console.log("Tfs", tfValues);
-    console.log("count", +tabsCount);
-    console.log("comments", cmValues);
-
-    for (var i = 0; i < tabsCount; i++) {
-      // console.log(`tab_title_${i + 1}`, titles[i]);
-      // console.log(`tab_tr_${i + 1}`, Object.assign({}, Rows[i]));
-      // Rows[i] = Object.assign({}, Rows[i]);
-      console.log(`tab_tr_${i + 1}`, Rows[i]);
-    }
-
     const fData = new FormData();
     fData.append("page_id", props.pageId);
     fData.append("title", titleValue);
@@ -204,10 +177,12 @@ const CreateTable = (props) => {
       data: fData,
     })
       .then((res) => {
-        console.log("res", res);
         if (res.data.status === "success created") {
-          console.log(res.data);
           setNotification(res.data.status);
+          setTimeout(() => {
+            authCtx.closePageHandler();
+            props.getData();
+          }, 2000);
           setTimeout(() => {
             authCtx.showPageHandler();
             authCtx.closeTableSection();
@@ -218,8 +193,6 @@ const CreateTable = (props) => {
         console.log("Error", err.response.data);
         setNotification("error");
       });
-
-    console.log(fData);
   };
 
   let formIsValid = false;
