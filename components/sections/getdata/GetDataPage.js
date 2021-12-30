@@ -7,7 +7,6 @@ import {
   Row,
   Col,
   Nav,
-  Table,
 } from "react-bootstrap";
 import AuthContext from "../../../store/auth-context";
 import classes from "./getdatapage.module.css";
@@ -69,6 +68,7 @@ import AddSlider from "../addnew/slider/AddSlider";
 import UpdateButtons from "../updatemodules/UpdateButtons";
 import UpdateVideo from "../updatemodules/UpdateVideo";
 import UpdateBlog from "../updatemodules/UpdateBlog";
+import Image from "next/image";
 
 const GetDataPage = (props) => {
   const [updateOne, setUpdateOne] = useState(false);
@@ -182,14 +182,24 @@ const GetDataPage = (props) => {
                     onClick={updateSectionHandler}
                   ></div>
                   <div className={`${classes.details} details`}>
-                    {sec.type_id !== 7 && sec.type_id !== 9 && (
+                    {sec.type_id !== 7 && sec.type_id !== 9 && item.image_url && (
                       <div>
-                        <img src={item.image_url} />
+                        <Image
+                          width={300}
+                          height={250}
+                          alt="image-update"
+                          src={item.image_url}
+                        />
                       </div>
                     )}
-                    {sec.type_id !== 7 && sec.type_id === 9 && (
+                    {sec.type_id !== 7 && sec.type_id === 9 && item.image && (
                       <div>
-                        <img src={item.image} />
+                        <Image
+                          width={300}
+                          height={250}
+                          alt="image-update"
+                          src={item.image}
+                        />
                       </div>
                     )}
                     <div
@@ -352,7 +362,14 @@ const GetDataPage = (props) => {
                   ></div>
                   <div className={`${classes.details} details`}>
                     <div>
-                      <img src={item.image_url} />
+                      {item.image_url && (
+                        <Image
+                          width={300}
+                          height={250}
+                          alt="image-update"
+                          src={item.image_url}
+                        />
+                      )}
                     </div>
                     <div>
                       <h3>Name: {item.name}</h3>
@@ -457,7 +474,14 @@ const GetDataPage = (props) => {
                     <div className={classes.boxWorksamples}>
                       <h3>Box Items:</h3>
                       <h4>title : {item.title_box}</h4>
-                      <img src={item.image_box_url} />
+                      {item.image_box_url && (
+                        <Image
+                          width={300}
+                          height={250}
+                          alt="image-update"
+                          src={item.image_box_url}
+                        />
+                      )}
                     </div>
                     <div className={classes.prjWorksamples}>
                       <h3>Project Items:</h3>
@@ -468,7 +492,14 @@ const GetDataPage = (props) => {
                         <a href={`/${item.url_project}`}>{item.url_project}</a>
                       </p>
                       <p>button name: {item.buttons.name}</p>
-                      <img src={item.image_project_url} />
+                      {item.image_project_url && (
+                        <Image
+                          width={300}
+                          height={250}
+                          alt="image-update"
+                          src={item.image_project_url}
+                        />
+                      )}
                     </div>
                   </div>
 
@@ -544,7 +575,14 @@ const GetDataPage = (props) => {
                   ></div>
                   <div className={`${classes.details} details`}>
                     <div className={classes.simpleTxtImg}>
-                      {item.image_url && <img src={item.image_url} />}
+                      {item.image_url && (
+                        <Image
+                          width={300}
+                          height={250}
+                          alt="image-update"
+                          src={item.image_url}
+                        />
+                      )}
                       {item.subtitle && <ListAccordion items={item.subtitle} />}
                     </div>
                   </div>
@@ -762,7 +800,14 @@ const GetDataPage = (props) => {
                         <h3>{item.title}</h3>
 
                         <Markup content={item.excerpt} />
-                        {item.image_link && <img src={item.image_link} />}
+                        {item.image_link && (
+                          <Image
+                            width={300}
+                            height={250}
+                            alt="image-update"
+                            src={item.image_link}
+                          />
+                        )}
                         <Button variant="info">
                           <Link href={item.link}>view more</Link>
                         </Button>

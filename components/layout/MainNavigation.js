@@ -27,17 +27,21 @@ const MainNavigation = (props) => {
   let list1 = [];
   let list2 = [];
 
-  useEffect(async () => {
-    const dataget = await getData("get/header");
-    if (dataget.header) {
-      setMenuList(dataget.header.list_menu);
-      setMenuButton(dataget.header.button.url);
-      setMenuLogo(dataget.header.logo_url);
-    } else {
-      setMenuList([]);
-      setMenuButton("");
-      setMenuLogo("");
-    }
+  useEffect(() => {
+    const fetchData = async () => {
+      const dataget = await getData("get/header");
+      if (dataget.header) {
+        setMenuList(dataget.header.list_menu);
+        setMenuButton(dataget.header.button.url);
+        setMenuLogo(dataget.header.logo_url);
+      } else {
+        setMenuList([]);
+        setMenuButton("");
+        setMenuLogo("");
+      }
+    };
+
+    fetchData();
   }, []);
 
   for (let i = 0; i < Math.ceil(menuList.length / 2); i++) {
@@ -79,8 +83,15 @@ const MainNavigation = (props) => {
           </div>
 
           <div className={classes.menuCol} lg={2}>
-            <Navbar.Brand href="/">
-              <img src={menuLogo} />
+            <Navbar.Brand className={classes.logoImg} href="/">
+              {menuLogo && (
+                <Image
+                  width={300}
+                  height={220}
+                  alt="Touskaweb"
+                  src={menuLogo}
+                />
+              )}
             </Navbar.Brand>
           </div>
           <div className={`${classes.secondMenu} ${classes.menuItems}`} lg={4}>
@@ -119,7 +130,14 @@ const MainNavigation = (props) => {
         <Navbar className={classes.mobileMenu} bg="light" expand={false}>
           <Container fluid>
             <Navbar.Brand className={classes.logMobile} href="/">
-              <img src={menuLogo} />
+              {menuLogo && (
+                <Image
+                  width={300}
+                  height={220}
+                  alt="Touskaweb"
+                  src={menuLogo}
+                />
+              )}
             </Navbar.Brand>
             <Navbar.Toggle aria-controls="offcanvasNavbar" />
             <Navbar.Offcanvas
@@ -133,7 +151,14 @@ const MainNavigation = (props) => {
                   className={classes.logMobile}
                   id="offcanvasNavbarLabel"
                 >
-                  <img src={menuLogo} />
+                  {menuLogo && (
+                    <Image
+                      width={300}
+                      height={220}
+                      alt="Touskaweb"
+                      src={menuLogo}
+                    />
+                  )}
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>

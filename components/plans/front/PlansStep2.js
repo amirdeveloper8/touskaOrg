@@ -2,13 +2,12 @@ import { useState } from "react";
 import BasicPlans from "./BasicPlans";
 import classes from "./plans-front.module.css";
 
-import { MdOutlineKeyboardReturn } from "react-icons/md";
-
 import Button from "../../ui/Button";
 import OfferPlans from "./OfferPlans";
 import SpecialPlans from "./SpecialPlans";
 
 import PrintValues from "./PrintValues";
+import { Badge } from "react-bootstrap";
 
 const PlansStep2 = (props) => {
   const value = props.value;
@@ -84,21 +83,15 @@ const PlansStep2 = (props) => {
     const basicVal = valueBasics.filter((item) => item.name !== "");
     printValues.basic = basicVal;
 
-    console.log(printValues.basic);
-
-    // console.log("valueBasics", valueBasics);
-
     setOfferStep(true);
-    // setBasicStep(false);
   };
 
   const getOffersHandler = () => {
     const offerVal = valueOffers.filter((item) => item.name !== "");
     printValues.offer = offerVal;
-    // setOfferStep(false);
+
     setSpecialStep(true);
     setSubmitOffer(true);
-    console.log(printValues.basic);
   };
 
   const getSpecialsHandler = () => {
@@ -109,9 +102,6 @@ const PlansStep2 = (props) => {
   };
 
   const printHandler = () => {
-    console.log(printValues);
-    // console.log("ip", await publicIp.v4());
-
     setPrintSec(true);
   };
 
@@ -124,10 +114,10 @@ const PlansStep2 = (props) => {
           <div className={classes.actions}>
             <Button onClick={getBasicsHandler}>مرحله بعد</Button>
           </div>
-          <MdOutlineKeyboardReturn
-            className={classes.back}
-            onClick={props.backStep1}
-          />
+          <Badge className={classes.back} onClick={props.backStep1}>
+            {" "}
+            بازگشت
+          </Badge>
         </div>
       )}
       {offerStep && !printSec && (
@@ -137,10 +127,10 @@ const PlansStep2 = (props) => {
           <div className={classes.actions}>
             <Button onClick={getOffersHandler}>مرحله بعد</Button>
           </div>
-          <MdOutlineKeyboardReturn
-            className={classes.back}
-            onClick={() => setBasicStep(true)}
-          />
+          <Badge className={classes.back} onClick={() => setBasicStep(true)}>
+            {" "}
+            بازگشت
+          </Badge>
         </div>
       )}
       {specialStep && !printSec && (
@@ -150,10 +140,10 @@ const PlansStep2 = (props) => {
           <div className={classes.actions}>
             <Button onClick={getSpecialsHandler}>مرحله بعد</Button>
           </div>
-          <MdOutlineKeyboardReturn
-            className={classes.back}
-            onClick={() => setOfferStep(true)}
-          />
+          <Badge className={classes.back} onClick={() => setOfferStep(true)}>
+            {" "}
+            بازگشت
+          </Badge>
         </div>
       )}
       {printStep && !printSec && (

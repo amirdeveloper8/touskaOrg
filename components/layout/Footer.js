@@ -8,19 +8,31 @@ import Link from "next/link";
 import { FaInstagram } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
 import { FaWhatsapp } from "react-icons/fa";
+import Image from "next/image";
 
 const Footer = (props) => {
   const [details, setDetails] = useState();
-  useEffect(async () => {
-    const dataget = await getData("get/footer");
-    setDetails(dataget.footer);
+  useEffect(() => {
+    const getFooter = async () => {
+      const dataget = await getData("get/footer");
+      setDetails(dataget.footer);
+    };
+
+    getFooter();
   }, []);
   return (
     <section className={classes.footer}>
       {details && (
         <div className={classes.footerRow}>
           <div className={classes.footerColImage}>
-            <img src={details.logo_url} />
+            {details.logo_url && (
+              <Image
+                width={300}
+                height={230}
+                alt="Touskweb"
+                src={details.logo_url}
+              />
+            )}
             <p className={classes.description}>{details.description}</p>
           </div>
           <div className={classes.footerCol} lg={2} md={6}>

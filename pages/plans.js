@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Col, Form } from "react-bootstrap";
-import { getData } from "../lib/get-data";
 
 import Button from "../components/ui/Button";
 
@@ -18,41 +17,28 @@ const Plans = (props) => {
 
   const [step1, setStep1] = useState(true);
 
-  // useEffect(async () => {
-  //   const valCats = await getData("get/semiplan/cat");
-
-  //   setCatDetails(valCats.cats);
-  // }, []);
-
   const changeHandler = (e) => {
     const value = e.target.value;
     const val = value.split(".");
     setValueBox(value);
 
     setTypeValue(+val[0]);
-    console.log("value", typeValue);
   };
 
   const categories = catDetails.filter(
     (item) => item.name !== "پایه" && item.name !== "پیشنهادی"
   );
 
-  console.log("catDetails", catDetails);
-
   const backStep1Handler = () => {
     setStep1(true);
   };
 
   const submitHandler = () => {
-    console.log(typeValue);
-
     const connectDB = ConnectToDB("get/semiplan/panel");
 
     const fData = new FormData();
 
     fData.append("category_id", typeValue);
-
-    console.log(typeValue);
 
     axios({
       method: "POST",
@@ -60,15 +46,13 @@ const Plans = (props) => {
       data: fData,
     })
       .then((res) => {
-        console.log("res", res.data);
         if (res.data.status === "success") {
           setItemDetails(res.data);
-          console.log(itemDetails);
           setStep1(false);
         }
       })
       .catch((err) => {
-        console.log("Error", err);
+        console.log("Error", err.response);
       });
   };
 

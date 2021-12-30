@@ -93,8 +93,23 @@
 .menuCol img {
   width: 100%;
   max-width: 120px !important;
+  box-shadow: 3px 3px 2px var(--green) !important;
 
   transition: 0.3s linear;
+}
+
+.logoImg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  height: 80px;
+  transition: 0.3s ease-in-out;
+}
+
+.logoImg:hover {
+  box-shadow: 3px 3px 2px grey !important;
+  transition: 0.3s ease-in-out;
 }
 
 .menuCol img:hover {

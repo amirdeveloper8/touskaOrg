@@ -16,9 +16,7 @@ import CreateSlideDown from "../../../components/sections/create/slide-down/Crea
 import CreatePalns from "../../../components/sections/create/plans/CreatePlans";
 import CreateTeams from "../../../components/sections/create/teams/CreateTeams";
 import CreateAccordion from "../../../components/sections/create/accordion/CreateAccordion";
-import TablesForm from "../../../components/sections/create/table/TablesForm";
 import CreateTable from "../../../components/sections/create/table/CreateTable";
-import { Markup } from "interweave";
 import CreatePortfolio from "../../../components/sections/create/Portfolio/CreatePortfolio";
 import SampleWorks from "../../../components/sections/create/sample-works/SampleWorks";
 import CreateContactForm from "../../../components/sections/create/contact-form/CreateContactForm";
@@ -62,13 +60,6 @@ const CreatePage = (props) => {
   const openModal = () => {
     authCtx.openSectionModal();
   };
-
-  // useEffect(async () => {
-  //   const dataget = await getData(`getPage/${pageId}`);
-  //   setPageData(dataget);
-  // }, [showPage]);
-
-  // console.log(pageData);
 
   const getDataHandler = async () => {
     const dataget = await getData(`getPage/${pageId}`);
@@ -156,21 +147,3 @@ export const getServerSideProps = async (context) => {
     },
   };
 };
-
-// export async function getStaticProps(props) {
-//   // const { params } = context;
-
-//   const pageId = props.pageId;
-//   const res = await fetch(`http://api.touskaweb.com/api/getPage/40`);
-//   const data = await res.json();
-
-//   if (!data) {
-//     return {
-//       notFound: true,
-//     };
-//   }
-
-//   return {
-//     props: { data }, // will be passed to the page component as props
-//   };
-// }

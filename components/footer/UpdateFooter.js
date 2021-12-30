@@ -17,6 +17,7 @@ import axios from "axios";
 import AuthContext from "../../store/auth-context";
 import Notification from "../ui/notification";
 import UpdateAddSocials from "./UpdateAddSocials";
+import Image from "next/image";
 
 const isText = (value) => value.trim().length > 0;
 const UpdateFooter = (props) => {
@@ -336,8 +337,14 @@ const UpdateFooter = (props) => {
               size="sm"
             />
           )}
-          {!resetImg && (
-            <img src={details.logo_url} className="w-100 bg-light" />
+          {!resetImg && details.logo_url && (
+            <Image
+              width={300}
+              height={230}
+              src={details.logo_url}
+              alt="logo"
+              className="w-100 bg-light"
+            />
           )}
           {!resetImg && (
             <AiFillEdit

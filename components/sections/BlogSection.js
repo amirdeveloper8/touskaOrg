@@ -3,6 +3,7 @@ import { Markup } from "interweave";
 
 import Button from "../ui/Button";
 import Link from "next/link";
+import Image from "next/image";
 
 const BlogSection = (props) => {
   const sec = props.sec;
@@ -14,7 +15,12 @@ const BlogSection = (props) => {
       <div className={classes.posts}>
         {posts.map((post, index) => (
           <div key={index} className={classes.post}>
-            <img src={post.image_link} alt={post.title} />
+            <Image
+              width={550}
+              height={350}
+              src={post.image_link}
+              alt={post.title}
+            />
             <h3>{post.title}</h3>
             {/* <Markup content={post.excerpt} /> */}
             <p className="text-center"> ... </p>

@@ -10,6 +10,7 @@ import Notification from "../../ui/notification";
 import axios from "axios";
 
 import Modal from "../../ui/Modal";
+import Image from "next/image";
 
 const isText = (value) => value.trim().length > 0;
 
@@ -191,9 +192,14 @@ const UpdateHeader = (props) => {
       <h1>Update Header</h1>
       <Form onSubmit={submitHandler}>
         <Row className={classes.control}>
-          {!resetImage && (
+          {!resetImage && props.item.logo_url && (
             <div className={classes.imageLogo}>
-              <img src={props.item.logo_url} />
+              <Image
+                width={300}
+                height={230}
+                alt="logo"
+                src={props.item.logo_url}
+              />
 
               <AiFillEdit
                 className={classes.edit}
